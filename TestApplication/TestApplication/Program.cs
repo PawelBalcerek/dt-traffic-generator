@@ -1,11 +1,13 @@
 ﻿/*Kod apliakcji generujacej obciazenie na serwerze
  * Autor: Kuczman Kamil
- * Data ostatniej aktualizacji 20.10.2019
+ * Data ostatniej aktualizacji 4.11.2019
+ * aktualna wersja oprogramowania: 1.2
  * 
  * zaimplementowane funkcjonalności:
- * -generowanie losowej liczby w celu sprawdzenia roznych etapów/drzewek sciezek łaczenia z baza danych
- * -licznik do zliczania czasu operacji
- * -ustawienei żądania GET(pobranie całego HTML)
+ * -generowanie losowej liczby w celu sprawdzenia roznych etapów/drzewek sciezek łaczenia z baza danych     (version 1.0)
+ * -licznik do zliczania czasu operacji                                                                     (version 1.0)
+ * -ustawienia żądania GET(pobranie całego HTML)                                                            (version 1.0)
+ * -wyslanie okreslonej  ilosci zadąń w czasie minuty (np 60,120,240)                                       (version 1.1)
  * 
  * 
  */
@@ -36,7 +38,7 @@ namespace TestApplication
         static void Main(string[] args)
         {
 
-
+            int numberOfRequestSend = 0;
 
             //opis parametrow testowych wraz z numerem testu
             int[,] TestScenarioParameter = new int[5, 5]{
@@ -235,30 +237,37 @@ namespace TestApplication
         }
 
         static void testScenerio3()
-        {
+        { int numberOfRequestSend = 0;
             Stopwatch sw = new Stopwatch();
-            Stopwatch sw1 = new Stopwatch();
+            
             Stopwatch delay = new Stopwatch();
             //3 scenariusz testowy do tworzenia cegiełek kodu
             // test wykonania okreslonej ilosci zapytan w ciagu minuty
             sw.Start();
-            while (sw.ElapsedMilliseconds < 60000) {
+            while (sw.ElapsedMilliseconds < 2000) {
+                Stopwatch sw1 = new Stopwatch();
                 sw1.Start();
+                    numberOfRequestSend++;
                 testScenerio31();
                 sw1.Stop();
                 Console.WriteLine("odcczekiwanie");
-                Thread.Sleep(250);
+                Thread.Sleep(100);
                 //while (delay.ElapsedMilliseconds < 250) { }//poprawic by działalo
                 Console.Write("czas:");
                 Console.WriteLine("Elapsed={0}", sw1.Elapsed);
             }
 
             sw.Stop();
+
+            Console.Write("liczba requestow:");
+            Console.WriteLine(numberOfRequestSend);
+
             Console.Write("czas całkowity:");
             Console.WriteLine("Elapsed={0}", sw.Elapsed);
             Console.WriteLine("oczekiwanie na wcisniecie klawisza");
             Console.ReadLine();
 
+            
 
         }
 
