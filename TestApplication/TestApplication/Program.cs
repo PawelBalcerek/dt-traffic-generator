@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 //do obslugi GET i POST
 using System.Net;
 using System.IO;
+using System.Threading;
 
 
 
@@ -30,11 +31,11 @@ namespace TestApplication
     {
 
         //testowy request GET
-        
+
 
         static void Main(string[] args)
         {
-            
+
 
 
             //opis parametrow testowych wraz z numerem testu
@@ -56,6 +57,13 @@ namespace TestApplication
                 {0,40,50,10},
                 {0,10,10,80}
             };
+
+            int numberOfUser = 6;
+            int numberOfRequest = 10;
+            //wynik obciazenia jako mnoznik ilosci uzytkonikow i requestow
+            int testFreQuency = numberOfRequest * numberOfUser;
+            //delay do odczekania po kazdej akcji
+            int delayTest = 60000 / testFreQuency;
 
 
             Stopwatch sw = new Stopwatch();
@@ -81,7 +89,7 @@ namespace TestApplication
             string sURL;
             sURL = "http://www.microsoft.com";
             WebRequest wrGETURL;
-            wrGETURL = WebRequest.Create(sURL); 
+            wrGETURL = WebRequest.Create(sURL);
 
             switch (testScenarioNumber)
             {
@@ -111,6 +119,7 @@ namespace TestApplication
                     break;
                 case 3:
                     Console.WriteLine("scenariusz 3");
+                    testScenerio3();
                     break;
                 default:
                     Console.WriteLine("wybrano zly scenariusz");
@@ -120,6 +129,7 @@ namespace TestApplication
 
 
         }
+
 
 
         static void testScenerio1()
@@ -134,7 +144,7 @@ namespace TestApplication
             {
 
 
-                
+
                 int randomNumber = rnd.Next(1, 101);//generate and return number beetwen 0 and 100
                 Console.WriteLine(randomNumber);
 
@@ -157,7 +167,7 @@ namespace TestApplication
                 else if (randomNumber >= 20 && randomNumber < 50)
                 {
                     Console.WriteLine("kupno akcji");
-                }else if (randomNumber >= 50 && randomNumber < 90)
+                } else if (randomNumber >= 50 && randomNumber < 90)
                 {
                     Console.WriteLine("sprzedaz akcji");
                 }
@@ -174,10 +184,86 @@ namespace TestApplication
                     logged_in = false;
                 }
 
-                
+
             }
 
         }
+
+        static void testScenerio31()
+       {
+            bool logged_in = false;
+            bool log_out = false;
+            Random rnd = new Random();
+          
+                int randomNumber = rnd.Next(1, 101);//generate and return number beetwen 0 and 100
+                Console.WriteLine(randomNumber);
+
+                if (logged_in == true)
+                {
+                    randomNumber = rnd.Next(21, 101);
+                }
+                if (log_out == true)
+                {
+                    randomNumber = rnd.Next(1, 21);
+                }
+
+                if (randomNumber < 20)
+                {
+                    Console.WriteLine("logowanie");
+                    logged_in = true;
+                    log_out = false;
+
+                }
+                else if (randomNumber >= 20 && randomNumber < 50)
+                {
+                    Console.WriteLine("kupno akcji");
+                }
+                else if (randomNumber >= 50 && randomNumber < 90)
+                {
+                    Console.WriteLine("sprzedaz akcji");
+                }
+                else
+                {
+                    Console.WriteLine("wylogowanie");
+                    log_out = true;
+                    logged_in = false;
+                }
+               
+
+
+            
+        }
+
+        static void testScenerio3()
+        {
+            Stopwatch sw = new Stopwatch();
+            Stopwatch sw1 = new Stopwatch();
+            Stopwatch delay = new Stopwatch();
+            //3 scenariusz testowy do tworzenia cegiełek kodu
+            // test wykonania okreslonej ilosci zapytan w ciagu minuty
+            sw.Start();
+            while (sw.ElapsedMilliseconds < 60000) {
+                sw1.Start();
+                testScenerio31();
+                sw1.Stop();
+                Console.WriteLine("odcczekiwanie");
+                Thread.Sleep(250);
+                //while (delay.ElapsedMilliseconds < 250) { }//poprawic by działalo
+                Console.Write("czas:");
+                Console.WriteLine("Elapsed={0}", sw1.Elapsed);
+            }
+
+            sw.Stop();
+            Console.Write("czas całkowity:");
+            Console.WriteLine("Elapsed={0}", sw.Elapsed);
+            Console.WriteLine("oczekiwanie na wcisniecie klawisza");
+            Console.ReadLine();
+
+
+        }
+
+        
+            
 
     }
 }
