@@ -8,7 +8,7 @@
  * -licznik do zliczania czasu operacji                                                                     (version 1.0)
  * -ustawienia żądania GET(pobranie całego HTML)                                                            (version 1.0)
  * -wyslanie okreslonej  ilosci zadąń w czasie minuty (np 60,120,240)                                       (version 1.1)
- * 
+ * -zliczenie  ilosci requestow, ustawienie timerow dla poszczegolnych żądań osobno                         (version 1.2)
  * 
  */
 
@@ -28,17 +28,25 @@ using System.Threading;
 
 
 namespace TestApplication
+
 {
-    class Program
+
+
+  
+
+    
+
+class Program
     {
 
-        //testowy request GET
+        private static double TimeTotal = 0;
+
+        
 
 
         static void Main(string[] args)
         {
-
-            int numberOfRequestSend = 0;
+            
 
             //opis parametrow testowych wraz z numerem testu
             int[,] TestScenarioParameter = new int[5, 5]{
@@ -238,8 +246,11 @@ namespace TestApplication
 
         static void testScenerio3()
         { int numberOfRequestSend = 0;
+            TimeSpan timecalkowity;
             Stopwatch sw = new Stopwatch();
-            
+            double RequestToTime;
+
+
             Stopwatch delay = new Stopwatch();
             //3 scenariusz testowy do tworzenia cegiełek kodu
             // test wykonania okreslonej ilosci zapytan w ciagu minuty
@@ -251,16 +262,23 @@ namespace TestApplication
                 testScenerio31();
                 sw1.Stop();
                 Console.WriteLine("odcczekiwanie");
-                Thread.Sleep(100);
+                Thread.Sleep(250);
                 //while (delay.ElapsedMilliseconds < 250) { }//poprawic by działalo
                 Console.Write("czas:");
                 Console.WriteLine("Elapsed={0}", sw1.Elapsed);
+               timecalkowity =+ sw1.Elapsed;
+                timeMeasure(timecalkowity.TotalMilliseconds, numberOfRequestSend);
             }
 
             sw.Stop();
 
             Console.Write("liczba requestow:");
             Console.WriteLine(numberOfRequestSend);
+
+            Console.Write("liczba requestow/minute:");
+            Console.WriteLine(Frequency);
+            
+
 
             Console.Write("czas całkowity:");
             Console.WriteLine("Elapsed={0}", sw.Elapsed);
@@ -271,7 +289,16 @@ namespace TestApplication
 
         }
 
-        
+        static double Frequency;
+
+        static void timeMeasure(double time,int RequestNumber)
+        {
+            TimeTotal += time;
+            Console.Write("czas całkowity w funkcji:");
+            Console.WriteLine(TimeTotal);
+            Frequency = RequestNumber*60000/TimeTotal  ;
+
+        }
             
 
     }
