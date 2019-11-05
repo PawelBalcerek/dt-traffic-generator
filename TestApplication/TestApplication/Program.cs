@@ -1,7 +1,7 @@
 ﻿/*Kod apliakcji generujacej obciazenie na serwerze
- * Autor: Kuczman Kamil
- * Data ostatniej aktualizacji 4.11.2019
- * aktualna wersja oprogramowania: 1.2
+ * Autor: Kuczman Kamil, Jakub Cieśla 
+ * Data ostatniej aktualizacji 5.11.2019
+ * aktualna wersja oprogramowania: 1.4
  * 
  * zaimplementowane funkcjonalności:
  * -generowanie losowej liczby w celu sprawdzenia roznych etapów/drzewek sciezek łaczenia z baza danych     (version 1.0)
@@ -9,6 +9,8 @@
  * -ustawienia żądania GET(pobranie całego HTML)                                                            (version 1.0)
  * -wyslanie okreslonej  ilosci zadąń w czasie minuty (np 60,120,240)                                       (version 1.1)
  * -zliczenie  ilosci requestow, ustawienie timerow dla poszczegolnych żądań osobno                         (version 1.2)
+ * -zliczanie wartości Request/minutę                                                                       (version 1.3)
+ * -wyslanie requesta do API Java                                                                           (version 1.4)
  * 
  */
 
@@ -38,11 +40,13 @@ namespace TestApplication
 
 class Program
     {
-
+        //miejscena zmienne globalne i prywatne
         private static double TimeTotal = 0;
-
-        
-
+        //zmienne pozwalajace szybciej przepinac się pomiedzy API
+        private static string Http = "http://";
+        private static string adrress = "javatestai.ddns.net:";
+        private static string port = "8080";
+        private static string testEndPoint = "/api/users/all";
 
         static void Main(string[] args)
         {
@@ -131,9 +135,18 @@ class Program
                     Console.WriteLine("scenariusz 3");
                     testScenerio3();
                     break;
+                
+
+                case 4:
+                    Console.WriteLine("scenariusz 4");
+                    GetAllUsers();
+                    //Console.WriteLine("{1}",wrGETURL);
+
+                    break;
                 default:
                     Console.WriteLine("wybrano zly scenariusz");
                     break;
+
 
             }
 
@@ -299,7 +312,21 @@ class Program
             Frequency = RequestNumber*60000/TimeTotal  ;
 
         }
-            
+
+
+
+        public static void GetAllUsers()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                client.Headers.Add("Accept:application/json");
+                var result = client.DownloadString(Http+adrress+port+testEndPoint); //URI  
+                 
+        Console.WriteLine(Environment.NewLine + result);
+            }
+        }
+
 
     }
 }
