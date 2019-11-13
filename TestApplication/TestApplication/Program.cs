@@ -1,7 +1,7 @@
 ﻿/*Kod apliakcji generujacej obciazenie na serwerze
  * Autor: Kuczman Kamil, Jakub Cieśla 
- * Data ostatniej aktualizacji 5.11.2019
- * aktualna wersja oprogramowania: 1.4
+ * Data ostatniej aktualizacji 13.11.2019
+ * aktualna wersja oprogramowania: 2.0
  * 
  * zaimplementowane funkcjonalności:
  * -generowanie losowej liczby w celu sprawdzenia roznych etapów/drzewek sciezek łaczenia z baza danych     (version 1.0)
@@ -11,6 +11,8 @@
  * -zliczenie  ilosci requestow, ustawienie timerow dla poszczegolnych żądań osobno                         (version 1.2)
  * -zliczanie wartości Request/minutę                                                                       (version 1.3)
  * -wyslanie requesta do API Java                                                                           (version 1.4)
+ * -dodaonie funkcji odpowiedzilanych za odpytywanie wiekszosci Endpointów                                  (version 2.0)
+ *      --brakuje 5 funkcji z PUT/delete do przemyslenia jak je wykonac
  * 
  */
 
@@ -33,12 +35,6 @@ using Newtonsoft.Json;
 namespace TestApplication
 
 {
-
-
-
-
-
-
     class Program
     {
         //miejscena zmienne globalne i prywatne
@@ -49,7 +45,13 @@ namespace TestApplication
         private static string port = "8080";
         private static string testEndPoint = "/api/users/all";
         private static string loginEndpoint = "/login";
-        
+        private static string usersEndPoint = "/users";
+        private static string logOutEndPoint = "/logout";
+        private static string companiesEndpoint = "/companies";
+        private static string usersResourcesEndPoint = "/users/resources";
+        private static string usersSellOffersEndPoint = "/users/sell-offers";
+        private static string sellOffersEndPoint = "/sell-offers";
+        private static string usersTransactionsEndPoint = "/users/transaction";
 
         static void Main(string[] args)
         {
@@ -332,7 +334,7 @@ namespace TestApplication
                 Console.WriteLine(Environment.NewLine + result);
             }
         }
-
+        //zalogowanie uzytkownika
         public static void login()
         {
             using (var client = new WebClient())
@@ -347,11 +349,204 @@ namespace TestApplication
                 //var result=client.DownloadString()
             }
         }
+        //pobranie danych zalogowanego uzytkownika
+        public static void usersGet()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                client.Headers.Add("Accept:application/json");
+                var result = client.DownloadString(Http + adrress + port + usersEndPoint); //URI  
+
+                Console.WriteLine(Environment.NewLine + result);
+            }
+        }
+        //rejestracja nowego uzytkownika
+        public static void usersPost()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                Users userData = new Users();
+                userData.name = "ExampleName";
+                userData.email = "example@mail.com";
+                userData.password = "password";
+                string output = JsonConvert.SerializeObject(userData);
+                string URI = Http + adrress + port + usersEndPoint;
+                var request = client.UploadString(URI, output);
+                //var result=client.DownloadString()
+            }
+        }
+        //wylogowanie
+        public static void logOutGet()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                client.Headers.Add("Accept:application/json");
+                var result = client.DownloadString(Http + adrress + port + logOutEndPoint); //URI  
+
+                Console.WriteLine(Environment.NewLine + result);
+            }
+        }
+        //pobranie wsystkich firm
+        public static void companiesGet()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                client.Headers.Add("Accept:application/json");
+                var result = client.DownloadString(Http + adrress + port + companiesEndpoint); //URI  
+
+                Console.WriteLine(Environment.NewLine + result);
+            }
+        }
+        //rejestrowanie nowej firmy
+        public static void companiesPost()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                Companies companyData = new Companies();
+                companyData.name = "ExampleName";
+                //companyData.resourceAmount = 1500;
+               //Watpliwosc jak to zrobic z poziomu kodu
+                string output = JsonConvert.SerializeObject(companyData);
+                string URI = Http + adrress + port + companiesEndpoint;
+                var request = client.UploadString(URI, output);
+                //var result=client.DownloadString()
+            }
+        }
+        //zwraca liczbe zasobow zalogowanego uzyszkodnika
+        public static void usersResources()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                client.Headers.Add("Accept:application/json");
+                var result = client.DownloadString(Http + adrress + port + usersResourcesEndPoint); //URI  
+
+                Console.WriteLine(Environment.NewLine + result);
+            }
+        }
+        //zwraca ofety sprzedazy zalogowanego uzytkownika
+        public static void usersSellOffers()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                client.Headers.Add("Accept:application/json");
+                var result = client.DownloadString(Http + adrress + port + usersSellOffersEndPoint); //URI  
+
+                Console.WriteLine(Environment.NewLine + result);
+            }
+        }
+        //dodaje nowa oferte sprzedazy 
+        public static void sellOffers()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                Sell_Offers sellData = new Sell_Offers();
+                sellData.resource_id = 12;
+                sellData.amount = 10;
+                sellData.price = 21.37;
+                string output = JsonConvert.SerializeObject(sellData);
+                string URI = Http + adrress + port + sellOffersEndPoint;
+                var request = client.UploadString(URI, output);
+                //var result=client.DownloadString()
+            }
+        }
+        //metoda z PUT
+
+        //dodaje nowa oferte kupna
+        public static void buyOffers()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                Buy_Offers offersData = new Buy_Offers();
+                //offersData.companyId= "ExampleName";
+                offersData.amount = 12;
+                offersData.max_price = 2131.312;
+                string output = JsonConvert.SerializeObject(offersData);
+                string URI = Http + adrress + port + usersTransactionsEndPoint;
+                var request = client.UploadString(URI, output);
+            }
+        }
+        //kolejna metoda z PUT
+
+        //zwraca liste tranzakcji zalogowanego uzytkownika
+        public static void usersTranssaction()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                client.Headers.Add("Accept:application/json");
+                var result = client.DownloadString(Http + adrress + port + usersTransactionsEndPoint); //URI  
+
+                Console.WriteLine(Environment.NewLine + result);
+            }
+        }
+        //Delete nr 1
+
+        //Delete nr 2
+
+        //Put nr 3
+
+        
+
 
         public class Users
         {
             public string email { get; set; }
             public string password { get; set; }
+            public string name { get; set; }
+            public double cash { get; set; }
+        }
+
+        public class Resources
+        {
+            public int user_id { get; set; }
+            public int comp_id { get; set; }
+            public int amount { get; set; }
+
+        }
+
+        public class Companies
+        {
+            public string name { get; set; }
+            
+        }
+
+        public class Sell_Offers
+        {
+            public int resource_id { get; set; }
+            public int amount { get; set; }
+            public double price { get; set; }
+            public DateTime date { get; set; }
+            public bool is_valid { get; set; }
+            public int star_amount { get; set; }
+
+        }
+
+        public class Transaction
+        {
+            public int sell_offer_id { get; set; }
+            public int buy_offer_id { get; set; }
+            public DateTime date { get; set; }
+            public int amount { get; set; }
+            public double price{ get; set; }
+        }
+
+        public class Buy_Offers
+        {
+            public int resource_id { get; set; }
+            public int amount{ get; set; }
+            public double max_price { get; set; }
+            public DateTime date { get; set; }
+            public bool is_valid { get; set; }
+            public int start_amount { get; set; }
         }
     }
 }
