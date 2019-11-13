@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Threading;
+using Newtonsoft.Json;
 
 
 
@@ -34,11 +35,11 @@ namespace TestApplication
 {
 
 
-  
 
-    
 
-class Program
+
+
+    class Program
     {
         //miejscena zmienne globalne i prywatne
         private static double TimeTotal = 0;
@@ -47,10 +48,12 @@ class Program
         private static string adrress = "javatestai.ddns.net:";
         private static string port = "8080";
         private static string testEndPoint = "/api/users/all";
+        private static string loginEndpoint = "/login";
+        
 
         static void Main(string[] args)
         {
-            
+
 
             //opis parametrow testowych wraz z numerem testu
             int[,] TestScenarioParameter = new int[5, 5]{
@@ -135,7 +138,7 @@ class Program
                     Console.WriteLine("scenariusz 3");
                     testScenerio3();
                     break;
-                
+
 
                 case 4:
                     Console.WriteLine("scenariusz 4");
@@ -190,7 +193,8 @@ class Program
                 else if (randomNumber >= 20 && randomNumber < 50)
                 {
                     Console.WriteLine("kupno akcji");
-                } else if (randomNumber >= 50 && randomNumber < 90)
+                }
+                else if (randomNumber >= 50 && randomNumber < 90)
                 {
                     Console.WriteLine("sprzedaz akcji");
                 }
@@ -213,52 +217,53 @@ class Program
         }
 
         static void testScenerio31()
-       {
+        {
             bool logged_in = false;
             bool log_out = false;
             Random rnd = new Random();
-          
-                int randomNumber = rnd.Next(1, 101);//generate and return number beetwen 0 and 100
-                Console.WriteLine(randomNumber);
 
-                if (logged_in == true)
-                {
-                    randomNumber = rnd.Next(21, 101);
-                }
-                if (log_out == true)
-                {
-                    randomNumber = rnd.Next(1, 21);
-                }
+            int randomNumber = rnd.Next(1, 101);//generate and return number beetwen 0 and 100
+            Console.WriteLine(randomNumber);
 
-                if (randomNumber < 20)
-                {
-                    Console.WriteLine("logowanie");
-                    logged_in = true;
-                    log_out = false;
+            if (logged_in == true)
+            {
+                randomNumber = rnd.Next(21, 101);
+            }
+            if (log_out == true)
+            {
+                randomNumber = rnd.Next(1, 21);
+            }
 
-                }
-                else if (randomNumber >= 20 && randomNumber < 50)
-                {
-                    Console.WriteLine("kupno akcji");
-                }
-                else if (randomNumber >= 50 && randomNumber < 90)
-                {
-                    Console.WriteLine("sprzedaz akcji");
-                }
-                else
-                {
-                    Console.WriteLine("wylogowanie");
-                    log_out = true;
-                    logged_in = false;
-                }
-               
+            if (randomNumber < 20)
+            {
+                Console.WriteLine("logowanie");
+                logged_in = true;
+                log_out = false;
+
+            }
+            else if (randomNumber >= 20 && randomNumber < 50)
+            {
+                Console.WriteLine("kupno akcji");
+            }
+            else if (randomNumber >= 50 && randomNumber < 90)
+            {
+                Console.WriteLine("sprzedaz akcji");
+            }
+            else
+            {
+                Console.WriteLine("wylogowanie");
+                log_out = true;
+                logged_in = false;
+            }
 
 
-            
+
+
         }
 
         static void testScenerio3()
-        { int numberOfRequestSend = 0;
+        {
+            int numberOfRequestSend = 0;
             TimeSpan timecalkowity;
             Stopwatch sw = new Stopwatch();
             double RequestToTime;
@@ -268,10 +273,11 @@ class Program
             //3 scenariusz testowy do tworzenia cegiełek kodu
             // test wykonania okreslonej ilosci zapytan w ciagu minuty
             sw.Start();
-            while (sw.ElapsedMilliseconds < 2000) {
+            while (sw.ElapsedMilliseconds < 2000)
+            {
                 Stopwatch sw1 = new Stopwatch();
                 sw1.Start();
-                    numberOfRequestSend++;
+                numberOfRequestSend++;
                 testScenerio31();
                 sw1.Stop();
                 Console.WriteLine("odcczekiwanie");
@@ -279,7 +285,7 @@ class Program
                 //while (delay.ElapsedMilliseconds < 250) { }//poprawic by działalo
                 Console.Write("czas:");
                 Console.WriteLine("Elapsed={0}", sw1.Elapsed);
-               timecalkowity =+ sw1.Elapsed;
+                timecalkowity = +sw1.Elapsed;
                 timeMeasure(timecalkowity.TotalMilliseconds, numberOfRequestSend);
             }
 
@@ -290,7 +296,7 @@ class Program
 
             Console.Write("liczba requestow/minute:");
             Console.WriteLine(Frequency);
-            
+
 
 
             Console.Write("czas całkowity:");
@@ -298,18 +304,18 @@ class Program
             Console.WriteLine("oczekiwanie na wcisniecie klawisza");
             Console.ReadLine();
 
-            
+
 
         }
 
         static double Frequency;
 
-        static void timeMeasure(double time,int RequestNumber)
+        static void timeMeasure(double time, int RequestNumber)
         {
             TimeTotal += time;
             Console.Write("czas całkowity w funkcji:");
             Console.WriteLine(TimeTotal);
-            Frequency = RequestNumber*60000/TimeTotal  ;
+            Frequency = RequestNumber * 60000 / TimeTotal;
 
         }
 
@@ -321,13 +327,32 @@ class Program
             {
                 client.Headers.Add("Content-Type:application/json"); //Content-Type  
                 client.Headers.Add("Accept:application/json");
-                var result = client.DownloadString(Http+adrress+port+testEndPoint); //URI  
-                 
-        Console.WriteLine(Environment.NewLine + result);
+                var result = client.DownloadString(Http + adrress + port + testEndPoint); //URI  
+
+                Console.WriteLine(Environment.NewLine + result);
             }
         }
 
+        public static void login()
+        {
+            using (var client = new WebClient())
+            {
+                client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                Users logindata = new Users();
+                logindata.email = "example@mail.com";
+                logindata.password = "password";
+                string output=JsonConvert.SerializeObject(logindata);
+                string URI = Http + adrress + port + loginEndpoint;
+                var request = client.UploadString(URI, output);   
+                //var result=client.DownloadString()
+            }
+        }
 
+        public class Users
+        {
+            public string email { get; set; }
+            public string password { get; set; }
+        }
     }
 }
 
