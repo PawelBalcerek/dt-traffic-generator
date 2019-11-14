@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data.Models
 {
@@ -13,7 +10,7 @@ namespace Data.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-OQ06NJ3;Database=EfficiencyTest;Trusted_Connection=True;");
+            optionsBuilder.UseNpgsql(@"Server=efduaa.postgres.database.azure.com;Port = 5432;Database=EfficiencyTest;User Id = l01@efduaa;Password = PolitechnikaRzeszowska2019;");
         }
     }
 }

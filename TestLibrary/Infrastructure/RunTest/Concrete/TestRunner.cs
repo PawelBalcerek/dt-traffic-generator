@@ -1,6 +1,6 @@
-﻿using TestLibrary.Infrastructure.Abstract;
+﻿using TestLibrary.Infrastructure.RunTest.Abstract;
 
-namespace TestLibrary.Infrastructure
+namespace TestLibrary.Infrastructure.RunTest.Concrete
 {
     public class TestRunner : ITestRunner
     {

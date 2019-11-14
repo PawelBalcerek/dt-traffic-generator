@@ -1,4 +1,4 @@
-﻿namespace TestLibrary.Infrastructure.Abstract
+﻿namespace TestLibrary.Infrastructure.RunTest.Abstract
 {
     interface ITestRunner
     {

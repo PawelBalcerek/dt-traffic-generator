@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
@@ -13,7 +13,7 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     EndpointId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     EndpointName = table.Column<string>(nullable: true),
                     HttpMethod = table.Column<string>(nullable: true)
                 },
@@ -27,7 +27,7 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     TestParametersId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     NumberOfUsers = table.Column<int>(nullable: false),
                     NumberOfRequests = table.Column<int>(nullable: false),
                     MinBuyPrice = table.Column<double>(nullable: false),
@@ -45,7 +45,7 @@ namespace Data.Migrations
                 columns: table => new
                 {
                     TestId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TestParametersId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     EndpointId = table.Column<int>(nullable: false),

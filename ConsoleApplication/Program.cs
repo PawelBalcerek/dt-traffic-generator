@@ -1,6 +1,5 @@
 ﻿using System;
-using TestLibrary.Infrastructure;
-using TestLibrary.Infrastructure.Const;
+using TestLibrary.Infrastructure.RunTest.Concrete;
 
 namespace ConsoleApplication
 {

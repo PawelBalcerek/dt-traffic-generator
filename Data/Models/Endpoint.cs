@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+using TestLibrary.BusinessObject.Abstract;
 
 namespace Data.Models
 {
     [Table("Endpoints")]
-    public class Endpoint
+    public class Endpoint : IEndpoint
     {
         public Endpoint()
         {
