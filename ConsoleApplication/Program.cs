@@ -1,6 +1,5 @@
 ﻿using System;
-using TestLibrary.Infrastructure;
-using TestLibrary.Infrastructure.Const;
+using TestLibrary.Infrastructure.RunTest.Concrete;
 
 namespace ConsoleApplication
 {
@@ -14,7 +13,7 @@ namespace ConsoleApplication
             // natomiast powinna być wywoływana logika testów za pomocą metody "RunTest"
             // przykład uruchomienia poniżej
             TestRunner testRunner = new TestRunner();
-            testRunner.RunTest(TestType.Test1);
+            testRunner.RunTest(1);
         }
     }
 }
