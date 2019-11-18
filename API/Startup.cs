@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 using TestLibrary.Repositories.Abstract;
 
 namespace API
@@ -26,7 +27,10 @@ namespace API
 
             services.AddTransient<EfficiencyTestDbContext>();
             services.AddTransient<IEndpointRepository, EndpointRepository>();
-
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new Info { Title = "dt-traffic-generator Api", Description = "DayTrader - Traffic Generation - Swagger Api Documentation" });
+            });
             services.AddDbContext<EfficiencyTestDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("EfficiencyTestDatabase")));
         }
 
@@ -44,6 +48,11 @@ namespace API
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("../swagger/v1/swagger.json", "dt-traffic-generator Api");
+            });
         }
     }
 }
