@@ -1,7 +1,7 @@
 ﻿namespace TestLibrary.Infrastructure.RunTest.Abstract
 {
-    interface ITestRunner
+    public interface ITestRunner
     {
-        void RunTest(int testType);
+        IRunTestResponse RunTest(int testParametersId);
     }
 }

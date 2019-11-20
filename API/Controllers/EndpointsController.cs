@@ -8,11 +8,11 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EndpointController : ControllerBase
+    public class EndpointsController : ControllerBase
     {
         private readonly IEndpointRepository _endpointRepository;
 
-        public EndpointController(IEndpointRepository endpointRepository)
+        public EndpointsController(IEndpointRepository endpointRepository)
         {
             _endpointRepository = endpointRepository;
         }

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TestLibrary.Infrastructure.RunTest.Abstract;
+using TestLibrary.Infrastructure.RunTest.Concrete;
 using Swashbuckle.AspNetCore.Swagger;
 using TestLibrary.Repositories.Abstract;
 
@@ -27,11 +29,13 @@ namespace API
 
             services.AddTransient<EfficiencyTestDbContext>();
             services.AddTransient<IEndpointRepository, EndpointRepository>();
+            services.AddDbContext<EfficiencyTestDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("EfficiencyTestDatabase")));
+            services.AddTransient<ITestRunner, TestRunner>();
+          
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new Info { Title = "dt-traffic-generator Api", Description = "DayTrader - Traffic Generation - Swagger Api Documentation" });
             });
-            services.AddDbContext<EfficiencyTestDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("EfficiencyTestDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

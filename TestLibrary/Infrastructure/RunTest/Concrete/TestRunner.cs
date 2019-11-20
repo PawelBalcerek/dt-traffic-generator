@@ -1,14 +1,18 @@
-﻿using TestLibrary.Infrastructure.RunTest.Abstract;
+﻿using TestLibrary.Infrastructure.Common.Const;
+using TestLibrary.Infrastructure.RunTest.Abstract;
 
 namespace TestLibrary.Infrastructure.RunTest.Concrete
 {
     public class TestRunner : ITestRunner
     {
-        public void RunTest(int testType)
+        public IRunTestResponse RunTest(int testParametersId)
         {
-            //TODO tutaj powinna by implementacja metody "RunTest" udostępnionej w publicznym interfejsie "ITestRunner" dla innych projektów
-            //TODO zalecane nie pisanie całej logiki testów w jednej klasie
-            throw new System.NotImplementedException();
+            //TODO
+            //get TestParams model from database by "testParametersId"
+            
+            //TODO
+            //run test with got parameters
+            return new RunTestResponse(ResponseResultEnum.Exception);
         }
     }
 }
