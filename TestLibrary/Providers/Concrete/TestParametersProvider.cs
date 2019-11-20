@@ -1,5 +1,7 @@
 ﻿using Serilog;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TestLibrary.BusinessObject.Abstract;
 using TestLibrary.Infrastructure.ObjectsConverter.Abstract;
 using TestLibrary.Infrastructure.TestParametersInfrastructure.Abstract;
@@ -28,10 +30,23 @@ namespace TestLibrary.Providers.Concrete
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "GetTestParametersById(EXCEPTION)");
+                Log.Fatal(ex, "GetTestParameters(EXCEPTION)");
                 return new GetTestParametersResponse();
             }
+        }
 
+        public IGetTestsParametersResponse GetTestsParameters()
+        {
+            try
+            {
+                IEnumerable<ITestParameters> testsParameters = _testParametersRepository.GetTestsParameters();
+                return new GetTestsParametersResponse(testsParameters.Select(p=> _converter.ConvertTestParameters(p)));
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "GetTestsParameters(EXCEPTION)");
+                return new GetTestsParametersResponse();
+            }
         }
     }
 }

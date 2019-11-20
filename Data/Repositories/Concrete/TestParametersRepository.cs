@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using System.Collections.Generic;
+using Data.Models;
 using Data.Repositories.Abstract;
 using System.Linq;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -15,6 +16,11 @@ namespace Data.Repositories.Concrete
         public ITestParameters GetTestParameters(long testParametersId)
         {
             return DbContext.TestsParameters.FirstOrDefault(p => p.TestParametersId == testParametersId);
+        }
+
+        public IEnumerable<ITestParameters> GetTestsParameters()
+        {
+            return DbContext.TestsParameters;
         }
 
         public ITestParameters AddTestParameters(ITestParameters testParameters)

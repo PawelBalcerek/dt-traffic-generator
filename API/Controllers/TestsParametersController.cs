@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using API.Models.TestParameters;
 using TestLibrary.BusinessObject;
+using TestLibrary.BusinessObject.Abstract;
 using TestLibrary.Creators.Abstract;
 using TestLibrary.Infrastructure.Common.Const;
 using TestLibrary.Infrastructure.TestParametersInfrastructure.Abstract;
@@ -46,6 +48,37 @@ namespace API.Controllers
             {
                 case ResponseResultEnum.Success:
                     return Ok(new GetTestParametersResponseModel(testParametersResponse.TestParameters));
+                case ResponseResultEnum.NotFound:
+                    return StatusCode(404);
+                default:
+                    return StatusCode(500);
+            }
+        }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [HttpGet]
+        public ActionResult Get()
+        {
+            try
+            {
+                IGetTestsParametersResponse testsParametersResponse = _testParametersProvider.GetTestsParameters();
+                return PrepareHttpResponse(testsParametersResponse);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "TestsParametersController(GetMany)(EXCEPTION)");
+                return StatusCode(500);
+            }
+        }
+
+        private ActionResult PrepareHttpResponse(IGetTestsParametersResponse testsParametersResponse)
+        {
+            switch (testsParametersResponse.ResponseResult)
+            {
+                case ResponseResultEnum.Success:
+                    return Ok(new GetTestsParametersResponseModel(testsParametersResponse.TestsParameters));
                 case ResponseResultEnum.NotFound:
                     return StatusCode(404);
                 default:
