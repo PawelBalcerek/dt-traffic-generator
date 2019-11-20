@@ -1,6 +1,7 @@
 ﻿using Data.Models;
 using Data.Repositories.Abstract;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TestLibrary.BusinessObject.Abstract;
 using TestLibrary.Repositories.Abstract;
 
@@ -13,12 +14,15 @@ namespace Data.Repositories.Concrete
 
         public ITestParameters GetTestParameters(long testParametersId)
         {
-            return DbContext.TestsParameters.Where(p => p.TestParametersId == testParametersId).FirstOrDefault();
+            return DbContext.TestsParameters.FirstOrDefault(p => p.TestParametersId == testParametersId);
         }
 
-        public long AddTestParameters()
+        public ITestParameters AddTestParameters(ITestParameters testParameters)
         {
-            throw new System.NotImplementedException();
+            TestParameters testParametersDataModel = new TestParameters(testParameters.TestParametersId, testParameters.TestName, testParameters.NumberOfUsers, testParameters.NumberOfRequests, testParameters.MinBuyPrice, testParameters.MaxBuyPrice, testParameters.MinSellPrice, testParameters.MaxSellPrice);
+            EntityEntry<TestParameters> entityEntry = DbContext.TestsParameters.Add(testParametersDataModel);
+            DbContext.SaveChanges();
+            return entityEntry.Entity;
         }
     }
 }

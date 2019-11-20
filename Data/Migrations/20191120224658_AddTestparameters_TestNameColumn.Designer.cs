@@ -3,15 +3,17 @@ using System;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(EfficiencyTestDbContext))]
-    partial class EfficiencyTestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191120224658_AddTestparameters_TestNameColumn")]
+    partial class AddTestparameters_TestNameColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

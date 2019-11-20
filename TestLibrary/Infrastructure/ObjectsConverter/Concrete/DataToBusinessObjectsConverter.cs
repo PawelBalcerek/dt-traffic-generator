@@ -10,7 +10,7 @@ namespace TestLibrary.Infrastructure.ObjectsConverter.Concrete
         {
             if (testParameters == null)
                 return null;
-            return new TestParameters(testParameters.TestParametersId, testParameters.NumberOfUsers, testParameters.NumberOfRequests, testParameters.MinBuyPrice,
+            return new TestParameters(testParameters.TestParametersId, testParameters.TestName, testParameters.NumberOfUsers, testParameters.NumberOfRequests, testParameters.MinBuyPrice,
                 testParameters.MaxBuyPrice, testParameters.MinSellPrice, testParameters.MaxSellPrice);
         }
     }

@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using TestLibrary.Infrastructure.RunTest.Abstract;
 using TestLibrary.Infrastructure.RunTest.Concrete;
 using Swashbuckle.AspNetCore.Swagger;
+using TestLibrary.Creators.Abstract;
+using TestLibrary.Creators.Concrete;
 using TestLibrary.Infrastructure.ObjectsConverter.Abstract;
 using TestLibrary.Infrastructure.ObjectsConverter.Concrete;
 using TestLibrary.Repositories.Abstract;
@@ -38,6 +40,7 @@ namespace API
             services.AddTransient<ITestRunner, TestRunner>();
             services.AddTransient<ITestParametersProvider, TestParametersProvider>();
             services.AddTransient<IDataToBusinessObjectsConverter, DataToBusinessObjectsConverter>();
+            services.AddTransient<ITestParametersCreator, TestParametersCreator>();
           
             services.AddSwaggerGen(x =>
             {
