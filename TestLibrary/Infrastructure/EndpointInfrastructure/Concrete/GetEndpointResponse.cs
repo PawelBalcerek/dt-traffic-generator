@@ -1,8 +1,8 @@
-﻿using TestLibrary.BusinessObject.Abstract;
+﻿using TestLibrary.BusinessObject;
 using TestLibrary.Infrastructure.Common.Const;
-using TestLibrary.Infrastructure.Endpoint.Abstract;
+using TestLibrary.Infrastructure.EndpointInfrastructure.Abstract;
 
-namespace TestLibrary.Infrastructure.Endpoint.Concrete
+namespace TestLibrary.Infrastructure.EndpointInfrastructure.Concrete
 {
     public class GetEndpointResponse : IGetEndpointResponse
     {
@@ -11,7 +11,7 @@ namespace TestLibrary.Infrastructure.Endpoint.Concrete
             ResponseResult = ResponseResultEnum.Exception;
         }
 
-        public GetEndpointResponse(IEndpoint endpoint)
+        public GetEndpointResponse(Endpoint endpoint)
         {
             if (endpoint == null)
             {
@@ -23,7 +23,7 @@ namespace TestLibrary.Infrastructure.Endpoint.Concrete
                 ResponseResult = ResponseResultEnum.Success;
             }
         }
-        public IEndpoint Endpoint { get; }
+        public Endpoint Endpoint { get; }
         public ResponseResultEnum ResponseResult { get; }
     }
 }

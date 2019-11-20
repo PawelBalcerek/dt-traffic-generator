@@ -1,4 +1,4 @@
-﻿using TestLibrary.Infrastructure.TestParameters.Abstract;
+﻿using TestLibrary.Infrastructure.TestParametersInfrastructure.Abstract;
 
 namespace TestLibrary.Providers.Abstract
 {

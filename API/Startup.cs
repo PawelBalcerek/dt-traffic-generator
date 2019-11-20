@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using TestLibrary.Infrastructure.RunTest.Abstract;
 using TestLibrary.Infrastructure.RunTest.Concrete;
 using Swashbuckle.AspNetCore.Swagger;
+using TestLibrary.Infrastructure.ObjectsConverter.Abstract;
+using TestLibrary.Infrastructure.ObjectsConverter.Concrete;
 using TestLibrary.Repositories.Abstract;
 using TestLibrary.Providers.Abstract;
 using TestLibrary.Providers.Concrete;
@@ -35,6 +37,7 @@ namespace API
             services.AddDbContext<EfficiencyTestDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("EfficiencyTestDatabase")));
             services.AddTransient<ITestRunner, TestRunner>();
             services.AddTransient<ITestParametersProvider, TestParametersProvider>();
+            services.AddTransient<IDataToBusinessObjectsConverter, DataToBusinessObjectsConverter>();
           
             services.AddSwaggerGen(x =>
             {

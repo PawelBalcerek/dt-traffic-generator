@@ -1,8 +1,8 @@
-﻿using TestLibrary.BusinessObject.Abstract;
+﻿using TestLibrary.BusinessObject;
 using TestLibrary.Infrastructure.Common.Const;
-using TestLibrary.Infrastructure.TestParameters.Abstract;
+using TestLibrary.Infrastructure.TestParametersInfrastructure.Abstract;
 
-namespace TestLibrary.Infrastructure.TestParameters.Concrete
+namespace TestLibrary.Infrastructure.TestParametersInfrastructure.Concrete
 {
     public class GetTestParametersResponse : IGetTestParametersResponse
     {
@@ -11,7 +11,7 @@ namespace TestLibrary.Infrastructure.TestParameters.Concrete
             ResponseResult = ResponseResultEnum.Exception;
         }
 
-        public GetTestParametersResponse(BusinessObject.TestParameters testParameters)
+        public GetTestParametersResponse(TestParameters testParameters)
         {
             if (testParameters == null)
             {
@@ -23,7 +23,7 @@ namespace TestLibrary.Infrastructure.TestParameters.Concrete
                 ResponseResult = ResponseResultEnum.Success;
             }
         }
-        public BusinessObject.TestParameters TestParameters { get; }
+        public TestParameters TestParameters { get; }
         public ResponseResultEnum ResponseResult { get; }
     }
 }

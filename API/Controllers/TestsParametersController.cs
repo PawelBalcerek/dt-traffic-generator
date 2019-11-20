@@ -2,21 +2,18 @@
 using Serilog;
 using System;
 using TestLibrary.Infrastructure.Common.Const;
-using TestLibrary.Infrastructure.TestParameters.Abstract;
+using TestLibrary.Infrastructure.TestParametersInfrastructure.Abstract;
 using TestLibrary.Providers.Abstract;
-using TestLibrary.Repositories.Abstract;
 
 namespace API.Controllers
-{ 
+{
     [Route("api/[controller]")]
     [ApiController]
     public class TestsParametersController : ControllerBase
     {
-        private readonly ITestParametersRepository _testParametersRepository;
         private readonly ITestParametersProvider _testParametersProvider;
-        public TestsParametersController(ITestParametersRepository testParametersRepository, ITestParametersProvider testParametersProvider)
+        public TestsParametersController(ITestParametersProvider testParametersProvider)
         {
-            _testParametersRepository = testParametersRepository;
             _testParametersProvider = testParametersProvider;
         }
 
@@ -30,7 +27,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "TestsParametersController");
+                Log.Fatal(ex, "TestsParametersController(Get)(EXCEPTION)");
                 return StatusCode(500);
             }
         }
