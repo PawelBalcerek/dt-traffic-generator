@@ -1,13 +1,19 @@
-﻿using TestLibrary.BusinessObject.Abstract;
+﻿using Data.Models;
+using Data.Repositories.Abstract;
+using System.Linq;
+using TestLibrary.BusinessObject.Abstract;
 using TestLibrary.Repositories.Abstract;
 
 namespace Data.Repositories.Concrete
 {
-    public class TestParametersRepository : ITestParametersRepository
+    public class TestParametersRepository : RepositoryBase, ITestParametersRepository
     {
-        public ITestParameters GetTestParameters(int testParametersId)
+        public TestParametersRepository(EfficiencyTestDbContext dbContext) : base(dbContext) { }
+
+
+        public ITestParameters GetTestParameters(long testParametersId)
         {
-            throw new System.NotImplementedException();
+            return DbContext.TestsParameters.Where(p => p.TestParametersId == testParametersId).FirstOrDefault();
         }
 
         public long AddTestParameters()

@@ -4,7 +4,7 @@ namespace TestLibrary.Repositories.Abstract
 {
     public interface ITestParametersRepository
     {
-        ITestParameters GetTestParameters(int testParametersId);
+        ITestParameters GetTestParameters(long testParametersId);
         long AddTestParameters();
     }
 }

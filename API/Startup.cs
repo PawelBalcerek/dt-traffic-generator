@@ -10,6 +10,8 @@ using TestLibrary.Infrastructure.RunTest.Abstract;
 using TestLibrary.Infrastructure.RunTest.Concrete;
 using Swashbuckle.AspNetCore.Swagger;
 using TestLibrary.Repositories.Abstract;
+using TestLibrary.Providers.Abstract;
+using TestLibrary.Providers.Concrete;
 
 namespace API
 {
@@ -29,8 +31,10 @@ namespace API
 
             services.AddTransient<EfficiencyTestDbContext>();
             services.AddTransient<IEndpointRepository, EndpointRepository>();
+            services.AddTransient<ITestParametersRepository, TestParametersRepository>();
             services.AddDbContext<EfficiencyTestDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("EfficiencyTestDatabase")));
             services.AddTransient<ITestRunner, TestRunner>();
+            services.AddTransient<ITestParametersProvider, TestParametersProvider>();
           
             services.AddSwaggerGen(x =>
             {

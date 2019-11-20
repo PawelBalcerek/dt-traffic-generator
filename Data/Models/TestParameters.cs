@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using TestLibrary.BusinessObject.Abstract;
 
 namespace Data.Models
 {
     [Table("TestParameters")]
-    public class TestParameters
+    public class TestParameters : ITestParameters
     {
         public TestParameters()
         {
