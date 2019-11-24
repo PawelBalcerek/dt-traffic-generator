@@ -8,7 +8,7 @@ namespace TestLibrary.Infrastructure.RunTest.Concrete
     {
         public RunTestResponse(ResponseResultEnum responseResult)
         {
-            ResponseResult = ResponseResultEnum.Exception;
+            ResponseResult = responseResult;
         }
 
         public ResponseResultEnum ResponseResult { get; }

@@ -23,9 +23,9 @@ namespace Data.Repositories.Concrete
             return DbContext.TestsParameters;
         }
 
-        public ITestParameters AddTestParameters(ITestParameters testParameters)
+        public ITestParameters AddTestParameters(ITestParametersBase testParameters)
         {
-            TestParameters testParametersDataModel = new TestParameters(testParameters.TestParametersId, testParameters.TestName, testParameters.NumberOfUsers, testParameters.NumberOfRequests, testParameters.MinBuyPrice, testParameters.MaxBuyPrice, testParameters.MinSellPrice, testParameters.MaxSellPrice);
+            TestParameters testParametersDataModel = new TestParameters(testParameters.TestName, testParameters.NumberOfUsers, testParameters.NumberOfRequests, testParameters.MinBuyPrice, testParameters.MaxBuyPrice, testParameters.MinSellPrice, testParameters.MaxSellPrice);
             EntityEntry<TestParameters> entityEntry = DbContext.TestsParameters.Add(testParametersDataModel);
             DbContext.SaveChanges();
             return entityEntry.Entity;

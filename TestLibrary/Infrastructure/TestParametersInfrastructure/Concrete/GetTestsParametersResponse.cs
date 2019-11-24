@@ -6,7 +6,6 @@ using TestLibrary.Infrastructure.TestParametersInfrastructure.Abstract;
 
 namespace TestLibrary.Infrastructure.TestParametersInfrastructure.Concrete
 { 
-
     public class GetTestsParametersResponse : IGetTestsParametersResponse
     {
         public GetTestsParametersResponse()

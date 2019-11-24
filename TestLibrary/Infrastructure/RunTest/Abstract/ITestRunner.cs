@@ -2,6 +2,6 @@
 {
     public interface ITestRunner
     {
-        IRunTestResponse RunTest(int testParametersId);
+        IRunTestResponse RunTest(long testParametersId);
     }
 }

@@ -5,8 +5,13 @@ namespace TestLibrary.BusinessObject
     public class Endpoint : IEndpoint
     {
         public Endpoint(int endpointId, string endpointName, string httpMethod)
+            : this(endpointName, httpMethod)
         {
             EndpointId = endpointId;
+        }
+
+        public Endpoint(string endpointName, string httpMethod)
+        {
             EndpointName = endpointName;
             HttpMethod = httpMethod;
         }

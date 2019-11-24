@@ -7,6 +7,6 @@ namespace TestLibrary.Repositories.Abstract
     {
         ITestParameters GetTestParameters(long testParametersId);
         IEnumerable<ITestParameters> GetTestsParameters();
-        ITestParameters AddTestParameters(ITestParameters testParameters);
+        ITestParameters AddTestParameters(ITestParametersBase testParameters);
     }
 }

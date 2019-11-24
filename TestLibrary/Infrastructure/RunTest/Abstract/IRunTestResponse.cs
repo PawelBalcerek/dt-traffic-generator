@@ -1,9 +1,6 @@
-﻿using TestLibrary.Infrastructure.Common.Const;
+﻿using TestLibrary.Infrastructure.Common.Abstract;
 
 namespace TestLibrary.Infrastructure.RunTest.Abstract
 {
-    public interface IRunTestResponse
-    {
-        ResponseResultEnum ResponseResult { get; }
-    }
+    public interface IRunTestResponse : IResponseResult { }
 }

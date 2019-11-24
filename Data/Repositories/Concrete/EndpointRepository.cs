@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Data.Models;
 using Data.Repositories.Abstract;
-using Serilog;
 using TestLibrary.BusinessObject.Abstract;
 using TestLibrary.Repositories.Abstract;
 
@@ -13,24 +12,22 @@ namespace Data.Repositories.Concrete
     {
         public EndpointRepository(EfficiencyTestDbContext dbContext) : base(dbContext) { }
 
-        public IEndpoint GetEndpoint(int id)
+
+        public IEndpoint GetEndpoint(long endpointId)
         {
-            //TESTS
-            return DbContext.Endpoints.FirstOrDefault();
-            //throw new NotImplementedException();
+            return DbContext.Endpoints.FirstOrDefault(p => p.EndpointId == endpointId);
         }
 
-        public IEndpoint GetEndpoint(string name, string httpMethod)
+        public IEnumerable<IEndpoint> GetEndpoints()
         {
-            throw new NotImplementedException();
+            return DbContext.Endpoints;
         }
 
-        public long AddEndpoint(string endpointName, string httpMethod)
+        public void AddEndpoint(IEndpointBase endpoint)
         {
-            DbContext.Endpoints.Add(new Endpoint {EndpointName = endpointName, HttpMethod = httpMethod });
+            Endpoint endpointDataModel = new Endpoint(endpoint.EndpointName, endpoint.HttpMethod);
+            DbContext.Endpoints.Add(endpointDataModel);
             DbContext.SaveChanges();
-            //throw new NotImplementedException();
-            return 1;
         }
     }
 }

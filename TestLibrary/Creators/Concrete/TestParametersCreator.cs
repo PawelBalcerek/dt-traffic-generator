@@ -3,7 +3,6 @@ using Serilog;
 using TestLibrary.BusinessObject;
 using TestLibrary.BusinessObject.Abstract;
 using TestLibrary.Creators.Abstract;
-using TestLibrary.Infrastructure.Common.Const;
 using TestLibrary.Infrastructure.ObjectsConverter.Abstract;
 using TestLibrary.Infrastructure.TestParametersInfrastructure.Abstract;
 using TestLibrary.Infrastructure.TestParametersInfrastructure.Concrete;
