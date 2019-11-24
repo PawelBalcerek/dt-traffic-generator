@@ -5,7 +5,7 @@ namespace TestLibrary.Infrastructure.RunTest.Concrete
 {
     public class TestRunner : ITestRunner
     {
-        public IRunTestResponse RunTest(int testParametersId)
+        public IRunTestResponse RunTest(long testParametersId)
         {
             //TODO
             //get TestParams model from database by "testParametersId"
