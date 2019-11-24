@@ -4,10 +4,16 @@ namespace TestLibrary.BusinessObject
 {
     public class TestParameters : ITestParameters
     {
-        public TestParameters(int testParametersId, int numberOfUsers, int numberOfRequests, double minBuyPrice, double maxBuyPrice, double minSellPrice, double maxSellPrice)
+        public TestParameters(int testParametersId, string testName, int numberOfUsers, int numberOfRequests, double minBuyPrice, double maxBuyPrice, double minSellPrice, double maxSellPrice) 
+            : this(numberOfUsers, testName, numberOfRequests, minBuyPrice, maxBuyPrice, minSellPrice, maxSellPrice)
         {
             TestParametersId = testParametersId;
+        }
+
+        public TestParameters(int numberOfUsers, string testName, int numberOfRequests, double minBuyPrice, double maxBuyPrice, double minSellPrice, double maxSellPrice)
+        {
             NumberOfUsers = numberOfUsers;
+            TestName = testName;
             NumberOfRequests = numberOfRequests;
             MinBuyPrice = minBuyPrice;
             MaxBuyPrice = maxBuyPrice;
@@ -16,6 +22,7 @@ namespace TestLibrary.BusinessObject
         }
 
         public int TestParametersId { get; }
+        public string TestName { get; }
         public int NumberOfUsers { get; }
         public int NumberOfRequests { get; }
         public double MinBuyPrice { get; }

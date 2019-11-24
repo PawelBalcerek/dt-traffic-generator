@@ -1,17 +1,33 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using TestLibrary.BusinessObject.Abstract;
 
 namespace Data.Models
 {
     [Table("TestParameters")]
-    public class TestParameters
+    public class TestParameters : ITestParameters
     {
         public TestParameters()
         {
             Tests = new HashSet<Test>();
         }
 
+        public TestParameters(int testParametersId, string testName, int numberOfUsers, int numberOfRequests, double minBuyPrice, double maxBuyPrice, double minSellPrice, double maxSellPrice)
+        {
+            TestParametersId = testParametersId;
+            NumberOfUsers = numberOfUsers;
+            NumberOfRequests = numberOfRequests;
+            MinBuyPrice = minBuyPrice;
+            MaxBuyPrice = maxBuyPrice;
+            MinSellPrice = minSellPrice;
+            MaxSellPrice = maxSellPrice;
+            MaxSellPrice = maxSellPrice;
+            TestName = testName;
+            Tests = new HashSet<Test>();
+        }
+
         public int TestParametersId { get; set; }
+        public string TestName { get; set; }
         public int NumberOfUsers { get; set; }
         public int NumberOfRequests { get; set; }
         public double MinBuyPrice { get; set; }

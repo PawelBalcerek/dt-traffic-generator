@@ -3,6 +3,7 @@
     public interface ITestParameters
     {
         int TestParametersId { get; }
+        string TestName { get; }
         int NumberOfUsers { get; }
         int NumberOfRequests { get; }
         double MinBuyPrice { get; }

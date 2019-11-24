@@ -1,18 +1,34 @@
-﻿using TestLibrary.BusinessObject.Abstract;
+﻿using System.Collections.Generic;
+using Data.Models;
+using Data.Repositories.Abstract;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using TestLibrary.BusinessObject.Abstract;
 using TestLibrary.Repositories.Abstract;
 
 namespace Data.Repositories.Concrete
 {
-    public class TestParametersRepository : ITestParametersRepository
+    public class TestParametersRepository : RepositoryBase, ITestParametersRepository
     {
-        public ITestParameters GetTestParameters(int testParametersId)
+        public TestParametersRepository(EfficiencyTestDbContext dbContext) : base(dbContext) { }
+
+
+        public ITestParameters GetTestParameters(long testParametersId)
         {
-            throw new System.NotImplementedException();
+            return DbContext.TestsParameters.FirstOrDefault(p => p.TestParametersId == testParametersId);
         }
 
-        public long AddTestParameters()
+        public IEnumerable<ITestParameters> GetTestsParameters()
         {
-            throw new System.NotImplementedException();
+            return DbContext.TestsParameters;
+        }
+
+        public ITestParameters AddTestParameters(ITestParameters testParameters)
+        {
+            TestParameters testParametersDataModel = new TestParameters(testParameters.TestParametersId, testParameters.TestName, testParameters.NumberOfUsers, testParameters.NumberOfRequests, testParameters.MinBuyPrice, testParameters.MaxBuyPrice, testParameters.MinSellPrice, testParameters.MaxSellPrice);
+            EntityEntry<TestParameters> entityEntry = DbContext.TestsParameters.Add(testParametersDataModel);
+            DbContext.SaveChanges();
+            return entityEntry.Entity;
         }
     }
 }
