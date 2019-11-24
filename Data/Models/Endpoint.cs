@@ -12,6 +12,13 @@ namespace Data.Models
             Tests = new HashSet<Test>();
         }
 
+        public Endpoint(string endpointName, string httpMethod)
+        {
+            EndpointName = endpointName;
+            HttpMethod = httpMethod;
+            Tests = new HashSet<Test>();
+        }
+
         public int EndpointId { get; set; }
         public string EndpointName { get; set; }
         public string HttpMethod { get; set; }

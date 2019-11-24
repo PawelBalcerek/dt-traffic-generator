@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using ConsoleApplication.Examples;
 using Data.Models;
 using Data.Repositories.Concrete;
@@ -35,6 +34,8 @@ namespace ConsoleApplication
             services.AddTransient<IExamplesRunner, ExamplesRunner>();
             services.AddTransient<EfficiencyTestDbContext>();
             services.AddTransient<IEndpointRepository, EndpointRepository>();
+            services.AddTransient<IEndpointsProvider, EndpointsProvider>();
+            services.AddTransient<IEndpointsCreator, EndpointsCreator>();
             services.AddTransient<ITestParametersRepository, TestParametersRepository>();
             services.AddDbContext<EfficiencyTestDbContext>(options => options.UseNpgsql(configuration.GetSection("ConnectionStrings")["EfficiencyTestDatabase"]));
             services.AddTransient<ITestRunner, TestRunner>();
@@ -70,9 +71,13 @@ namespace ConsoleApplication
                 _examplesRunner.AddTestParameters();
                 _examplesRunner.GetTestParameters();
                 _examplesRunner.GetTestsParameters();
-                _examplesRunner.RunTest();
+                _examplesRunner.AddEndpoint();
+                _examplesRunner.GetEndpoint();
+                _examplesRunner.GetEndpoints();
                 _examplesRunner.AddTests();
+                _examplesRunner.GetTest();
                 _examplesRunner.GetTests();
+                _examplesRunner.RunTest();
             }
             catch (Exception ex)
             {

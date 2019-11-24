@@ -4,6 +4,7 @@ using System.Linq;
 using TestLibrary.BusinessObject;
 using TestLibrary.Creators.Abstract;
 using TestLibrary.Infrastructure.Common.Const;
+using TestLibrary.Infrastructure.EndpointInfrastructure.Abstract;
 using TestLibrary.Infrastructure.RunTest.Abstract;
 using TestLibrary.Infrastructure.TestInfrastructure.Abstract;
 using TestLibrary.Infrastructure.TestParametersInfrastructure.Abstract;
@@ -18,14 +19,18 @@ namespace ConsoleApplication.Examples
         private readonly ITestsProvider _testsProvider;
         private readonly ITestParametersProvider _testParametersProvider;
         private readonly ITestParametersCreator _testParametersCreator;
+        private readonly IEndpointsCreator _endpointsCreator;
+        private readonly IEndpointsProvider _endpointsProvider;
 
-        public ExamplesRunner(ITestRunner testRunner, ITestsCreator testsCreator, ITestsProvider testsProvider, ITestParametersProvider testParametersProvider, ITestParametersCreator testParametersCreator)
+        public ExamplesRunner(ITestRunner testRunner, ITestsCreator testsCreator, ITestsProvider testsProvider, ITestParametersProvider testParametersProvider, ITestParametersCreator testParametersCreator, IEndpointsCreator endpointsCreator, IEndpointsProvider endpointsProvider)
         {
             _testRunner = testRunner;
             _testsCreator = testsCreator;
             _testsProvider = testsProvider;
             _testParametersProvider = testParametersProvider;
             _testParametersCreator = testParametersCreator;
+            _endpointsCreator = endpointsCreator;
+            _endpointsProvider = endpointsProvider;
         }
 
         public void RunTest()
@@ -37,9 +42,9 @@ namespace ConsoleApplication.Examples
 
         public void AddTests()
         {
-            IList<Test> tests = new List<Test>();
+            IList<Test> tests = new List<Test>(); //TODO jak w bazie nie bedzie podanych "testParametersId" lub "endpointId" to narazie wraca status "Exception"
             tests.Add(new Test(1, 1, 1, new DateTime(), new DateTime(), new DateTime()));
-            tests.Add(new Test(2, 2, 2, new DateTime(), new DateTime(), new DateTime()));
+            tests.Add(new Test(9, 1, 13, new DateTime(), new DateTime(), new DateTime()));
             IAddTestsResponse addTestsResponse = _testsCreator.AddTests(tests);
             ResponseResultEnum result = addTestsResponse.ResponseResult;
         }
@@ -89,6 +94,32 @@ namespace ConsoleApplication.Examples
             if (addTestParametersResponse.ResponseResult == ResponseResultEnum.Success)
             {
                 TestParameters addedTestParameters = addTestParametersResponse.AddedTestParameters; //TODO parametry zapisane w bazie, razem z testParametersId
+            }
+        }
+
+        public void AddEndpoint()
+        {
+            Endpoint endpoint = new Endpoint("nazwa endpointa", "POST");
+            IAddEndpointResponse addEndpointResponse = _endpointsCreator.AddEndpoint(endpoint);
+            ResponseResultEnum result = addEndpointResponse.ResponseResult;
+        }
+
+        public void GetEndpoint()
+        {
+            long endpointId = 1;
+            IGetEndpointResponse getEndpointResponse = _endpointsProvider.GetEndpoint(endpointId);
+            if (getEndpointResponse.ResponseResult == ResponseResultEnum.Success)
+            {
+                Endpoint endpoint = getEndpointResponse.Endpoint;
+            }
+        }
+
+        public void GetEndpoints()
+        {
+            IGetEndpointsResponse getEndpointsResponse = _endpointsProvider.GetEndpoints();
+            if (getEndpointsResponse.ResponseResult == ResponseResultEnum.Success)
+            {
+                IList<Endpoint> endpoints = getEndpointsResponse.Endpoints.ToList();
             }
         }
     }

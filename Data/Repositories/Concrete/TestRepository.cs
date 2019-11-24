@@ -21,7 +21,7 @@ namespace Data.Repositories.Concrete
             return DbContext.Tests;
         }
 
-        public void AddTests(IEnumerable<ITest> tests)
+        public void AddTests(IEnumerable<ITestBase> tests)
         {
             IEnumerable<Test> testDataModels = tests.Select(p => new Test(p.TestParametersId, p.UserId, p.EndpointId, p.DatabaseTestTime, p.ApplicationTestTime, p.ApiTestTime));
             DbContext.Tests.AddRange(testDataModels);

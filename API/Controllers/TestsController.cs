@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using API.Models.Endpoint;
 using API.Models.Test;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using TestLibrary.BusinessObject;
 using TestLibrary.Creators.Abstract;
 using TestLibrary.Infrastructure.Common.Const;
+using TestLibrary.Infrastructure.EndpointInfrastructure.Abstract;
 using TestLibrary.Infrastructure.RunTest.Abstract;
 using TestLibrary.Infrastructure.TestInfrastructure.Abstract;
 using TestLibrary.Providers.Abstract;
@@ -75,6 +77,38 @@ namespace API.Controllers
                 return StatusCode(500);
             }
         }
+
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [HttpGet("{id}")]
+        public ActionResult Get(long id)
+        {
+            try
+            {
+                IGetTestResponse getTestResponse = _testsProvider.GetTest(id);
+                return PrepareHttpResponse(getTestResponse);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "TestsController(Get)(EXCEPTION)");
+                return StatusCode(500);
+            }
+        }
+
+        private ActionResult PrepareHttpResponse(IGetTestResponse getTestResponse)
+        {
+            switch (getTestResponse.ResponseResult)
+            {
+                case ResponseResultEnum.Success:
+                    return Ok(new GetTestResponseModel(getTestResponse.Test));
+                case ResponseResultEnum.NotFound:
+                    return StatusCode(404);
+                default:
+                    return StatusCode(500);
+            }
+        }
+
 
         private ActionResult PrepareHttpResponse(IAddTestsResponse addTestsResponse)
         {

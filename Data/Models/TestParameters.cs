@@ -12,9 +12,8 @@ namespace Data.Models
             Tests = new HashSet<Test>();
         }
 
-        public TestParameters(int testParametersId, string testName, int numberOfUsers, int numberOfRequests, double minBuyPrice, double maxBuyPrice, double minSellPrice, double maxSellPrice)
+        public TestParameters(string testName, int numberOfUsers, int numberOfRequests, double minBuyPrice, double maxBuyPrice, double minSellPrice, double maxSellPrice)
         {
-            TestParametersId = testParametersId;
             NumberOfUsers = numberOfUsers;
             NumberOfRequests = numberOfRequests;
             MinBuyPrice = minBuyPrice;

@@ -1,15 +1,7 @@
-﻿using System;
-
-namespace TestLibrary.BusinessObject.Abstract
+﻿namespace TestLibrary.BusinessObject.Abstract
 {
-    public interface ITest
+    public interface ITest : ITestBase
     {
         int TestId { get; }
-        int TestParametersId { get; }
-        int UserId { get; }
-        int EndpointId { get; }
-        DateTime DatabaseTestTime { get; }
-        DateTime ApplicationTestTime { get; }
-        DateTime ApiTestTime { get; }
     }
 }

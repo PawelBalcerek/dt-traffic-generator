@@ -9,5 +9,8 @@
         void GetTestsParameters();
         void GetTestParameters();
         void AddTestParameters();
+        void AddEndpoint();
+        void GetEndpoint();
+        void GetEndpoints();
     }
 }

@@ -31,7 +31,6 @@ namespace TestLibrary.Creators.Concrete
                 Log.Fatal(ex, "AddTests(EXCEPTION)");
                 return new AddTestsResponse(ResponseResultEnum.Exception);
             }
-
         }
     }
 }

@@ -7,6 +7,6 @@ namespace TestLibrary.Repositories.Abstract
     {
         ITest GetTest(long testId);
         IEnumerable<ITest> GetTests();
-        void AddTests(IEnumerable<ITest> tests);
+        void AddTests(IEnumerable<ITestBase> tests);
     }
 }

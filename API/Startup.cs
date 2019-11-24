@@ -35,6 +35,8 @@ namespace API
 
             services.AddTransient<EfficiencyTestDbContext>();
             services.AddTransient<IEndpointRepository, EndpointRepository>();
+            services.AddTransient<IEndpointsProvider, EndpointsProvider>();
+            services.AddTransient<IEndpointsCreator, EndpointsCreator>();
             services.AddTransient<ITestParametersRepository, TestParametersRepository>();
             services.AddDbContext<EfficiencyTestDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("EfficiencyTestDatabase")));
             services.AddTransient<ITestRunner, TestRunner>();
