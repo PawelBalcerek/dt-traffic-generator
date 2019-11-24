@@ -78,6 +78,18 @@ namespace API.Controllers
             }
         }
 
+        private ActionResult PrepareHttpResponse(IAddTestsResponse addTestsResponse)
+        {
+            switch (addTestsResponse.ResponseResult)
+            {
+                case ResponseResultEnum.Success:
+                    return Ok();
+                default:
+                    return StatusCode(500);
+            }
+        }
+
+
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
@@ -109,17 +121,6 @@ namespace API.Controllers
             }
         }
 
-
-        private ActionResult PrepareHttpResponse(IAddTestsResponse addTestsResponse)
-        {
-            switch (addTestsResponse.ResponseResult)
-            {
-                case ResponseResultEnum.Success:
-                    return Ok();
-                default:
-                    return StatusCode(500);
-            }
-        }
 
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
