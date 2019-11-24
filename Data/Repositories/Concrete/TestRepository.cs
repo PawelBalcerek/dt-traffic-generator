@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Data.Models;
 using Data.Repositories.Abstract;
 using TestLibrary.BusinessObject.Abstract;
@@ -10,14 +11,21 @@ namespace Data.Repositories.Concrete
     {
         public TestRepository(EfficiencyTestDbContext dbContext) : base(dbContext) { }
 
-        public ITest GetTest(int id)
+        public ITest GetTest(long testId)
         {
-            throw new NotImplementedException();
+            return DbContext.Tests.FirstOrDefault(p => p.TestId == testId);
         }
 
-        public long AddTest()
+        public IEnumerable<ITest> GetTests()
         {
-            throw new NotImplementedException();
+            return DbContext.Tests;
+        }
+
+        public void AddTests(IEnumerable<ITest> tests)
+        {
+            IEnumerable<Test> testDataModels = tests.Select(p => new Test(p.TestParametersId, p.UserId, p.EndpointId, p.DatabaseTestTime, p.ApplicationTestTime, p.ApiTestTime));
+            DbContext.Tests.AddRange(testDataModels);
+            DbContext.SaveChanges();
         }
     }
 }

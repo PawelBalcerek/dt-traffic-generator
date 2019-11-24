@@ -12,7 +12,7 @@ namespace TestLibrary.Infrastructure.RunTest.Concrete
             
             //TODO
             //run test with got parameters
-            return new RunTestResponse(ResponseResultEnum.Exception);
+            return new RunTestResponse(ResponseResultEnum.NotFound);
         }
     }
 }

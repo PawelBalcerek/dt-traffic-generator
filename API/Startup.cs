@@ -41,6 +41,9 @@ namespace API
             services.AddTransient<ITestParametersProvider, TestParametersProvider>();
             services.AddTransient<IDataToBusinessObjectsConverter, DataToBusinessObjectsConverter>();
             services.AddTransient<ITestParametersCreator, TestParametersCreator>();
+            services.AddTransient<ITestRepository, TestRepository>();
+            services.AddTransient<ITestsProvider, TestsProvider>();
+            services.AddTransient<ITestsCreator, TestsCreator>();
           
             services.AddSwaggerGen(x =>
             {
