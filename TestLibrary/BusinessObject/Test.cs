@@ -5,10 +5,11 @@ namespace TestLibrary.BusinessObject
 {
     public class Test : ITest
     {
-        public Test(int testId, int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime) 
+        public Test(int testId, int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime, DateTime timeStamp) 
             : this(testParametersId, userId, endpointId, databaseTestTime, applicationTestTime, apiTestTime)
         {
             TestId = testId;
+            TimeStamp = timeStamp;
         }
 
         public Test(int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime)
@@ -19,6 +20,7 @@ namespace TestLibrary.BusinessObject
             DatabaseTestTime = databaseTestTime;
             ApplicationTestTime = applicationTestTime;
             ApiTestTime = apiTestTime;
+            TimeStamp = DateTime.Now;;
         }
 
         public int TestId { get; }
@@ -28,5 +30,6 @@ namespace TestLibrary.BusinessObject
         public DateTime DatabaseTestTime { get; }
         public DateTime ApplicationTestTime { get; }
         public DateTime ApiTestTime { get; }
+        public DateTime TimeStamp { get; }
     }
 }

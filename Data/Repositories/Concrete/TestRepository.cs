@@ -23,7 +23,7 @@ namespace Data.Repositories.Concrete
 
         public void AddTests(IEnumerable<ITestBase> tests)
         {
-            IEnumerable<Test> testDataModels = tests.Select(p => new Test(p.TestParametersId, p.UserId, p.EndpointId, p.DatabaseTestTime, p.ApplicationTestTime, p.ApiTestTime));
+            IEnumerable<Test> testDataModels = tests.Select(p => new Test(p.TestParametersId, p.UserId, p.EndpointId, p.DatabaseTestTime, p.ApplicationTestTime, p.ApiTestTime, p.TimeStamp));
             DbContext.Tests.AddRange(testDataModels);
             DbContext.SaveChanges();
         }

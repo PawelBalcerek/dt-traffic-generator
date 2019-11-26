@@ -10,5 +10,6 @@ namespace TestLibrary.BusinessObject.Abstract
         DateTime DatabaseTestTime { get; }
         DateTime ApplicationTestTime { get; }
         DateTime ApiTestTime { get; }
+        DateTime TimeStamp { get; }
     }
 }

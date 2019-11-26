@@ -18,7 +18,7 @@ namespace TestLibrary.Infrastructure.ObjectsConverter.Concrete
         {
             if (test == null)
                 return null;
-            return new Test(test.TestId, test.TestParametersId, test.UserId, test.EndpointId, test.DatabaseTestTime, test.ApplicationTestTime, test.ApiTestTime);
+            return new Test(test.TestId, test.TestParametersId, test.UserId, test.EndpointId, test.DatabaseTestTime, test.ApplicationTestTime, test.ApiTestTime, test.TimeStamp);
         }
 
         public Endpoint ConvertEndpoint(IEndpoint endpoint)
