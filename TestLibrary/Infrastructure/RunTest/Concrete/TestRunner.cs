@@ -12,6 +12,10 @@ namespace TestLibrary.Infrastructure.RunTest.Concrete
             
             //TODO
             //run test with got parameters
+
+
+            //po zakonczynych zwaracamy succes / notfound jak nie ma parametru  
+            //obiekt parametru 
             return new RunTestResponse(ResponseResultEnum.NotFound);
         }
     }

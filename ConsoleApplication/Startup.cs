@@ -13,6 +13,7 @@ using TestLibrary.Infrastructure.ObjectsConverter.Abstract;
 using TestLibrary.Infrastructure.ObjectsConverter.Concrete;
 using TestLibrary.Infrastructure.RunTest.Abstract;
 using TestLibrary.Infrastructure.RunTest.Concrete;
+using TestLibrary.Infrastructure.TestLogic;
 using TestLibrary.Providers.Abstract;
 using TestLibrary.Providers.Concrete;
 using TestLibrary.Repositories.Abstract;
@@ -22,10 +23,11 @@ namespace ConsoleApplication
     public class Startup
     {
         private readonly IExamplesRunner _examplesRunner;
-        public Startup(IExamplesRunner examplesRunner)
+        private readonly ITestRun _testRun;
+        public Startup(IExamplesRunner examplesRunner, ITestRun testRun)
         {
-
             _examplesRunner = examplesRunner;
+            _testRun = testRun;
         }
 
         public static IServiceCollection ConfigureServices(IConfiguration configuration)
@@ -45,6 +47,7 @@ namespace ConsoleApplication
             services.AddTransient<ITestRepository, TestRepository>();
             services.AddTransient<ITestsProvider, TestsProvider>();
             services.AddTransient<ITestsCreator, TestsCreator>();
+            services.AddTransient<ITestRun, TestRun>();
 
             services.AddTransient<Startup>();
             return services;
@@ -67,17 +70,17 @@ namespace ConsoleApplication
                 //TODO w tym projekcie "ConsoleApplication" nie powinno być żadnej logiki działąnia testów, 
                 // natomiast powinna być wywoływana logika testów za pomocą metody "RunTest"
                 // przykład uruchomienia poniżej
-
-                _examplesRunner.AddTestParameters();
-                _examplesRunner.GetTestParameters();
-                _examplesRunner.GetTestsParameters();
-                _examplesRunner.AddEndpoint();
-                _examplesRunner.GetEndpoint();
-                _examplesRunner.GetEndpoints();
-                _examplesRunner.AddTests();
-                _examplesRunner.GetTest();
-                _examplesRunner.GetTests();
-                _examplesRunner.RunTest();
+                _testRun.TestMain();
+                //_examplesRunner.AddTestParameters();
+                //_examplesRunner.GetTestParameters();
+                //_examplesRunner.GetTestsParameters();
+                //_examplesRunner.AddEndpoint();
+                //_examplesRunner.GetEndpoint();
+                //_examplesRunner.GetEndpoints();
+                //_examplesRunner.AddTests();
+                //_examplesRunner.GetTest();
+                //_examplesRunner.GetTests();
+                //_examplesRunner.RunTest();
             }
             catch (Exception ex)
             {
