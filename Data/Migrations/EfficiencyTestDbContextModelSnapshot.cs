@@ -38,11 +38,11 @@ namespace Data.Migrations
                     b.Property<int>("TestId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("ApiTestTime");
+                    b.Property<double>("ApiTestTime");
 
-                    b.Property<DateTime>("ApplicationTestTime");
+                    b.Property<double>("ApplicationTestTime");
 
-                    b.Property<DateTime>("DatabaseTestTime");
+                    b.Property<double>("DatabaseTestTime");
 
                     b.Property<int>("EndpointId");
 

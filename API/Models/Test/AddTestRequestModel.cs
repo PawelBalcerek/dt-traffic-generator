@@ -4,7 +4,7 @@ namespace API.Models.Test
 {
     public class AddTestRequestModel
     {
-        public AddTestRequestModel(int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime)
+        public AddTestRequestModel(int testParametersId, int userId, int endpointId, double databaseTestTime, double applicationTestTime, double apiTestTime)
         {
             TestParametersId = testParametersId;
             UserId = userId;
@@ -17,8 +17,8 @@ namespace API.Models.Test
         public int TestParametersId { get; }
         public int UserId { get; }
         public int EndpointId { get; }
-        public DateTime DatabaseTestTime { get; }
-        public DateTime ApplicationTestTime { get; }
-        public DateTime ApiTestTime { get; }
+        public double DatabaseTestTime { get; }
+        public double ApplicationTestTime { get; }
+        public double ApiTestTime { get; }
     }
 }

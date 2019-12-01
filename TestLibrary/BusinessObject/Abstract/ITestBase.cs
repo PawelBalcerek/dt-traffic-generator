@@ -7,9 +7,9 @@ namespace TestLibrary.BusinessObject.Abstract
         int TestParametersId { get; }
         int UserId { get; }
         int EndpointId { get; }
-        DateTime DatabaseTestTime { get; }
-        DateTime ApplicationTestTime { get; }
-        DateTime ApiTestTime { get; }
+        double DatabaseTestTime { get; }
+        double ApplicationTestTime { get; }
+        double ApiTestTime { get; }
         DateTime TimeStamp { get; }
     }
 }

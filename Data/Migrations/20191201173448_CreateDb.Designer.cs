@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(EfficiencyTestDbContext))]
-    [Migration("20191126184019_Test_AddTimeStamp")]
-    partial class Test_AddTimeStamp
+    [Migration("20191201173448_CreateDb")]
+    partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,11 +40,11 @@ namespace Data.Migrations
                     b.Property<int>("TestId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("ApiTestTime");
+                    b.Property<double>("ApiTestTime");
 
-                    b.Property<DateTime>("ApplicationTestTime");
+                    b.Property<double>("ApplicationTestTime");
 
-                    b.Property<DateTime>("DatabaseTestTime");
+                    b.Property<double>("DatabaseTestTime");
 
                     b.Property<int>("EndpointId");
 
