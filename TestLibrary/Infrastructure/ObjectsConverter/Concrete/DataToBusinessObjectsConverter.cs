@@ -1,6 +1,8 @@
 ﻿using TestLibrary.BusinessObject;
 using TestLibrary.BusinessObject.Abstract;
 using TestLibrary.Infrastructure.ObjectsConverter.Abstract;
+using TestLibrary.Infrastructure.ReportInfrastructure.Abstract;
+using TestLibrary.Infrastructure.ReportInfrastructure.Concrete;
 
 namespace TestLibrary.Infrastructure.ObjectsConverter.Concrete
 {
@@ -26,6 +28,17 @@ namespace TestLibrary.Infrastructure.ObjectsConverter.Concrete
             if (endpoint == null)
                 return null;
             return new Endpoint(endpoint.EndpointId, endpoint.EndpointName, endpoint.HttpMethod);
+        }
+
+        public AverageEndpointsExecutionTimes ConvertAverageEndpointsExecutionTimes(IAverageEndpointsExecutionTimes data)
+        {
+            if (data == null)
+                return null;
+            return new AverageEndpointsExecutionTimes(ConvertEndpoint(data.Endpoint),
+                new ExecutionTimes(
+                    data.AverageExecutionTimes.DatabaseTestTime,
+                    data.AverageExecutionTimes.ApplicationTestTime,
+                    data.AverageExecutionTimes.ApiTestTime));
         }
     }
 }

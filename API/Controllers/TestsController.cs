@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using API.Models.Endpoint;
 using API.Models.Test;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using TestLibrary.BusinessObject;
 using TestLibrary.Creators.Abstract;
 using TestLibrary.Infrastructure.Common.Const;
-using TestLibrary.Infrastructure.EndpointInfrastructure.Abstract;
 using TestLibrary.Infrastructure.RunTest.Abstract;
 using TestLibrary.Infrastructure.TestInfrastructure.Abstract;
 using TestLibrary.Providers.Abstract;
@@ -59,7 +57,22 @@ namespace API.Controllers
             }
         }
 
-        //Temp - tests
+        /// <summary>
+        /// Add specific test
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/Tests/Add
+        ///     {        
+        ///       "TestParametersId": 1,
+        ///       "UserId": 1,
+        ///       "EndpointId": 1,
+        ///       "DatabaseTestTime": 10,
+        ///       "ApplicationTestTime": 20,
+        ///       "ApiTestTime": 30,
+        ///     }
+        /// </remarks>
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpPost("Add")]

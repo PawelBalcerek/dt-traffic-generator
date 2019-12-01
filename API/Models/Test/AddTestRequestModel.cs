@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.Models.Test
 {
@@ -14,11 +14,22 @@ namespace API.Models.Test
             ApiTestTime = apiTestTime;
         }
 
+        [Required]
         public int TestParametersId { get; }
+
+        [Required]
         public int UserId { get; }
+
+        [Required]
         public int EndpointId { get; }
+
+        [Required]
         public double DatabaseTestTime { get; }
+
+        [Required]
         public double ApplicationTestTime { get; }
+
+        [Required]
         public double ApiTestTime { get; }
     }
 }

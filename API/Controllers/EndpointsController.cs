@@ -56,6 +56,18 @@ namespace API.Controllers
         }
 
 
+        /// <summary>
+        /// Add specific endpoint
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/Endpoints/Add
+        ///     {        
+        ///       "EndpointName": "endpoint",
+        ///       "HttpMethod": "POST"
+        ///     }
+        /// </remarks>
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpPost("Add")]

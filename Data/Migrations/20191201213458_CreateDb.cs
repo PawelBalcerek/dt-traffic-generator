@@ -12,7 +12,7 @@ namespace Data.Migrations
                 name: "Endpoints",
                 columns: table => new
                 {
-                    EndpointId = table.Column<int>(nullable: false)
+                    EndpointId = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     EndpointName = table.Column<string>(nullable: true),
                     HttpMethod = table.Column<string>(nullable: true)
@@ -26,7 +26,7 @@ namespace Data.Migrations
                 name: "TestParameters",
                 columns: table => new
                 {
-                    TestParametersId = table.Column<int>(nullable: false)
+                    TestParametersId = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     TestName = table.Column<string>(nullable: true),
                     NumberOfUsers = table.Column<int>(nullable: false),
@@ -45,11 +45,11 @@ namespace Data.Migrations
                 name: "Tests",
                 columns: table => new
                 {
-                    TestId = table.Column<int>(nullable: false)
+                    TestId = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    TestParametersId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    EndpointId = table.Column<int>(nullable: false),
+                    TestParametersId = table.Column<long>(nullable: false),
+                    UserId = table.Column<long>(nullable: false),
+                    EndpointId = table.Column<long>(nullable: false),
                     DatabaseTestTime = table.Column<double>(nullable: false),
                     ApplicationTestTime = table.Column<double>(nullable: false),
                     ApiTestTime = table.Column<double>(nullable: false),

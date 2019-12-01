@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>API</name>
+    </assembly>
+    <members>
+        <member name="M:API.Controllers.EndpointsController.AddEndpoint(API.Models.Endpoint.AddEndpointRequestModel)">
+            <summary>
+            Add specific endpoint
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST api/Endpoints/Add
+                {        
+                  "EndpointName": "endpoint",
+                  "HttpMethod": "POST"
+                }
+            </remarks>
+        </member>
+        <member name="M:API.Controllers.ReportsController.GetAverageEndpointsExecutionTimes(System.Int64)">
+            <summary>
+            Gets the list of all endpoints (for specific test) with average execution times.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.TestsController.AddTest(API.Models.Test.AddTestRequestModel)">
+            <summary>
+            Add specific test
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST api/Tests/Add
+                {        
+                  "TestParametersId": 1,
+                  "UserId": 1,
+                  "EndpointId": 1,
+                  "DatabaseTestTime": 10,
+                  "ApplicationTestTime": 20,
+                  "ApiTestTime": 30,
+                }
+            </remarks>
+        </member>
+        <member name="M:API.Controllers.TestsParametersController.AddTestParameters(API.Models.TestParameters.AddTestParametersRequestModel)">
+            <summary>
+            Add specific test parameters
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST api/TestsParameters/Add
+                {        
+                  "NumberOfUsers": 1,
+                  "TestName": "test 1",
+                  "NumberOfRequests": 1,
+                  "MinBuyPrice": 0,
+                  "MaxBuyPrice": 10,
+                  "MinSellPrice": 0,
+                  "MaxSellPrice": 10
+                }
+            </remarks>
+        </member>
+    </members>
+</doc>

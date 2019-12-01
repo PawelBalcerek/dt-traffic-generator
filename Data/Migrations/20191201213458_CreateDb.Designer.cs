@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(EfficiencyTestDbContext))]
-    [Migration("20191201173448_CreateDb")]
+    [Migration("20191201213458_CreateDb")]
     partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Endpoint", b =>
                 {
-                    b.Property<int>("EndpointId")
+                    b.Property<long>("EndpointId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("EndpointName");
@@ -37,7 +37,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Test", b =>
                 {
-                    b.Property<int>("TestId")
+                    b.Property<long>("TestId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<double>("ApiTestTime");
@@ -46,13 +46,13 @@ namespace Data.Migrations
 
                     b.Property<double>("DatabaseTestTime");
 
-                    b.Property<int>("EndpointId");
+                    b.Property<long>("EndpointId");
 
-                    b.Property<int>("TestParametersId");
+                    b.Property<long>("TestParametersId");
 
                     b.Property<DateTime>("TimeStamp");
 
-                    b.Property<int>("UserId");
+                    b.Property<long>("UserId");
 
                     b.HasKey("TestId");
 
@@ -65,7 +65,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.TestParameters", b =>
                 {
-                    b.Property<int>("TestParametersId")
+                    b.Property<long>("TestParametersId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<double>("MaxBuyPrice");

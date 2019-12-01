@@ -1,4 +1,7 @@
-﻿using Data.Models;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using Data.Models;
 using Data.Repositories.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -46,10 +49,16 @@ namespace API
             services.AddTransient<ITestRepository, TestRepository>();
             services.AddTransient<ITestsProvider, TestsProvider>();
             services.AddTransient<ITestsCreator, TestsCreator>();
+            services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddTransient<IReportProvider, ReportProvider>();
           
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new Info { Title = "dt-traffic-generator Api", Description = "DayTrader - Traffic Generation - Swagger Api Documentation" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                x.IncludeXmlComments(xmlPath);
             });
         }
 
