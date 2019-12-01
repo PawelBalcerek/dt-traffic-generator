@@ -7,13 +7,13 @@ namespace Data.Models
     [Table("Tests")]
     public class Test : ITest
     {
-        public Test(int testId, int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime) 
-            : this(testParametersId, userId, endpointId, databaseTestTime, applicationTestTime, apiTestTime)
+        public Test(int testId, int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime, DateTime timeStamp) 
+            : this(testParametersId, userId, endpointId, databaseTestTime, applicationTestTime, apiTestTime, timeStamp)
         {
             TestId = testId;
         }
 
-        public Test(int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime)
+        public Test(int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime, DateTime timeStamp)
         {
             TestParametersId = testParametersId;
             UserId = userId;
@@ -21,6 +21,7 @@ namespace Data.Models
             DatabaseTestTime = databaseTestTime;
             ApplicationTestTime = applicationTestTime;
             ApiTestTime = apiTestTime;
+            TimeStamp = timeStamp;
         }
 
         public int TestId { get; set; }
@@ -30,6 +31,7 @@ namespace Data.Models
         public DateTime DatabaseTestTime { get; set; }
         public DateTime ApplicationTestTime { get; set; }
         public DateTime ApiTestTime { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         public virtual TestParameters TestParameters { get; set; }
         public virtual Endpoint Endpoint { get; set; }
