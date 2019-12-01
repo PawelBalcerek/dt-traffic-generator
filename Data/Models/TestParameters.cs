@@ -25,7 +25,7 @@ namespace Data.Models
             Tests = new HashSet<Test>();
         }
 
-        public int TestParametersId { get; set; }
+        public long TestParametersId { get; set; }
         public string TestName { get; set; }
         public int NumberOfUsers { get; set; }
         public int NumberOfRequests { get; set; }

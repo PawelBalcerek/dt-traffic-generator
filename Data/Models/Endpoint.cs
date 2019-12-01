@@ -19,7 +19,7 @@ namespace Data.Models
             Tests = new HashSet<Test>();
         }
 
-        public int EndpointId { get; set; }
+        public long EndpointId { get; set; }
         public string EndpointName { get; set; }
         public string HttpMethod { get; set; }
 

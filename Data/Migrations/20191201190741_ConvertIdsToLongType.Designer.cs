@@ -3,15 +3,17 @@ using System;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(EfficiencyTestDbContext))]
-    partial class EfficiencyTestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191201190741_ConvertIdsToLongType")]
+    partial class ConvertIdsToLongType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

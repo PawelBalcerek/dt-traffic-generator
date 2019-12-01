@@ -4,7 +4,7 @@ namespace TestLibrary.BusinessObject
 {
     public class Endpoint : IEndpoint
     {
-        public Endpoint(int endpointId, string endpointName, string httpMethod)
+        public Endpoint(long endpointId, string endpointName, string httpMethod)
             : this(endpointName, httpMethod)
         {
             EndpointId = endpointId;
@@ -16,7 +16,7 @@ namespace TestLibrary.BusinessObject
             HttpMethod = httpMethod;
         }
 
-        public int EndpointId { get; }
+        public long EndpointId { get; }
         public string EndpointName { get; }
         public string HttpMethod { get; }
     }

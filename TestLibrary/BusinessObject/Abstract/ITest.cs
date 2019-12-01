@@ -2,6 +2,6 @@
 {
     public interface ITest : ITestBase
     {
-        int TestId { get; }
+        long TestId { get; }
     }
 }

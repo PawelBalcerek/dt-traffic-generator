@@ -4,9 +4,9 @@ namespace TestLibrary.BusinessObject.Abstract
 {
     public interface ITestBase
     {
-        int TestParametersId { get; }
-        int UserId { get; }
-        int EndpointId { get; }
+        long TestParametersId { get; }
+        long UserId { get; }
+        long EndpointId { get; }
         double DatabaseTestTime { get; }
         double ApplicationTestTime { get; }
         double ApiTestTime { get; }
