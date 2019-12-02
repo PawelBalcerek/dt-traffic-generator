@@ -2,6 +2,6 @@
 {
     public interface ITestParameters : ITestParametersBase
     {
-        int TestParametersId { get; }
+        long TestParametersId { get; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace API.Models.Endpoint
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Models.Endpoint
 {
     public class AddEndpointRequestModel
     {
@@ -8,7 +10,10 @@
             HttpMethod = httpMethod;
         }
 
+        [Required]
         public string EndpointName { get; }
+
+        [Required]
         public string HttpMethod { get; }
     }
 }

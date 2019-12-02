@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Data.Migrations
 {
     [DbContext(typeof(EfficiencyTestDbContext))]
-    [Migration("20191126184019_Test_AddTimeStamp")]
-    partial class Test_AddTimeStamp
+    [Migration("20191201213458_CreateDb")]
+    partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Endpoint", b =>
                 {
-                    b.Property<int>("EndpointId")
+                    b.Property<long>("EndpointId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("EndpointName");
@@ -37,22 +37,22 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.Test", b =>
                 {
-                    b.Property<int>("TestId")
+                    b.Property<long>("TestId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("ApiTestTime");
+                    b.Property<double>("ApiTestTime");
 
-                    b.Property<DateTime>("ApplicationTestTime");
+                    b.Property<double>("ApplicationTestTime");
 
-                    b.Property<DateTime>("DatabaseTestTime");
+                    b.Property<double>("DatabaseTestTime");
 
-                    b.Property<int>("EndpointId");
+                    b.Property<long>("EndpointId");
 
-                    b.Property<int>("TestParametersId");
+                    b.Property<long>("TestParametersId");
 
                     b.Property<DateTime>("TimeStamp");
 
-                    b.Property<int>("UserId");
+                    b.Property<long>("UserId");
 
                     b.HasKey("TestId");
 
@@ -65,7 +65,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Models.TestParameters", b =>
                 {
-                    b.Property<int>("TestParametersId")
+                    b.Property<long>("TestParametersId")
                         .ValueGeneratedOnAdd();
 
                     b.Property<double>("MaxBuyPrice");

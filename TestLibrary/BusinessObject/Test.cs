@@ -5,14 +5,14 @@ namespace TestLibrary.BusinessObject
 {
     public class Test : ITest
     {
-        public Test(int testId, int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime, DateTime timeStamp) 
+        public Test(long testId, long testParametersId, long userId, long endpointId, double databaseTestTime, double applicationTestTime, double apiTestTime, DateTime timeStamp) 
             : this(testParametersId, userId, endpointId, databaseTestTime, applicationTestTime, apiTestTime)
         {
             TestId = testId;
             TimeStamp = timeStamp;
         }
 
-        public Test(int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime)
+        public Test(long testParametersId, long userId, long endpointId, double databaseTestTime, double applicationTestTime, double apiTestTime)
         {
             TestParametersId = testParametersId;
             UserId = userId;
@@ -23,13 +23,13 @@ namespace TestLibrary.BusinessObject
             TimeStamp = DateTime.Now;;
         }
 
-        public int TestId { get; }
-        public int TestParametersId { get; }
-        public int UserId { get; }
-        public int EndpointId { get; }
-        public DateTime DatabaseTestTime { get; }
-        public DateTime ApplicationTestTime { get; }
-        public DateTime ApiTestTime { get; }
+        public long TestId { get; }
+        public long TestParametersId { get; }
+        public long UserId { get; }
+        public long EndpointId { get; }
+        public double DatabaseTestTime { get; }
+        public double ApplicationTestTime { get; }
+        public double ApiTestTime { get; }
         public DateTime TimeStamp { get; }
     }
 }

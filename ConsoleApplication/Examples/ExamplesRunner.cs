@@ -43,8 +43,8 @@ namespace ConsoleApplication.Examples
         public void AddTests()
         {
             IList<Test> tests = new List<Test>(); //TODO jak w bazie nie bedzie podanych "testParametersId" lub "endpointId" to narazie wraca status "Exception"
-            tests.Add(new Test(1, 1, 1, new DateTime(), new DateTime(), new DateTime()));
-            tests.Add(new Test(9, 1, 13, new DateTime(), new DateTime(), new DateTime()));
+            tests.Add(new Test(1, 1, 1, 20, 50, 100));
+            tests.Add(new Test(9, 1, 13, 20.6, 21.6, 34));
             IAddTestsResponse addTestsResponse = _testsCreator.AddTests(tests);
             ResponseResultEnum result = addTestsResponse.ResponseResult;
         }

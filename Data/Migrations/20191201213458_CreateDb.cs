@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
-    public partial class CreateEfficiencyTestDb : Migration
+    public partial class CreateDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,7 @@ namespace Data.Migrations
                 name: "Endpoints",
                 columns: table => new
                 {
-                    EndpointId = table.Column<int>(nullable: false)
+                    EndpointId = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     EndpointName = table.Column<string>(nullable: true),
                     HttpMethod = table.Column<string>(nullable: true)
@@ -26,8 +26,9 @@ namespace Data.Migrations
                 name: "TestParameters",
                 columns: table => new
                 {
-                    TestParametersId = table.Column<int>(nullable: false)
+                    TestParametersId = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TestName = table.Column<string>(nullable: true),
                     NumberOfUsers = table.Column<int>(nullable: false),
                     NumberOfRequests = table.Column<int>(nullable: false),
                     MinBuyPrice = table.Column<double>(nullable: false),
@@ -44,14 +45,15 @@ namespace Data.Migrations
                 name: "Tests",
                 columns: table => new
                 {
-                    TestId = table.Column<int>(nullable: false)
+                    TestId = table.Column<long>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    TestParametersId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    EndpointId = table.Column<int>(nullable: false),
-                    DatabaseTestTime = table.Column<DateTime>(nullable: false),
-                    ApplicationTestTime = table.Column<DateTime>(nullable: false),
-                    ApiTestTime = table.Column<DateTime>(nullable: false)
+                    TestParametersId = table.Column<long>(nullable: false),
+                    UserId = table.Column<long>(nullable: false),
+                    EndpointId = table.Column<long>(nullable: false),
+                    DatabaseTestTime = table.Column<double>(nullable: false),
+                    ApplicationTestTime = table.Column<double>(nullable: false),
+                    ApiTestTime = table.Column<double>(nullable: false),
+                    TimeStamp = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

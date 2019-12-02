@@ -1,10 +1,10 @@
-﻿using System;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace API.Models.Test
 {
     public class AddTestRequestModel
     {
-        public AddTestRequestModel(int testParametersId, int userId, int endpointId, DateTime databaseTestTime, DateTime applicationTestTime, DateTime apiTestTime)
+        public AddTestRequestModel(int testParametersId, int userId, int endpointId, double databaseTestTime, double applicationTestTime, double apiTestTime)
         {
             TestParametersId = testParametersId;
             UserId = userId;
@@ -14,11 +14,22 @@ namespace API.Models.Test
             ApiTestTime = apiTestTime;
         }
 
+        [Required]
         public int TestParametersId { get; }
+
+        [Required]
         public int UserId { get; }
+
+        [Required]
         public int EndpointId { get; }
-        public DateTime DatabaseTestTime { get; }
-        public DateTime ApplicationTestTime { get; }
-        public DateTime ApiTestTime { get; }
+
+        [Required]
+        public double DatabaseTestTime { get; }
+
+        [Required]
+        public double ApplicationTestTime { get; }
+
+        [Required]
+        public double ApiTestTime { get; }
     }
 }

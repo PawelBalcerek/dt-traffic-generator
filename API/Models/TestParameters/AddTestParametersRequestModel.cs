@@ -1,4 +1,6 @@
-﻿namespace API.Models.TestParameters
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Models.TestParameters
 {
     public class AddTestParametersRequestModel
     {
@@ -13,12 +15,23 @@
             MaxSellPrice = maxSellPrice;
         }
 
+        [Required]
         public int NumberOfUsers { get; }
         public string TestName { get; }
+
+        [Required]
         public int NumberOfRequests { get; }
+
+        [Required]
         public double MinBuyPrice { get; }
+
+        [Required]
         public double MaxBuyPrice { get; }
+
+        [Required]
         public double MinSellPrice { get; }
+
+        [Required]
         public double MaxSellPrice { get; }
     }
 }
