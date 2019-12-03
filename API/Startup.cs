@@ -19,6 +19,8 @@ using TestLibrary.Infrastructure.ObjectsConverter.Concrete;
 using TestLibrary.Repositories.Abstract;
 using TestLibrary.Providers.Abstract;
 using TestLibrary.Providers.Concrete;
+using Microsoft.EntityFrameworkCore.Migrations;
+using System.Linq;
 
 namespace API
 {
@@ -60,6 +62,7 @@ namespace API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 x.IncludeXmlComments(xmlPath);
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,11 +79,25 @@ namespace API
 
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseSwagger();
+            app.UseSwagger(c=> {
+                c.RouteTemplate = "/dt-traffic-generator/swagger/{documentName}/swagger.json";
+            });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("../swagger/v1/swagger.json", "dt-traffic-generator Api");
+                c.SwaggerEndpoint("/dt-traffic-generator/swagger/v1/swagger.json", "dt-traffic-generator Api");
+                c.RoutePrefix = "dt-traffic-generator/swagger";
             });
+
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                using (var dbContext = scope.ServiceProvider.GetService<EfficiencyTestDbContext>())
+                {
+                    if (dbContext.Database.GetPendingMigrations().Any())
+                    {
+                        dbContext.Database.Migrate();
+                    }
+                }
+            }
         }
     }
 }
