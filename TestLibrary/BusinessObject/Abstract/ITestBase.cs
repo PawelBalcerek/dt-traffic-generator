@@ -4,11 +4,12 @@ namespace TestLibrary.BusinessObject.Abstract
 {
     public interface ITestBase
     {
-        int TestParametersId { get; }
-        int UserId { get; }
-        int EndpointId { get; }
-        DateTime DatabaseTestTime { get; }
-        DateTime ApplicationTestTime { get; }
-        DateTime ApiTestTime { get; }
+        long TestParametersId { get; }
+        long UserId { get; }
+        long EndpointId { get; }
+        double DatabaseTestTime { get; }
+        double ApplicationTestTime { get; }
+        double ApiTestTime { get; }
+        DateTime TimeStamp { get; }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IEndpoint : IEndpointBase
     {
-        int EndpointId { get; }
+        long EndpointId { get; }
     }
 }

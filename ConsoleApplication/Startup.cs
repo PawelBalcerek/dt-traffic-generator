@@ -47,6 +47,8 @@ namespace ConsoleApplication
             services.AddTransient<ITestRepository, TestRepository>();
             services.AddTransient<ITestsProvider, TestsProvider>();
             services.AddTransient<ITestsCreator, TestsCreator>();
+            services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddTransient<IReportProvider, ReportProvider>();
             services.AddTransient<ITestRun, TestRun>();
 
             services.AddTransient<Startup>();

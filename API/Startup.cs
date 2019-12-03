@@ -1,4 +1,7 @@
-﻿using Data.Models;
+﻿using System;
+using System.IO;
+using System.Reflection;
+using Data.Models;
 using Data.Repositories.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +19,8 @@ using TestLibrary.Infrastructure.ObjectsConverter.Concrete;
 using TestLibrary.Repositories.Abstract;
 using TestLibrary.Providers.Abstract;
 using TestLibrary.Providers.Concrete;
+using Microsoft.EntityFrameworkCore.Migrations;
+using System.Linq;
 
 namespace API
 {
@@ -46,11 +51,18 @@ namespace API
             services.AddTransient<ITestRepository, TestRepository>();
             services.AddTransient<ITestsProvider, TestsProvider>();
             services.AddTransient<ITestsCreator, TestsCreator>();
+            services.AddTransient<IReportRepository, ReportRepository>();
+            services.AddTransient<IReportProvider, ReportProvider>();
           
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new Info { Title = "dt-traffic-generator Api", Description = "DayTrader - Traffic Generation - Swagger Api Documentation" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                x.IncludeXmlComments(xmlPath);
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,11 +79,25 @@ namespace API
 
             app.UseHttpsRedirection();
             app.UseMvc();
-            app.UseSwagger();
+            app.UseSwagger(c=> {
+                c.RouteTemplate = "/dt-traffic-generator/swagger/{documentName}/swagger.json";
+            });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("../swagger/v1/swagger.json", "dt-traffic-generator Api");
+                c.SwaggerEndpoint("/dt-traffic-generator/swagger/v1/swagger.json", "dt-traffic-generator Api");
+                c.RoutePrefix = "dt-traffic-generator/swagger";
             });
+
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                using (var dbContext = scope.ServiceProvider.GetService<EfficiencyTestDbContext>())
+                {
+                    if (dbContext.Database.GetPendingMigrations().Any())
+                    {
+                        dbContext.Database.Migrate();
+                    }
+                }
+            }
         }
     }
 }

@@ -85,6 +85,24 @@ namespace API.Controllers
         }
 
 
+
+        /// <summary>
+        /// Add specific test parameters
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/TestsParameters/Add
+        ///     {        
+        ///       "NumberOfUsers": 1,
+        ///       "TestName": "test 1",
+        ///       "NumberOfRequests": 1,
+        ///       "MinBuyPrice": 0,
+        ///       "MaxBuyPrice": 10,
+        ///       "MinSellPrice": 0,
+        ///       "MaxSellPrice": 10
+        ///     }
+        /// </remarks>
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpPost("Add")]
