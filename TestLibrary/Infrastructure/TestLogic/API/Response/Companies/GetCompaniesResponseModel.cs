@@ -10,8 +10,9 @@ namespace TestLibrary.Infrastructure.TestLogic.API.Response.Companies
 {
     public class GetCompaniesResponseModel
     {
-        public IList<CompanyModel> Companies { get; set; }
+        public List<CompanyModel> Companies { get; set; }
         public ExecutionDetails ExecDetails { get; set; }
 
     }
+
 }

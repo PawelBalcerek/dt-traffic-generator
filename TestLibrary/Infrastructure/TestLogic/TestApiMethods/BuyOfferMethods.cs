@@ -1,14 +1,21 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
-using testdll.TestApiMethods;
+using Newtonsoft.Json;
+using TestLibrary.Infrastructure.TestLogic.API.Objects;
 using TestLibrary.Infrastructure.TestLogic.API.Request.BuyOffers;
+using TestLibrary.Infrastructure.TestLogic.API.Request.SellOffers;
+using TestLibrary.Infrastructure.TestLogic.API.Request.BuyOffers;
+using TestLibrary.Infrastructure.TestLogic.API.Request.SellOffers;
+using TestLibrary.Infrastructure.TestLogic.TestDB;
+
 using TestLibrary.Infrastructure.TestLogic.API.Request.Company;
 using TestLibrary.Infrastructure.TestLogic.API.Response.BuyOffers;
-using TestLibrary.Infrastructure.TestLogic.API.Response.Companies;
+using testdll.TestApiMethods;
 
-namespace TestLibrary.Infrastructure.TestLogic.TestApiMethods
+namespace TestLibrary.TestApiMethods
 {
     class BuyOfferMethods
     {
@@ -207,7 +214,7 @@ namespace TestLibrary.Infrastructure.TestLogic.TestApiMethods
                 ret.tests.Add(new Test(DateTime.Now, testParam, USERID, (int)EndpointEnum.PUTBuyOffer, 0, 0, 0));
                 Program.testsLis.AddRange(ret.tests);
             }
-
+           
             return ret;
 
         }

@@ -37,7 +37,7 @@ namespace TestLibrary.Infrastructure.TestLogic.TestApiMethods
 
         }
 
-        public static int GetUserId(string token)
+        public static int GetUserId(int v, string token)
         {
             string resp = "";
             using (var client = new WebClient())

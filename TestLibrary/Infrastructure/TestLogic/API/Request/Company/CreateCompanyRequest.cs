@@ -8,9 +8,9 @@ namespace TestLibrary.Infrastructure.TestLogic.API.Request.Company
     public class CreateCompanyRequest
     {
         public string name { get; set; }
-        public int resourcesAmount { get; set; }
+        public int resourceAmount { get; set; }
 
 
-        public bool IsValid => !string.IsNullOrWhiteSpace(name) && resourcesAmount > 0;
+        public bool IsValid => !string.IsNullOrWhiteSpace(name) && resourceAmount > 0;
     }
 }

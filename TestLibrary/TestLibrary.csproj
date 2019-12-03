@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\TestLogic\API\Response\" />
     <Folder Include="Infrastructure\TestLogic\Models\" />
     <Folder Include="Infrastructure\TestLogic\TestApiMethods\" />
   </ItemGroup>
