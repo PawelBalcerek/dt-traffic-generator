@@ -8,8 +8,9 @@ using TestLibrary.Infrastructure.TestLogic.API.Response.Transactions;
 using TestLibrary.Infrastructure.TestLogic.TestDB;
 using TestLibrary.Infrastructure.TestLogic.API.Response.Users;
 using TestLibrary;
+using TestLibrary.Infrastructure.TestLogic;
 
-namespace testdll.TestApiMethods
+namespace TestLibrary.TestApiMethods
 {
     class TransactionMethods
     {
@@ -49,10 +50,10 @@ namespace testdll.TestApiMethods
 
                     ret.Transaction.AddRange(transactions.Transactions);
 
-                    Program.testsLis.AddRange(ret.tests);
+                    TestRun.testsLis.AddRange(ret.tests);
 
 
-                    Program.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userTransctions = ret.Transaction);
+                    TestRun.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userTransctions = ret.Transaction);
 
                     //   Program.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userResources = ret.res);
                 }
@@ -64,7 +65,7 @@ namespace testdll.TestApiMethods
                 ret.tests.Add(new Test(DateTime.Now, testParam, userID, (int)EndpointEnum.GetTrasactions,
                     0, 0, 0));
 
-                Program.testsLis.AddRange(ret.tests);
+                TestRun.testsLis.AddRange(ret.tests);
             }
 
             return ret;

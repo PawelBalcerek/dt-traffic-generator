@@ -8,6 +8,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Serilog;
 using TestLibrary;
+using TestLibrary.Infrastructure.TestLogic;
 using TestLibrary.Infrastructure.TestLogic.API.Objects;
 using TestLibrary.Infrastructure.TestLogic.API.Request;
 using TestLibrary.Infrastructure.TestLogic.API.Request.SellOffers;
@@ -16,7 +17,7 @@ using TestLibrary.Infrastructure.TestLogic.API.Response.Users;
 using TestLibrary.Infrastructure.TestLogic.TestDB;
 
 
-namespace testdll.TestApiMethods
+namespace TestLibrary.TestApiMethods
 {
     class SellOffersMethods
     {
@@ -52,10 +53,10 @@ namespace testdll.TestApiMethods
 
                     returnedSellOffers.tests.Add(new Test(DateTime.Now, paramId, userId, (int) EndpointEnum.GetSellOffers,
                         response.ExecDetails.DbTime.Value, TestTime, response.ExecDetails.ExecTime.Value));
-                    Program.testsLis.AddRange(returnedSellOffers.tests);
+                    TestRun.testsLis.AddRange(returnedSellOffers.tests);
 
 
-                    Program.user.Where(u => u.userId == userId).ToList()
+                    TestRun.user.Where(u => u.userId == userId).ToList()
                         .ForEach(ug => ug.userSellOffers = returnedSellOffers.sell);
 
                 }
@@ -65,7 +66,7 @@ namespace testdll.TestApiMethods
                 returnedSellOffers.tests = new List<Test>();
                 returnedSellOffers.tests.Add(new Test(DateTime.Now, paramId, userId, (int) EndpointEnum.GetSellOffers,
                     0, 0, 0));
-                Program.testsLis.AddRange(returnedSellOffers.tests);
+                TestRun.testsLis.AddRange(returnedSellOffers.tests);
             }
 
 
@@ -89,7 +90,7 @@ namespace testdll.TestApiMethods
                 List<int> IdUserResources = new List<int>();
 
 
-                foreach (var x in Program.user)
+                foreach (var x in TestRun.user)
                 {
                     if (x.userToken == token)
                     {
@@ -141,13 +142,13 @@ namespace testdll.TestApiMethods
                     TestTime = 0;
                 }
                 ret.tests.Add(new Test(DateTime.Now, testParam, USERID, (int)EndpointEnum.AddSellOffer, response.ExecDetails.DbTime.Value, TestTime, response.ExecDetails.ExecTime.Value));
-                Program.testsLis.AddRange(ret.tests);
+                TestRun.testsLis.AddRange(ret.tests);
             }
             catch (Exception e)
             {
                 ret.tests = new List<Test>();
                 ret.tests.Add(new Test(DateTime.Now, testParam, USERID, (int)EndpointEnum.AddSellOffer, 0, 0, 0));
-                Program.testsLis.AddRange(ret.tests);
+                TestRun.testsLis.AddRange(ret.tests);
             }
             
             return ret;
@@ -169,7 +170,7 @@ namespace testdll.TestApiMethods
                 List<int> IdUserSellOffers = new List<int>();
 
 
-                foreach (var x in Program.user)
+                foreach (var x in TestRun.user)
                 {
                     if (x.userToken == token)
                     {
@@ -220,13 +221,13 @@ namespace testdll.TestApiMethods
                     TestTime = 0;
                 }
                 ret.tests.Add(new Test(DateTime.Now, testParam, USERID, (int)EndpointEnum.PUTSellOffer, response.ExecDetails.DbTime.Value, TestTime, response.ExecDetails.ExecTime.Value));
-                Program.testsLis.AddRange(ret.tests);
+                TestRun.testsLis.AddRange(ret.tests);
             }
             catch (Exception e)
             {
                 ret.tests = new List<Test>();
                 ret.tests.Add(new Test(DateTime.Now, testParam, USERID, (int)EndpointEnum.PUTSellOffer, 0, 0, 0));
-                Program.testsLis.AddRange(ret.tests);
+                TestRun.testsLis.AddRange(ret.tests);
             }
             
             return ret;

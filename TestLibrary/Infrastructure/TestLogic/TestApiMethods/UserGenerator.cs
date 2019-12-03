@@ -5,8 +5,7 @@ using System.Text;
 using TestLibrary.Infrastructure.TestLogic.API.Objects;
 using TestLibrary.Infrastructure.TestLogic.TestDB;
 using TestLibrary.Infrastructure.TestLogic.API;
-using testdll.TestApiMethods;
-using TestLibrary.Infrastructure.TestLogic.TestApiMethods;
+using TestLibrary.Infrastructure.TestLogic;
 
 namespace TestLibrary.TestApiMethods
 {
@@ -107,8 +106,8 @@ namespace TestLibrary.TestApiMethods
 
             ret.userGenerators = userGens;
             ret.test = testy;
-            Program.testsLis.AddRange(ret.test);
-            Program.user.AddRange(ret.userGenerators);
+            TestRun.testsLis.AddRange(ret.test);
+            TestRun.user.AddRange(ret.userGenerators);
 
             return ret;
 

@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using testdll.TestApiMethods;
 using TestLibrary.BusinessObject;
 using TestLibrary.Creators.Abstract;
 using TestLibrary.Infrastructure.Common.Const;
 using TestLibrary.Infrastructure.TestInfrastructure.Abstract;
 using TestLibrary.Infrastructure.TestLogic.API.Objects;
-using TestLibrary.Infrastructure.TestLogic.TestApiMethods;
+//using TestLibrary.Infrastructure.TestLogic.TestApiMethods;
 using TestLibrary.TestApiMethods;
+
 
 namespace TestLibrary.Infrastructure.TestLogic
 {
@@ -51,7 +51,7 @@ namespace TestLibrary.Infrastructure.TestLogic
                 Log.Debug("");
             }
 
-            foreach (var c in Program.comp)
+            foreach (var c in TestRun.comp)
             {
 
                 Log.Information("Company:   " + c.Id + "   " + c.Name);

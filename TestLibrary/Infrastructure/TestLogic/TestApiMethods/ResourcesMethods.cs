@@ -5,13 +5,14 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using TestLibrary;
+using TestLibrary.Infrastructure.TestLogic;
 using TestLibrary.Infrastructure.TestLogic.API.Objects;
 using TestLibrary.Infrastructure.TestLogic.API.Response.Companies;
 using TestLibrary.Infrastructure.TestLogic.API.Response.Resources;
 using TestLibrary.Infrastructure.TestLogic.API.Response.Transactions;
 using TestLibrary.Infrastructure.TestLogic.TestDB;
 
-namespace testdll.TestApiMethods
+namespace TestLibrary.TestApiMethods
 {
     class ResourcesMethods
     {
@@ -51,10 +52,10 @@ namespace testdll.TestApiMethods
 
                     ret.res.AddRange(resources.Resources);
 
-                    Program.testsLis.AddRange(ret.tests);
+                    TestRun.testsLis.AddRange(ret.tests);
 
 
-                    Program.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userResources = ret.res);
+                    TestRun.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userResources = ret.res);
 
                     //   Program.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userResources = ret.res);
                 }
@@ -66,7 +67,7 @@ namespace testdll.TestApiMethods
                 ret.tests.Add(new Test(DateTime.Now, testParam, userID, (int)EndpointEnum.GetUserResources,
                     0, 0, 0));
 
-                Program.testsLis.AddRange(ret.tests);
+                TestRun.testsLis.AddRange(ret.tests);
             }
 
             return ret;

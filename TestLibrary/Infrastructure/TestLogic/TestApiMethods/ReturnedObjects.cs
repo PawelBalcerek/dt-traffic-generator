@@ -7,7 +7,7 @@ using TestLibrary.Infrastructure.TestLogic.Models;
 using TestLibrary.Infrastructure.TestLogic.TestDB;
 using TestLibrary.TestApiMethods;
 
-namespace testdll.TestApiMethods
+namespace TestLibrary.TestApiMethods
 {
     public class ReturnLogin
     {
