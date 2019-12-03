@@ -8,7 +8,7 @@ using TestLibrary.Providers.Abstract;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("testapi/[controller]")]
     [ApiController]
     public class ReportsController : ControllerBase
     {
@@ -21,9 +21,9 @@ namespace API.Controllers
 
 
         /// <summary>
-        /// Gets the list of all endpoints (for specific test) with average execution times.
+        /// Method to get the list of all endpoints (for specific test) with average execution times.
         /// </summary>
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(GetAverageEndpointsExecutionTimesResponseModel))]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpGet("GetAverageEndpointsExecutionTimes")]

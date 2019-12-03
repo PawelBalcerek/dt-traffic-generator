@@ -4,34 +4,23 @@ namespace API.Models.TestParameters
 {
     public class AddTestParametersRequestModel
     {
-        public AddTestParametersRequestModel(int numberOfUsers, string testName, int numberOfRequests, double minBuyPrice, double maxBuyPrice, double minSellPrice, double maxSellPrice)
-        {
-            NumberOfUsers = numberOfUsers;
-            TestName = testName;
-            NumberOfRequests = numberOfRequests;
-            MinBuyPrice = minBuyPrice;
-            MaxBuyPrice = maxBuyPrice;
-            MinSellPrice = minSellPrice;
-            MaxSellPrice = maxSellPrice;
-        }
+        [Required]
+        public int NumberOfUsers { get; set; }
+        public string TestName { get; set; }
 
         [Required]
-        public int NumberOfUsers { get; }
-        public string TestName { get; }
+        public int NumberOfRequests { get; set; }
 
         [Required]
-        public int NumberOfRequests { get; }
+        public double MinBuyPrice { get; set; }
 
         [Required]
-        public double MinBuyPrice { get; }
+        public double MaxBuyPrice { get; set; }
 
         [Required]
-        public double MaxBuyPrice { get; }
+        public double MinSellPrice { get; set; }
 
         [Required]
-        public double MinSellPrice { get; }
-
-        [Required]
-        public double MaxSellPrice { get; }
+        public double MaxSellPrice { get; set; }
     }
 }
