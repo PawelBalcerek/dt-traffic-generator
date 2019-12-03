@@ -12,7 +12,7 @@ using TestLibrary.Providers.Abstract;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("testapi/[controller]")]
     [ApiController]
     public class TestsController : ControllerBase
     {
@@ -26,6 +26,9 @@ namespace API.Controllers
             _testsProvider = testsProvider;
         }
 
+        /// <summary>
+        /// Method to run test by testParameters id
+        /// </summary>
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
@@ -58,21 +61,8 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Add specific test
+        /// Method to add test
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     POST api/Tests/Add
-        ///     {        
-        ///       "TestParametersId": 1,
-        ///       "UserId": 1,
-        ///       "EndpointId": 1,
-        ///       "DatabaseTestTime": 10,
-        ///       "ApplicationTestTime": 20,
-        ///       "ApiTestTime": 30,
-        ///     }
-        /// </remarks>
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpPost("Add")]
@@ -103,7 +93,10 @@ namespace API.Controllers
         }
 
 
-        [ProducesResponseType(200)]
+        /// <summary>
+        /// Method to get test by id
+        /// </summary>
+        [ProducesResponseType(200, Type = typeof(GetTestResponseModel))]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpGet("{id}")]
@@ -134,8 +127,10 @@ namespace API.Controllers
             }
         }
 
-
-        [ProducesResponseType(200)]
+        /// <summary>
+        /// Method to get all tests.
+        /// </summary>
+        [ProducesResponseType(200, Type = typeof(GetTestsResponseModel))]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpGet]

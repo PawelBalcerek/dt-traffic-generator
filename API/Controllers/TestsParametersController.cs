@@ -10,7 +10,7 @@ using TestLibrary.Providers.Abstract;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("testapi/[controller]")]
     [ApiController]
     public class TestsParametersController : ControllerBase
     {
@@ -22,7 +22,10 @@ namespace API.Controllers
             _testParametersCreator = testParametersCreator;
         }
 
-        [ProducesResponseType(200)]
+        /// <summary>
+        /// Method to get test parameters by id
+        /// </summary>
+        [ProducesResponseType(200, Type = typeof(GetTestParametersResponseModel))]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpGet("{id}")]
@@ -53,7 +56,10 @@ namespace API.Controllers
             }
         }
 
-        [ProducesResponseType(200)]
+        /// <summary>
+        /// Method to get all tests parameters
+        /// </summary>
+        [ProducesResponseType(200, Type = typeof(GetTestsParametersResponseModel))]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpGet]
@@ -85,25 +91,10 @@ namespace API.Controllers
         }
 
 
-
         /// <summary>
-        /// Add specific test parameters
+        /// Method to add test parameters
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     POST api/TestsParameters/Add
-        ///     {        
-        ///       "NumberOfUsers": 1,
-        ///       "TestName": "test 1",
-        ///       "NumberOfRequests": 1,
-        ///       "MinBuyPrice": 0,
-        ///       "MaxBuyPrice": 10,
-        ///       "MinSellPrice": 0,
-        ///       "MaxSellPrice": 10
-        ///     }
-        /// </remarks>
-        [ProducesResponseType(200)]
+        [ProducesResponseType(200, Type = typeof(AddTestParametersResponseModel))]
         [ProducesResponseType(500)]
         [HttpPost("Add")]
         public ActionResult AddTestParameters([FromBody] AddTestParametersRequestModel request)

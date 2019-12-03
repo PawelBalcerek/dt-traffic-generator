@@ -10,7 +10,7 @@ using TestLibrary.Providers.Abstract;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("testapi/[controller]")]
     [ApiController]
     public class EndpointsController : ControllerBase
     {
@@ -23,8 +23,10 @@ namespace API.Controllers
             _endpointsCreator = endpointsCreator;
         }
 
-
-        [ProducesResponseType(200)]
+        /// <summary>
+        /// Method to get endpoint by id
+        /// </summary>
+        [ProducesResponseType(200, Type = typeof(GetEndpointResponseModel))]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpGet("{id}")]
@@ -57,17 +59,8 @@ namespace API.Controllers
 
 
         /// <summary>
-        /// Add specific endpoint
+        /// Method to add endpoint
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        /// 
-        ///     POST api/Endpoints/Add
-        ///     {        
-        ///       "EndpointName": "endpoint",
-        ///       "HttpMethod": "POST"
-        ///     }
-        /// </remarks>
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpPost("Add")]
@@ -97,8 +90,10 @@ namespace API.Controllers
             }
         }
 
-
-        [ProducesResponseType(200)]
+        /// <summary>
+        /// Method to get all endpoints
+        /// </summary>
+        [ProducesResponseType(200, Type = typeof(GetEndpointsResponseModel))]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpGet]
