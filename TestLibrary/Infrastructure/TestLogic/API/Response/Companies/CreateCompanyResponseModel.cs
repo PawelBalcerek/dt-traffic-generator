@@ -9,6 +9,6 @@ namespace TestLibrary.Infrastructure.TestLogic.API.Response.Companies
 {
     public class CreateCompanyResponseModel
     {
-        public ExecutionDetails ExecDetails { get; set; }
+        public ExecutionDetails execDetails { get; set; }
     }
 }

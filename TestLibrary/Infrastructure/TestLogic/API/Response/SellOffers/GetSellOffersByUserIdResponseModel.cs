@@ -10,6 +10,6 @@ namespace TestLibrary.Infrastructure.TestLogic.API.Response.SellOffers
     public class GetSellOffersByUserIdResponseModel
     {
         public IList<SellOfferModel> SellOffers { get; set; }
-        public ExecutionDetails ExecDetails { get; set; }
+        public ExecutionDetails execDetails { get; set; }
     }
 }

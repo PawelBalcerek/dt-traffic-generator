@@ -5,16 +5,17 @@ using System.Net;
 using Newtonsoft.Json;
 using TestLibrary.Infrastructure.TestLogic.API.Objects;
 using TestLibrary.Infrastructure.TestLogic.API.Response.Transactions;
-using TestLibrary.Infrastructure.TestLogic.TestDB;
 using TestLibrary.Infrastructure.TestLogic.API.Response.Users;
 using TestLibrary;
 using TestLibrary.Infrastructure.TestLogic;
+using System.Threading.Tasks;
+using TestLibrary.BusinessObject;
 
 namespace TestLibrary.TestApiMethods
 {
     class TransactionMethods
     {
-        public static ReturnTransactions GetTransactions(int testParam, string token, int userID)
+        public static async Task GetTransactions(int testParam, string token, int userID)
         {
             ReturnTransactions ret = new ReturnTransactions();
             try
@@ -28,7 +29,7 @@ namespace TestLibrary.TestApiMethods
                     client.Headers.Add("Content-Type:application/json"); //Content-Type  
                     client.Headers.Add("Accept:application/json");
                     client.Headers.Add("Authorization", "Bearer " + token);
-                    var result = client.DownloadString(GET_URLs.Transactions); //URI  
+                    var result = await client.DownloadStringTaskAsync(GET_URLs.Transactions).ConfigureAwait(true); //URI  
                     resp = result;
                     GetTransactionsByUserIdResponseModel transactions = new GetTransactionsByUserIdResponseModel();
                     transactions = JsonConvert.DeserializeObject<GetTransactionsByUserIdResponseModel>(resp);
@@ -44,9 +45,8 @@ namespace TestLibrary.TestApiMethods
                         transactions.ExecDetails.DbTime = 0;
                         TestTime = 0;
                     }
-
-                    ret.tests.Add(new Test(DateTime.Now, testParam, userID, (int)EndpointEnum.GetTrasactions,
-                        transactions.ExecDetails.DbTime.Value, TestTime, transactions.ExecDetails.ExecTime.Value));
+                    //(new Test(0, testParam, userID, (int)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value,  transactions.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
+                    ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value, transactions.ExecDetails.ExecTime.Value, TestTime));
 
                     ret.Transaction.AddRange(transactions.Transactions);
 
@@ -61,14 +61,13 @@ namespace TestLibrary.TestApiMethods
             catch (Exception e)
             {
                 ret.tests = new List<Test>();
-
-                ret.tests.Add(new Test(DateTime.Now, testParam, userID, (int)EndpointEnum.GetTrasactions,
-                    0, 0, 0));
+                //(new Test(0, testParam, USERID, (int)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
+                ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetTrasactions, 0, 0, 0));
 
                 TestRun.testsLis.AddRange(ret.tests);
             }
 
-            return ret;
+            //  return ret;
             //Console.WriteLine(Environment.NewLine + result);
             //return result;
         }

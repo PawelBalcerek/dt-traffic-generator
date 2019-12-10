@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 //using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
 using TestLibrary;
+using TestLibrary.BusinessObject;
 using TestLibrary.Infrastructure.TestLogic;
 using TestLibrary.Infrastructure.TestLogic.API.Objects;
 using TestLibrary.Infrastructure.TestLogic.API.Request.Company;
 using TestLibrary.Infrastructure.TestLogic.API.Response.Companies;
 
 using TestLibrary.Infrastructure.TestLogic.Models;
-using TestLibrary.Infrastructure.TestLogic.TestDB;
 
 namespace TestLibrary.TestApiMethods
 {
@@ -20,7 +21,7 @@ namespace TestLibrary.TestApiMethods
     {
 
         //public static CreateCompanyResponseModel POSTCompanies(int userId,int testParam, int testId, string jwt, string name, int amount)
-        public static ReturnAddCompanies POSTCompanies(int userId, int testParam, int testId, string jwt)
+        public static async Task POSTCompanies(int userId, int testParam, int testId, string jwt)
         {
             ReturnAddCompanies ret = new ReturnAddCompanies();
             try
@@ -44,14 +45,14 @@ namespace TestLibrary.TestApiMethods
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
                     string output = JsonConvert.SerializeObject(comapny);
-                    streamWriter.Write(output);
+                    await streamWriter.WriteAsync(output);
                 }
 
                 string resp = "";
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
-                    var result = streamReader.ReadToEnd();
+                    var result = await streamReader.ReadToEndAsync();
 
                     resp = result;
                 }
@@ -61,27 +62,27 @@ namespace TestLibrary.TestApiMethods
                 ret.tests = new List<Test>();
                 watch.Stop();
                 long TestTime = watch.ElapsedMilliseconds;
-                if (comp.ExecDetails.ExecTime == null || comp.ExecDetails.DbTime == null || TestTime == null)
+                if (comp.execDetails.ExecTime == null || comp.execDetails.DbTime == null || TestTime == null)
                 {
-                    comp.ExecDetails.ExecTime = 0;
-                    comp.ExecDetails.DbTime = 0;
+                    comp.execDetails.ExecTime = 0;
+                    comp.execDetails.DbTime = 0;
                     TestTime = 0;
                 }
-                ret.tests.Add(new Test(DateTime.Now, testParam, userId, (int)EndpointEnum.AddCompanies, comp.ExecDetails.DbTime.Value, TestTime, comp.ExecDetails.ExecTime.Value));
+                //(new Test(0, testParam, userId, (int)EndpointEnum.AddCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime, DateTime.Now));
+                ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.AddCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
                 TestRun.testsLis.AddRange(ret.tests);
-                //TestRun
             }
             catch (Exception e)
             {
                 ret.tests = new List<Test>();
-                ret.tests.Add(new Test(DateTime.Now, testParam, userId, (int)EndpointEnum.AddCompanies, 0, 0, 0));
+                ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.AddCompanies, 0, 0, 0));
                 TestRun.testsLis.AddRange(ret.tests);
             }
 
-            return ret;
+            //return Task.CompletedTask;
         }
 
-        public static ReturnGetCompanies GetCompanies(int testParam, string token, int userId)
+        public static async Task GetCompanies(int testParam, string token, int userId)
         {
             ReturnGetCompanies ret = new ReturnGetCompanies();
             try
@@ -95,7 +96,7 @@ namespace TestLibrary.TestApiMethods
                     client.Headers.Add("Content-Type:application/json"); //Content-Type  
                     client.Headers.Add("Accept:application/json");
                     client.Headers.Add("Authorization", "Bearer " + token);
-                    var result = client.DownloadString(GET_URLs.GETCompanies); //URI  
+                    var result = await client.DownloadStringTaskAsync(GET_URLs.GETCompanies).ConfigureAwait(true); //URI  
                     resp = result;
                     GetCompaniesResponseModel comp = new GetCompaniesResponseModel();
                     comp = JsonConvert.DeserializeObject<GetCompaniesResponseModel>(resp);
@@ -104,15 +105,14 @@ namespace TestLibrary.TestApiMethods
                     ret.companies = new List<CompanyModel>();
                     watch.Stop();
                     long TestTime = watch.ElapsedMilliseconds;
-                    if (comp.ExecDetails.ExecTime == null || comp.ExecDetails.DbTime == null || TestTime == null)
+                    if (comp.execDetails.ExecTime == null || comp.execDetails.DbTime == null || TestTime == null)
                     {
-                        comp.ExecDetails.ExecTime = 0;
-                        comp.ExecDetails.DbTime = 0;
+                        comp.execDetails.ExecTime = 0;
+                        comp.execDetails.DbTime = 0;
                         TestTime = 0;
                     }
-
-                    ret.tests.Add(new Test(DateTime.Now, testParam, userId, (int)EndpointEnum.GetCompanies,
-                        comp.ExecDetails.DbTime.Value, TestTime, comp.ExecDetails.ExecTime.Value));
+                    //(new Test(0, testParam, userId, (int)EndpointEnum.GetCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime, DateTime.Now));
+                    ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.GetCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
                     ret.companies.AddRange(comp.Companies);
 
                     TestRun.testsLis.AddRange(ret.tests);
@@ -123,14 +123,13 @@ namespace TestLibrary.TestApiMethods
             catch (Exception e)
             {
                 ret.tests = new List<Test>();
-                ret.tests.Add(new Test(DateTime.Now, testParam, userId, (int)EndpointEnum.GetCompanies,
-                    0, 0, 0));
+                ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.GetCompanies, 0, 0, 0));
                 TestRun.testsLis.AddRange(ret.tests);
 
                 TestRun.testsLis.AddRange(ret.tests);
             }
-
-            return ret;
+            await Task.CompletedTask;
+            //   return Task.CompletedTask;
             //Console.WriteLine(Environment.NewLine + result);
             //return result;
 

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestLibrary.Infrastructure.TestLogic.TestDB
+namespace TestLibrary.BusinessObject
 {
-    enum EndpointEnum:int
+    enum EndpointEnum : int
     {
-        GetUserInfo = 1 ,
+        GetUserInfo = 1,
         AddUser = 2,
         Login = 3,
         Logout = 4,

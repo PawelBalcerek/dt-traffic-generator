@@ -8,6 +8,6 @@ namespace TestLibrary.Infrastructure.TestLogic.API.Response.SellOffers
 {
     public class CreateSellOfferResponseModel
     {
-        public ExecutionDetails ExecDetails { get; set; }
+        public ExecutionDetails execDetails { get; set; }
     }
 }

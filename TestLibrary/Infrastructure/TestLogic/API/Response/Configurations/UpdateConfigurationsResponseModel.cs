@@ -9,6 +9,6 @@ namespace TestLibrary.Infrastructure.TestLogic.API.Response.Configurations
 {
     public class UpdateConfigurationsResponseModel
     {
-        public ExecutionDetails executionDetails { get; set; }
+        public ExecutionDetails execDetails { get; set; }
     }
 }

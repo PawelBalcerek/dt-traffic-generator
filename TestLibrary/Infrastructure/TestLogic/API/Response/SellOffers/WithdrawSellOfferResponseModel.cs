@@ -9,6 +9,6 @@ namespace TestLibrary.Infrastructure.TestLogic.API.Response.SellOffers
 {
     public class WithdrawSellOfferResponseModel
     {
-        public ExecutionDetails ExecDetails { get; set; }
+        public ExecutionDetails execDetails { get; set; }
     }
 }

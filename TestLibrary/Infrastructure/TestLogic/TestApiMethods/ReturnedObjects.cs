@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TestLibrary.BusinessObject;
 using TestLibrary.Infrastructure.TestLogic.API.Objects;
 using TestLibrary.Infrastructure.TestLogic.API.Response.Companies;
 using TestLibrary.Infrastructure.TestLogic.Models;
-using TestLibrary.Infrastructure.TestLogic.TestDB;
 using TestLibrary.TestApiMethods;
 
 namespace TestLibrary.TestApiMethods
 {
+   
     public class ReturnLogin
     {
         public string jwt;
@@ -25,7 +26,7 @@ namespace TestLibrary.TestApiMethods
     public class ReturnUserGenerator
     {
         public List<Test> test;
-        public List<UserGenerator> userGenerators;
+
     }
 
     public class ReturnRegistration
@@ -42,10 +43,11 @@ namespace TestLibrary.TestApiMethods
     public class ReturnAddCompanies
     {
         public List<Test> tests;
-       
+
     }
     public class ReturnResources
     {
+        public int id;
         public List<Test> tests;
         public List<ResourceModel> res;
 
@@ -60,7 +62,7 @@ namespace TestLibrary.TestApiMethods
     public class ReturnAddSellOffers
     {
         public List<Test> tests;
-        
+
 
     }
     public class ReturnPUTSellOffers
