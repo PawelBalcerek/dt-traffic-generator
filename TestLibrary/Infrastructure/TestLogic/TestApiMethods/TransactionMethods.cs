@@ -29,7 +29,7 @@ namespace TestLibrary.TestApiMethods
                     client.Headers.Add("Content-Type:application/json"); //Content-Type  
                     client.Headers.Add("Accept:application/json");
                     client.Headers.Add("Authorization", "Bearer " + token);
-                    var result = await client.DownloadStringTaskAsync(GET_URLs.Transactions).ConfigureAwait(true); //URI  
+                    var result = await client.DownloadStringTaskAsync(GET_URLs.Transactions).ConfigureAwait(false); //URI  
                     resp = result;
                     GetTransactionsByUserIdResponseModel transactions = new GetTransactionsByUserIdResponseModel();
                     transactions = JsonConvert.DeserializeObject<GetTransactionsByUserIdResponseModel>(resp);

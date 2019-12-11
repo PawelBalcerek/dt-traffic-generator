@@ -48,22 +48,23 @@ namespace TestLibrary.Infrastructure.TestLogic
             {
                 if (test != null)
                 {
-                    //Log.Information("TimeStamp: " + test.TestTime + "." + test.TestTime.Millisecond);
-                    Log.Information("TestParam: " + test.TestParametersId);
-                    Log.Information("TestId: " + test.TestId);
-                    Log.Information("UserId: " + test.UserId);
-                    Log.Information("EndpointId: " + test.EndpointId);
-                    Log.Information("API_Time: " + test.ApiTestTime / 1000);
-                    Log.Information("DB_Time: " + test.DatabaseTestTime / 1000);
-                    Log.Information("Apl_Time: " + test.ApplicationTestTime);
+                    Log.Information(test.TestParametersId + ", " + test.TestId + ", " + test.UserId + ", " + test.EndpointId + ", " + test.ApiTestTime + ", " + test.DatabaseTestTime + ", " + test.ApplicationTestTime);
 
-                    Log.Debug("");
+                    //                    //Log.Information("TimeStamp: " + test.TestTime + "." + test.TestTime.Millisecond);
+                    //                    Log.Information("TestParam: " + test.TestParametersId);
+                    //Log.Information("TestId: " + test.TestId);
+                    //Log.Information("UserId: " + test.UserId);
+                    //Log.Information("EndpointId: " + test.EndpointId);
+                    //Log.Information("API_Time: " + test.ApiTestTime / 1000);
+                    //Log.Information("DB_Time: " + test.DatabaseTestTime / 1000);
+                    //Log.Information("Apl_Time: " + test.ApplicationTestTime);
+
+                    //Log.Debug("");
                 }
                 else
                 {
                     Log.Error("NULL");
-                    Log.Error("NULL");
-                    Log.Error("NULL");
+
                 }
             }
             foreach (var c in TestRun.comp)
@@ -79,8 +80,7 @@ namespace TestLibrary.Infrastructure.TestLogic
         public static async Task RunFirst(int testId, int paramId, int numOfUsers, int numOfReq, double minBuyPrice, double maxBuyPrice,
            double minSellPrice, double maxSellPrice)
         {
-            //List<Task> listOfTasks = new List<Task>();
-            // Console.WriteLine("Userzy: ");
+
             var watch = System.Diagnostics.Stopwatch.StartNew();
             UserGenerator.CreateListOfUsers(numOfUsers);
 
@@ -119,34 +119,13 @@ namespace TestLibrary.Infrastructure.TestLogic
             Log.Information(TestTime2.ToString());
 
 
-            //RepairFinishTests(paramId, testId);
+
 
         }
 
 
 
-        //public static void RepairFinishTests(int paramId, int testId)
-        //{
-        //    List<Test> listaTestow = TestRun.testsLis;
 
-        //    for (int i = 0; i < listaTestow.Count; i++)
-        //    {
-        //        if (listaTestow[i] == null)
-        //        {
-        //            listaTestow.RemoveAt(listaTestow.IndexOf(listaTestow[i]));
-        //            listaTestow.Add(new Test(0, 0, 0, 0, 0, 0, 0, DateTime.Now));
-        //        }
-        //    }
-
-        //   // foreach (var test in listaTestow)
-        //    //{
-        //        test.TestId = testId;
-        //        test.TestParametersId = paramId;
-
-
-
-        //    }
-        //}
 
 
     }
@@ -165,9 +144,20 @@ namespace TestLibrary.Infrastructure.TestLogic
         {
 
             await WyswietlanieOfertKupna();
-            await DodanieFirmy();
-            await NowaOfertaKupna();
-            await WyswietlanieOfertKupna();
+            //await DodanieFirmy();
+            //await NowaOfertaKupna();
+            //await WyswietlanieOfertKupna();
+            //await DodanieFirmy();
+            await WyswietlanieOfertSprzedazy();
+            // await NowaOfertaKupna();
+            //await WycofanieOfertyKupna();
+            await WyswietlanieTransakcji();
+            await WyswietlanieZasobów();
+            await Wylogowanie();
+
+            //await DodanieFirmy();
+            //await NowaOfertaKupna();
+            //await WyswietlanieOfertKupna();
             // await ResourcesMethods.GetResources(0, _user.userToken);
             // // await SellOffersMethods.AddSellOffer(0, _user.userToken, _user.userId, 20, 50);
             // await SellOffersMethods.GetUserSellOffers(0, _user.userToken);
@@ -213,6 +203,34 @@ namespace TestLibrary.Infrastructure.TestLogic
         {
             await CompaniesMethod.POSTCompanies(_user.userId, 0, 0, _user.userToken);
             await ResourcesMethods.GetResources(0, _user.userToken);
+        }
+        public async Task WyswietlanieTransakcji()
+        {
+            await TransactionMethods.GetTransactions(0, _user.userToken, _user.userId);
+        }
+        public async Task WyswietlanieZasobów()
+        {
+            await ResourcesMethods.GetResources(0, _user.userToken);
+        }
+        public async Task WyswietlanieOfertSprzedazy()
+        {
+            await SellOffersMethods.GetUserSellOffers(0, _user.userToken);
+        }
+        public async Task NowaOfertaSprzedazy()
+        {
+            await ResourcesMethods.GetResources(0, _user.userToken);
+            await SellOffersMethods.AddSellOffer(0, _user.userToken, 20, 50);
+            await SellOffersMethods.GetUserSellOffers(0, _user.userToken);
+        }
+
+        public async Task WycofanieOfertySprzedazy()
+        {
+            await SellOffersMethods.GetUserSellOffers(0, _user.userToken);
+            await SellOffersMethods.PutSellOffers(0, _user.userToken, _user.userId);
+        }
+        public async Task Wylogowanie()
+        {
+            await UsersMethods.LogoutUser(0, _user.userId, _user.userToken);
         }
 
     }

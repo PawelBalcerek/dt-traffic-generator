@@ -3,5 +3,6 @@
     public interface ITestRun
     {
         void TestMain();
+
     }
 }

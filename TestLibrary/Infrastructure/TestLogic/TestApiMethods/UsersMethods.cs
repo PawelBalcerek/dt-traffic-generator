@@ -42,7 +42,7 @@ namespace TestLibrary.TestApiMethods
                 }
 
                 string resp = "";
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                var httpResponse = await httpWebRequest.GetResponseAsync();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     var result = await streamReader.ReadToEndAsync();
@@ -156,10 +156,10 @@ namespace TestLibrary.TestApiMethods
             }
 
             string resp = "";
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            var httpResponse = await httpWebRequest.GetResponseAsync();
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
-                var result = await streamReader.ReadToEndAsync().ConfigureAwait(true);
+                var result = await streamReader.ReadToEndAsync();
                 resp = result;
             }
 
@@ -216,7 +216,7 @@ namespace TestLibrary.TestApiMethods
                     client.Headers.Add("Content-Type:application/json"); //Content-Type  
                     client.Headers.Add("Accept:application/json");
                     client.Headers.Add("Authorization", "Bearer " + token);
-                    var result = await client.DownloadStringTaskAsync(GET_URLs.Logout).ConfigureAwait(true); //URI  
+                    var result = await client.DownloadStringTaskAsync(GET_URLs.Logout).ConfigureAwait(false); //URI  
                     resp = result;
                     LogoutResponse logout = new LogoutResponse();
                     // respo user = new GetUserResponse();
@@ -234,7 +234,7 @@ namespace TestLibrary.TestApiMethods
                     }
 
                     //(new Test(0, TestParamId, id, (int)EndpointEnum.Login, logout.ExecDetails.DbTime.Value,  logout.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
-                    ret.Add(new Test( TestParamId, id, (int)EndpointEnum.Login, logout.ExecDetails.DbTime.Value, logout.ExecDetails.ExecTime.Value, TestTime));
+                    ret.Add(new Test( TestParamId, id, (int)EndpointEnum.Logout, logout.ExecDetails.DbTime.Value, logout.ExecDetails.ExecTime.Value, TestTime));
                     TestRun.testsLis.AddRange(ret);
 
                 }
@@ -242,7 +242,7 @@ namespace TestLibrary.TestApiMethods
             catch (Exception e)
             {
                 List<Test> ret = new List<Test>();
-                ret.Add(new Test( TestParamId, id, (int)EndpointEnum.Login, 0, 0, 0));
+                ret.Add(new Test( TestParamId, id, (int)EndpointEnum.Logout, 0, 0, 0));
                 TestRun.testsLis.AddRange(ret);
 
             }

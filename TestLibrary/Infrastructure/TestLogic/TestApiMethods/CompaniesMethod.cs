@@ -49,7 +49,7 @@ namespace TestLibrary.TestApiMethods
                 }
 
                 string resp = "";
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                var httpResponse = await httpWebRequest.GetResponseAsync();
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     var result = await streamReader.ReadToEndAsync();
