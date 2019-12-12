@@ -21,9 +21,9 @@ namespace TestLibrary.TestApiMethods
     {
 
         //public static CreateCompanyResponseModel POSTCompanies(int userId,int testParam, int testId, string jwt, string name, int amount)
-        public static async Task POSTCompanies(int userId, int testParam, int testId, string jwt)
+        public static async Task POSTCompanies(int userId, long testParam, string jwt)
         {
-            ReturnAddCompanies ret = new ReturnAddCompanies();
+            List<CompanyModel> ret = new List<CompanyModel>();
             try
             {
                 var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -59,7 +59,7 @@ namespace TestLibrary.TestApiMethods
                 CreateCompanyResponseModel comp = new CreateCompanyResponseModel();
                 comp = JsonConvert.DeserializeObject<CreateCompanyResponseModel>(resp);
 
-                ret.tests = new List<Test>();
+                //ret.tests = new List<Test>();
                 watch.Stop();
                 long TestTime = watch.ElapsedMilliseconds;
                 if (comp.execDetails.ExecTime == null || comp.execDetails.DbTime == null || TestTime == null)
@@ -69,22 +69,22 @@ namespace TestLibrary.TestApiMethods
                     TestTime = 0;
                 }
                 //(new Test(0, testParam, userId, (int)EndpointEnum.AddCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime, DateTime.Now));
-                ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.AddCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
-                TestRun.testsLis.AddRange(ret.tests);
+                //ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.AddCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, userId, (int)EndpointEnum.AddCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
             }
             catch (Exception e)
             {
-                ret.tests = new List<Test>();
-                ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.AddCompanies, 0, 0, 0));
-                TestRun.testsLis.AddRange(ret.tests);
+                //ret.tests = new List<Test>();
+                //ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.AddCompanies, 0, 0, 0));
+                TestRun.testsLis.Add(new Test(testParam, userId, (int)EndpointEnum.AddCompanies, 0, 0, 0));
             }
 
             //return Task.CompletedTask;
         }
 
-        public static async Task GetCompanies(int testParam, string token, int userId)
+        public static async Task GetCompanies(long testParam, string token, int userId)
         {
-            ReturnGetCompanies ret = new ReturnGetCompanies();
+            List<CompanyModel> ret = new List<CompanyModel>();
             try
             {
                 var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -101,8 +101,8 @@ namespace TestLibrary.TestApiMethods
                     GetCompaniesResponseModel comp = new GetCompaniesResponseModel();
                     comp = JsonConvert.DeserializeObject<GetCompaniesResponseModel>(resp);
 
-                    ret.tests = new List<Test>();
-                    ret.companies = new List<CompanyModel>();
+                    //ret.tests = new List<Test>();
+                    ret = new List<CompanyModel>();
                     watch.Stop();
                     long TestTime = watch.ElapsedMilliseconds;
                     if (comp.execDetails.ExecTime == null || comp.execDetails.DbTime == null || TestTime == null)
@@ -112,23 +112,23 @@ namespace TestLibrary.TestApiMethods
                         TestTime = 0;
                     }
                     //(new Test(0, testParam, userId, (int)EndpointEnum.GetCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime, DateTime.Now));
-                    ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.GetCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
-                    ret.companies.AddRange(comp.Companies);
+                   // ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.GetCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
+                    ret.AddRange(comp.Companies);
 
-                    TestRun.testsLis.AddRange(ret.tests);
+                    TestRun.testsLis.Add(new Test(testParam, userId, (int)EndpointEnum.GetCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
                     TestRun.comp.Clear();
-                    TestRun.comp.AddRange(ret.companies);
+                    TestRun.comp.AddRange(ret);
                 }
             }
             catch (Exception e)
             {
-                ret.tests = new List<Test>();
-                ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.GetCompanies, 0, 0, 0));
-                TestRun.testsLis.AddRange(ret.tests);
+                //ret.tests = new List<Test>();
+                //ret.tests.Add(new Test( testParam, userId, (int)EndpointEnum.GetCompanies, 0, 0, 0));
+               // TestRun.testsLis.AddRange(ret.tests);
 
-                TestRun.testsLis.AddRange(ret.tests);
+                TestRun.testsLis.Add(new Test(testParam, userId, (int)EndpointEnum.GetCompanies, 0, 0, 0));
             }
-            await Task.CompletedTask;
+           // await Task.CompletedTask;
             //   return Task.CompletedTask;
             //Console.WriteLine(Environment.NewLine + result);
             //return result;

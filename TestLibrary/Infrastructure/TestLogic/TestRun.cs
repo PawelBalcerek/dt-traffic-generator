@@ -35,8 +35,9 @@ namespace TestLibrary.Infrastructure.TestLogic
             //     .WriteTo.File("logs\\.txt", rollingInterval: RollingInterval.Minute)
             //   .CreateLogger();
 
-
-            RunFirst(11, 1, 50, 10, 10, 20, 10, 20);
+            TestParameters tp = new TestParameters(20, "x", 10, 10, 20, 20, 30);
+            
+            RunFirst(tp);
 
 
             foreach (var u in user)
@@ -48,6 +49,7 @@ namespace TestLibrary.Infrastructure.TestLogic
             {
                 if (test != null)
                 {
+                    Log.Information(test.TimeStamp.ToLongTimeString()+"." + test.TimeStamp.Millisecond);
                     Log.Information(test.TestParametersId + ", " + test.TestId + ", " + test.UserId + ", " + test.EndpointId + ", " + test.ApiTestTime + ", " + test.DatabaseTestTime + ", " + test.ApplicationTestTime);
 
                     //                    //Log.Information("TimeStamp: " + test.TestTime + "." + test.TestTime.Millisecond);
@@ -77,12 +79,12 @@ namespace TestLibrary.Infrastructure.TestLogic
         }
 
 
-        public static async Task RunFirst(int testId, int paramId, int numOfUsers, int numOfReq, double minBuyPrice, double maxBuyPrice,
-           double minSellPrice, double maxSellPrice)
+        public static async Task RunFirst(TestParameters testParams)
         {
-
+            TestParameters tp = testParams;
+            
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            UserGenerator.CreateListOfUsers(numOfUsers);
+            UserGenerator.CreateListOfUsers(tp.NumberOfUsers);
 
             List<UserGenerator> ug = TestRun.user;
 
@@ -90,7 +92,7 @@ namespace TestLibrary.Infrastructure.TestLogic
 
             for (int i = 0; i < ug.Count; i++)
             {
-                generateUserList.Add(new UGAction(ug[i]).userGenerator());
+                generateUserList.Add(new UGAction(ug[i],tp).userGenerator());
             }
 
             Task.WaitAll(generateUserList.ToArray());
@@ -107,7 +109,7 @@ namespace TestLibrary.Infrastructure.TestLogic
 
             for (int i = 0; i < ug.Count; i++)
             {
-                userTasks.Add(new UserActions(ug[i]).PerformUserAction());
+                userTasks.Add(new UserActions(ug[i],tp).PerformUserAction());
             }
 
             Task.WaitAll(userTasks.ToArray());
@@ -132,105 +134,86 @@ namespace TestLibrary.Infrastructure.TestLogic
 
     public class UserActions
     {
-        //private List<ResourceModel> _resources = new List<ResourceModel>();
+        
         private UserGenerator _user = null;
+        private TestParameters _testParameters = null;
 
-        public UserActions(UserGenerator user)
+        public UserActions(UserGenerator user, TestParameters testParams)
         {
             _user = user;
+            _testParameters = testParams;
         }
 
         public async Task PerformUserAction()
         {
 
             await WyswietlanieOfertKupna();
+          
+            await NowaOfertaKupna();
+            
             //await DodanieFirmy();
-            //await NowaOfertaKupna();
-            //await WyswietlanieOfertKupna();
-            //await DodanieFirmy();
+            await NowaOfertaSprzedazy();
+            await WycofanieOfertySprzedazy();
             await WyswietlanieOfertSprzedazy();
-            // await NowaOfertaKupna();
-            //await WycofanieOfertyKupna();
+           
+            await WycofanieOfertyKupna();
             await WyswietlanieTransakcji();
             await WyswietlanieZasobów();
             await Wylogowanie();
 
-            //await DodanieFirmy();
-            //await NowaOfertaKupna();
-            //await WyswietlanieOfertKupna();
-            // await ResourcesMethods.GetResources(0, _user.userToken);
-            // // await SellOffersMethods.AddSellOffer(0, _user.userToken, _user.userId, 20, 50);
-            // await SellOffersMethods.GetUserSellOffers(0, _user.userToken);
-            // await ResourcesMethods.GetResources(0, _user.userToken);
-
-            // ///await CompaniesMethod.POSTCompanies(_user.userId, 0, 0, _user.userToken);
-            // await CompaniesMethod.GetCompanies(0, _user.userToken, _user.userId);
-
-            //// await SellOffersMethods.AddSellOffer(0,_user.userToken,20,30);
-            //// await SellOffersMethods.AddSellOffer(0,_user.userToken,60,90);
-            // await SellOffersMethods.PutSellOffers(0, _user.userToken, _user.userId);
-
-            // await SellOffersMethods.GetUserSellOffers(0, _user.userToken);
-            // //await BuyOfferMethods.GetUserBuyOffers(0, _user.userId, _user.userToken);
-            // //await BuyOfferMethods.AddBuyOffer(0, _user.userToken,_user.userId, 20, 30);
-            // //await BuyOfferMethods.AddBuyOffer(0, _user.userToken, _user.userId, 60, 90);
-            // //await BuyOfferMethods.PutBuyOffers(0, _user.userToken, _user.userId);
-
-            // await BuyOfferMethods.GetUserBuyOffers(0, _user.userId, _user.userToken);
-
-            // await TransactionMethods.GetTransactions(0, _user.userToken, _user.userId);
-            // await ResourcesMethods.GetResources(0, _user.userToken);
+            
+           
 
         }
 
         public async Task WyswietlanieOfertKupna()
         {
-            await BuyOfferMethods.GetUserBuyOffers(0, _user.userId, _user.userToken);
+            await BuyOfferMethods.GetUserBuyOffers(_testParameters.TestParametersId, _user.userId, _user.userToken);
         }
         public async Task NowaOfertaKupna()
         {
-            await CompaniesMethod.GetCompanies(0, _user.userToken, _user.userId);
-            await BuyOfferMethods.AddBuyOffer(0, _user.userToken, _user.userId, 20, 30);
+            await CompaniesMethod.GetCompanies(_testParameters.TestParametersId, _user.userToken, _user.userId);
+            await BuyOfferMethods.AddBuyOffer(_testParameters.TestParametersId, _user.userToken, _user.userId, _testParameters.MinBuyPrice, _testParameters.MaxBuyPrice);
         }
         public async Task WycofanieOfertyKupna()
         {
-            await BuyOfferMethods.GetUserBuyOffers(0, _user.userId, _user.userToken);
-            await BuyOfferMethods.PutBuyOffers(0, _user.userToken, _user.userId);
-            await BuyOfferMethods.GetUserBuyOffers(0, _user.userId, _user.userToken);
+            await BuyOfferMethods.GetUserBuyOffers(_testParameters.TestParametersId, _user.userId, _user.userToken);
+            await BuyOfferMethods.PutBuyOffers(_testParameters.TestParametersId, _user.userToken, _user.userId);
+            await BuyOfferMethods.GetUserBuyOffers(_testParameters.TestParametersId, _user.userId, _user.userToken);
         }
 
         public async Task DodanieFirmy()
         {
-            await CompaniesMethod.POSTCompanies(_user.userId, 0, 0, _user.userToken);
-            await ResourcesMethods.GetResources(0, _user.userToken);
+            await CompaniesMethod.POSTCompanies(_user.userId, _testParameters.TestParametersId, _user.userToken);
+            await ResourcesMethods.GetResources(_testParameters.TestParametersId, _user.userToken);
         }
         public async Task WyswietlanieTransakcji()
         {
-            await TransactionMethods.GetTransactions(0, _user.userToken, _user.userId);
+            await TransactionMethods.GetTransactions(_testParameters.TestParametersId, _user.userToken, _user.userId);
         }
         public async Task WyswietlanieZasobów()
         {
-            await ResourcesMethods.GetResources(0, _user.userToken);
+            await ResourcesMethods.GetResources(_testParameters.TestParametersId, _user.userToken);
         }
         public async Task WyswietlanieOfertSprzedazy()
         {
-            await SellOffersMethods.GetUserSellOffers(0, _user.userToken);
+            await SellOffersMethods.GetUserSellOffers(_testParameters.TestParametersId, _user.userToken);
         }
         public async Task NowaOfertaSprzedazy()
         {
-            await ResourcesMethods.GetResources(0, _user.userToken);
-            await SellOffersMethods.AddSellOffer(0, _user.userToken, 20, 50);
-            await SellOffersMethods.GetUserSellOffers(0, _user.userToken);
+            await ResourcesMethods.GetResources(_testParameters.TestParametersId, _user.userToken);
+            await SellOffersMethods.AddSellOffer(_testParameters.TestParametersId, _user.userToken, _testParameters.MinSellPrice, _testParameters.MaxSellPrice);
+            await SellOffersMethods.GetUserSellOffers(_testParameters.TestParametersId, _user.userToken);
         }
 
         public async Task WycofanieOfertySprzedazy()
         {
-            await SellOffersMethods.GetUserSellOffers(0, _user.userToken);
-            await SellOffersMethods.PutSellOffers(0, _user.userToken, _user.userId);
+            await SellOffersMethods.GetUserSellOffers(_testParameters.TestParametersId, _user.userToken);
+            await SellOffersMethods.PutSellOffers(_testParameters.TestParametersId, _user.userToken, _user.userId);
         }
         public async Task Wylogowanie()
         {
-            await UsersMethods.LogoutUser(0, _user.userId, _user.userToken);
+            await UsersMethods.LogoutUser(_testParameters.TestParametersId , _user.userId, _user.userToken);
         }
 
     }

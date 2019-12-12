@@ -22,9 +22,9 @@ namespace TestLibrary.TestApiMethods
 {
     class SellOffersMethods
     {
-        public static async Task GetUserSellOffers(int paramId, string token)
+        public static async Task GetUserSellOffers(long paramId, string token)
         {
-            ReturnGetSellOffers returnedSellOffers = new ReturnGetSellOffers();
+            List<SellOfferModel> returnedSellOffers = new List<SellOfferModel>();
             int userId = TestRun.user.Where(u => u.userToken == token).First().userId;
             try
             {
@@ -40,9 +40,9 @@ namespace TestLibrary.TestApiMethods
                     resp = result;
                     GetSellOffersByUserIdResponseModel response = new GetSellOffersByUserIdResponseModel();
                     response = JsonConvert.DeserializeObject<GetSellOffersByUserIdResponseModel>(resp);
-                    returnedSellOffers.tests = new List<Test>();
-                    returnedSellOffers.sell = new List<SellOfferModel>();
-                    returnedSellOffers.sell.AddRange(response.SellOffers);
+                    //returnedSellOffers.tests = new List<Test>();
+                    returnedSellOffers = new List<SellOfferModel>();
+                    returnedSellOffers.AddRange(response.SellOffers);
                     watch.Stop();
                     long TestTime = watch.ElapsedMilliseconds;
                     if (response.execDetails.ExecTime == null || response.execDetails.DbTime == null ||
@@ -53,20 +53,20 @@ namespace TestLibrary.TestApiMethods
                         TestTime = 0;
                     }
                     //(new Test(0, paramId, userId, (int)EndpointEnum.GetSellOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
-                    returnedSellOffers.tests.Add(new Test( paramId, userId, (int)EndpointEnum.GetSellOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
-                    TestRun.testsLis.AddRange(returnedSellOffers.tests);
+                    //returnedSellOffers.tests.Add(new Test( paramId, userId, (int)EndpointEnum.GetSellOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(paramId, userId, (int)EndpointEnum.GetSellOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
 
 
                     TestRun.user.Where(u => u.userId == userId).ToList()
-                        .ForEach(ug => ug.userSellOffers = returnedSellOffers.sell);
+                        .ForEach(ug => ug.userSellOffers = returnedSellOffers);
 
                 }
             }
             catch (Exception e)
             {
-                returnedSellOffers.tests = new List<Test>();
-                returnedSellOffers.tests.Add(new Test(paramId, userId, (int)EndpointEnum.GetSellOffers, 0, 0, 0));
-                TestRun.testsLis.AddRange(returnedSellOffers.tests);
+                //returnedSellOffers.tests = new List<Test>();
+                //returnedSellOffers.tests.Add(new Test(paramId, userId, (int)EndpointEnum.GetSellOffers, 0, 0, 0));
+                TestRun.testsLis.Add(new Test(paramId, userId, (int)EndpointEnum.GetSellOffers, 0, 0, 0));
             }
 
             await Task.CompletedTask;
@@ -75,9 +75,9 @@ namespace TestLibrary.TestApiMethods
             //return Task.CompletedTask;
         }
 
-        public static async Task AddSellOffer(int testParam, string token, double minSellPrice, double maxSellPrice)
+        public static async Task AddSellOffer(long testParam, string token, double minSellPrice, double maxSellPrice)
         {
-            ReturnAddSellOffers ret = new ReturnAddSellOffers();
+            List<SellOfferModel> ret = new List<SellOfferModel>();
             int USERID = TestRun.user.Where(u => u.userToken == token).First().userId;
             try
             {
@@ -135,7 +135,7 @@ namespace TestLibrary.TestApiMethods
                 response = JsonConvert.DeserializeObject<CreateSellOfferResponseModel>(resp);
                 watch.Stop();
                 long TestTime = watch.ElapsedMilliseconds;
-                ret.tests = new List<Test>();
+                ///ret.tests = new List<Test>();
                 if (response.execDetails.ExecTime == null || response.execDetails.DbTime == null || TestTime == null)
                 {
                     response.execDetails.ExecTime = 0;
@@ -143,21 +143,21 @@ namespace TestLibrary.TestApiMethods
                     TestTime = 0;
                 }
                 //(new Test(0, testParam, USERID, (int)EndpointEnum.AddSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
-                ret.tests.Add(new Test( testParam, USERID, (int)EndpointEnum.AddSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
-                TestRun.testsLis.AddRange(ret.tests);
+                //ret.tests.Add(new Test( testParam, USERID, (int)EndpointEnum.AddSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (int)EndpointEnum.AddSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
             }
             catch (Exception e)
             {
-                ret.tests = new List<Test>();
-                ret.tests.Add(new Test( testParam, USERID, (int)EndpointEnum.AddSellOffer, 0, 0, 0));
-                TestRun.testsLis.AddRange(ret.tests);
+                //ret.tests = new List<Test>();
+                //ret.tests.Add(new Test( testParam, USERID, (int)EndpointEnum.AddSellOffer, 0, 0, 0));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (int)EndpointEnum.AddSellOffer, 0, 0, 0));
             }
 
         }
 
-        public static async Task PutSellOffers(int testParam, string token, int USERID)
+        public static async Task PutSellOffers(long testParam, string token, int USERID)
         {
-            ReturnPUTSellOffers ret = new ReturnPUTSellOffers();
+            //List<SellOfferModel> ret = new List<SellOfferModel>();
             try
             {
                 var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -213,7 +213,7 @@ namespace TestLibrary.TestApiMethods
                 response = JsonConvert.DeserializeObject<WithdrawSellOfferResponseModel>(resp);
                 watch.Stop();
                 long TestTime = watch.ElapsedMilliseconds;
-                ret.tests = new List<Test>();
+                //ret.tests = new List<Test>();
                 if (response.execDetails.ExecTime == null || response.execDetails.DbTime == null || TestTime == null)
                 {
                     response.execDetails.ExecTime = 0;
@@ -221,14 +221,14 @@ namespace TestLibrary.TestApiMethods
                     TestTime = 0;
                 }
                 //(new Test(0, testParam, USERID, (int)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
-                ret.tests.Add(new Test( testParam, USERID, (int)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
-                TestRun.testsLis.AddRange(ret.tests);
+                //ret.tests.Add(new Test( testParam, USERID, (int)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (int)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
             }
             catch (Exception e)
             {
-                ret.tests = new List<Test>();
-                ret.tests.Add(new Test( testParam, USERID, (int)EndpointEnum.PUTSellOffer, 0, 0, 0));
-                TestRun.testsLis.AddRange(ret.tests);
+                //ret.tests = new List<Test>();
+                //ret.tests.Add(new Test( testParam, USERID, (int)EndpointEnum.PUTSellOffer, 0, 0, 0));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (int)EndpointEnum.PUTSellOffer, 0, 0, 0));
             }
 
             //  return ret;

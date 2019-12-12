@@ -15,9 +15,9 @@ namespace TestLibrary.TestApiMethods
 {
     class TransactionMethods
     {
-        public static async Task GetTransactions(int testParam, string token, int userID)
+        public static async Task GetTransactions(long testParam, string token, int userID)
         {
-            ReturnTransactions ret = new ReturnTransactions();
+            List<TransactionModel> ret = new List<TransactionModel>();
             try
             {
                 var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -34,8 +34,8 @@ namespace TestLibrary.TestApiMethods
                     GetTransactionsByUserIdResponseModel transactions = new GetTransactionsByUserIdResponseModel();
                     transactions = JsonConvert.DeserializeObject<GetTransactionsByUserIdResponseModel>(resp);
 
-                    ret.tests = new List<Test>();
-                    ret.Transaction = new List<TransactionModel>();
+                    //ret.tests = new List<Test>();
+                    ret = new List<TransactionModel>();
                     watch.Stop();
                     long TestTime = watch.ElapsedMilliseconds;
                     if (transactions.ExecDetails.ExecTime == null || transactions.ExecDetails.DbTime == null ||
@@ -46,25 +46,25 @@ namespace TestLibrary.TestApiMethods
                         TestTime = 0;
                     }
                     //(new Test(0, testParam, userID, (int)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value,  transactions.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
-                    ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value, transactions.ExecDetails.ExecTime.Value, TestTime));
+                    //ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value, transactions.ExecDetails.ExecTime.Value, TestTime));
 
-                    ret.Transaction.AddRange(transactions.Transactions);
+                    ret.AddRange(transactions.Transactions);
 
-                    TestRun.testsLis.AddRange(ret.tests);
+                    TestRun.testsLis.Add(new Test(testParam, userID, (int)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value, transactions.ExecDetails.ExecTime.Value, TestTime));
 
 
-                    TestRun.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userTransctions = ret.Transaction);
+                    TestRun.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userTransctions = ret);
 
                     //   Program.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userResources = ret.res);
                 }
             }
             catch (Exception e)
             {
-                ret.tests = new List<Test>();
-                //(new Test(0, testParam, USERID, (int)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
-                ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetTrasactions, 0, 0, 0));
+                //ret.tests = new List<Test>();
+                ////(new Test(0, testParam, USERID, (int)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
+                //ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetTrasactions, 0, 0, 0));
 
-                TestRun.testsLis.AddRange(ret.tests);
+                TestRun.testsLis.Add(new Test(testParam, userID, (int)EndpointEnum.GetTrasactions, 0, 0, 0));
             }
 
             //  return ret;

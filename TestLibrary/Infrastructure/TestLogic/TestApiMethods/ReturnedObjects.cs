@@ -23,11 +23,7 @@ namespace TestLibrary.TestApiMethods
         public List<Test> test;
     }
 
-    public class ReturnUserGenerator
-    {
-        public List<Test> test;
-
-    }
+   
 
     public class ReturnRegistration
     {
@@ -35,67 +31,67 @@ namespace TestLibrary.TestApiMethods
 
     }
 
-    public class ReturnGetCompanies
-    {
-        public List<Test> tests;
-        public List<CompanyModel> companies;
-    }
-    public class ReturnAddCompanies
-    {
-        public List<Test> tests;
+    //public class ReturnGetCompanies
+    //{
+    //    public List<Test> tests;
+    //    public List<CompanyModel> companies;
+    //}
+    //public class ReturnAddCompanies
+    //{
+    //    public List<Test> tests;
 
-    }
-    public class ReturnResources
-    {
-        public int id;
-        public List<Test> tests;
-        public List<ResourceModel> res;
+    //}
+    //public class ReturnResources
+    //{
+    //    public int id;
+    //    public List<Test> tests;
+    //    public List<ResourceModel> res;
 
-    }
-    public class ReturnGetSellOffers
-    {
-        public List<Test> tests;
-        public List<SellOfferModel> sell;
+    //}
+    //public class ReturnGetSellOffers
+    //{
+    //    public List<Test> tests;
+    //    public List<SellOfferModel> sell;
 
-    }
+    //}
 
-    public class ReturnAddSellOffers
-    {
-        public List<Test> tests;
-
-
-    }
-    public class ReturnPUTSellOffers
-    {
-        public List<Test> tests;
+    //public class ReturnAddSellOffers
+    //{
+    //    public List<Test> tests;
 
 
-    }
-    public class ReturnGetBuyOffers
-    {
-        public List<Test> tests;
-        public List<BuyOfferModel> buy;
-
-    }
-
-    public class ReturnAddBuyOffers
-    {
-        public List<Test> tests;
+    //}
+    //public class ReturnPUTSellOffers
+    //{
+    //    public List<Test> tests;
 
 
-    }
-    public class ReturnPUTBuyOffers
-    {
-        public List<Test> tests;
+    //}
+    //public class ReturnGetBuyOffers
+    //{
+    //    public List<Test> tests;
+    //    public List<BuyOfferModel> buy;
+
+    //}
+
+    //public class ReturnAddBuyOffers
+    //{
+    //    public List<Test> tests;
 
 
-    }
-    public class ReturnTransactions
-    {
-        public List<Test> tests;
-        public List<TransactionModel> Transaction;
+    //}
+    //public class ReturnPUTBuyOffers
+    //{
+    //    public List<Test> tests;
 
-    }
+
+    //}
+    //public class ReturnTransactions
+    //{
+    //    public List<Test> tests;
+    //    public List<TransactionModel> Transaction;
+
+    //}
 
     //public class ReturnLogout
     //{

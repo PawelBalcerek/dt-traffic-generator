@@ -7,6 +7,7 @@ using TestLibrary.Infrastructure.TestLogic.API;
 using TestLibrary.Infrastructure.TestLogic;
 using TestLibrary.TestApiMethods;
 using System.Threading.Tasks;
+using TestLibrary.BusinessObject;
 
 namespace TestLibrary.TestApiMethods
 {
@@ -68,10 +69,12 @@ namespace TestLibrary.TestApiMethods
 public class UGAction
 {
     private UserGenerator _user = null;
+    private TestParameters _testParameters = null;
 
-    public UGAction(UserGenerator user)
+    public UGAction(UserGenerator user, TestParameters testParams)
     {
         _user = user;
+        _testParameters = testParams;
     }
     public async Task userGenerator()
     {

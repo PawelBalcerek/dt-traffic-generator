@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ConsoleApplication.Examples;
 using Data.Models;
 using Data.Repositories.Concrete;
@@ -73,6 +74,7 @@ namespace ConsoleApplication
                 // natomiast powinna być wywoływana logika testów za pomocą metody "RunTest"
                 // przykład uruchomienia poniżej
                 _testRun.TestMain();
+                _examplesRunner.GetTestsParameters();
                 //_examplesRunner.AddTestParameters();
                 //_examplesRunner.GetTestParameters();
                 //_examplesRunner.GetTestsParameters();

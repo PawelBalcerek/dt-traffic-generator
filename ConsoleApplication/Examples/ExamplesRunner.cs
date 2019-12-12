@@ -89,7 +89,7 @@ namespace ConsoleApplication.Examples
 
         public void AddTestParameters()
         {
-            TestParameters testParameters = new TestParameters(20, "nazwa testu", 50, 10.50, 100, 1.50, 200);
+            TestParameters testParameters = new TestParameters(30, "pierwszy", 5, 10.50, 100, 1.50, 200);
             IAddTestParametersResponse addTestParametersResponse = _testParametersCreator.AddTestParameters(testParameters);
             if (addTestParametersResponse.ResponseResult == ResponseResultEnum.Success)
             {

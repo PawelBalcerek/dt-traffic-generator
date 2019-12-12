@@ -17,10 +17,10 @@ namespace TestLibrary.TestApiMethods
 {
     class ResourcesMethods
     {
-        public static async Task GetResources(int testParam, string token)
+        public static async Task GetResources(long testParam, string token)
         {
             int userID = TestRun.user.Where(u => u.userToken == token).First().userId;
-            ReturnResources ret = new ReturnResources();
+            List<ResourceModel> ret = new List<ResourceModel>();
             try
             {
                 var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -37,8 +37,8 @@ namespace TestLibrary.TestApiMethods
                     GetUserResourcesResponseModel resources = new GetUserResourcesResponseModel();
                     resources = JsonConvert.DeserializeObject<GetUserResourcesResponseModel>(resp);
 
-                    ret.tests = new List<Test>();
-                    ret.res = new List<ResourceModel>();
+                    //ret.tests = new List<Test>();
+                    ret = new List<ResourceModel>();
                     watch.Stop();
                     long TestTime = watch.ElapsedMilliseconds;
                     if (resources.execDetails.ExecTime == null || resources.execDetails.DbTime == null ||
@@ -49,25 +49,25 @@ namespace TestLibrary.TestApiMethods
                         TestTime = 0;
                     }
                     //(new Test(0, testParam, userID, (int)EndpointEnum.GetCompanies, resources.execDetails.DbTime.Value, resources.execDetails.ExecTime.Value, TestTime, DateTime.Now));
-                    ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetCompanies, resources.execDetails.DbTime.Value, resources.execDetails.ExecTime.Value, TestTime));
+                    //ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetCompanies, resources.execDetails.DbTime.Value, resources.execDetails.ExecTime.Value, TestTime));
 
-                    ret.res.AddRange(resources.Resources);
+                    ret.AddRange(resources.Resources);
 
-                    TestRun.testsLis.AddRange(ret.tests);
+                    TestRun.testsLis.Add(new Test(testParam, userID, (int)EndpointEnum.GetCompanies, resources.execDetails.DbTime.Value, resources.execDetails.ExecTime.Value, TestTime));
 
 
-                    TestRun.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userResources = ret.res);
+                    TestRun.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userResources = ret);
 
                     //   Program.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userResources = ret.res);
                 }
             }
             catch (Exception e)
             {
-                ret.tests = new List<Test>();
-                //(new Test(0, testParam, userID, (int)EndpointEnum.GetCompanies, resources.execDetails.DbTime.Value, resources.execDetails.ExecTime.Value, TestTime, DateTime.Now));
-                ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetCompanies, 0, 0,0));
+                //ret.tests = new List<Test>();
+                ////(new Test(0, testParam, userID, (int)EndpointEnum.GetCompanies, resources.execDetails.DbTime.Value, resources.execDetails.ExecTime.Value, TestTime, DateTime.Now));
+                //ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetUserResources, 0, 0,0));
 
-                TestRun.testsLis.AddRange(ret.tests);
+                TestRun.testsLis.Add(new Test(testParam, userID, (int)EndpointEnum.GetUserResources, 0, 0, 0));
             }
 
             //return Task.CompletedTask;
