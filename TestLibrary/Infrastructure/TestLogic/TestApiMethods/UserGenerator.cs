@@ -85,16 +85,16 @@ public class UGAction
         {
 
             // string key = await UsersMethods.GetJWT(1, _user.userEmail.ToString(), _user.userPassword.ToString());
-            await UsersMethods.GetJWT(1, _user.userEmail, _user.userPassword);
-            await UsersMethods.GetUserId(0, _user.userToken);
+            await UsersMethods.GetJWT(_testParameters.TestParametersId, _user.userEmail, _user.userPassword);
+            await UsersMethods.GetUserId(_testParameters.TestParametersId, _user.userToken);
 
         }
         catch (Exception e)
         {
 
-            await UsersMethods.RegisterUser(1, _user.userEmail, _user.userPassword, _user.userName);
-            await UsersMethods.GetJWT(1, _user.userEmail, _user.userPassword);
-            await UsersMethods.GetUserId(0, _user.userToken);
+            await UsersMethods.RegisterUser(_testParameters.TestParametersId, _user.userEmail, _user.userPassword, _user.userName);
+            await UsersMethods.GetJWT(_testParameters.TestParametersId, _user.userEmail, _user.userPassword);
+            await UsersMethods.GetUserId(_testParameters.TestParametersId, _user.userToken);
 
 
 

@@ -15,7 +15,7 @@ namespace TestLibrary.TestApiMethods
 {
     class TransactionMethods
     {
-        public static async Task GetTransactions(long testParam, string token, int userID)
+        public static async Task GetTransactions(long testParam, string token, long userID)
         {
             List<TransactionModel> ret = new List<TransactionModel>();
             try
@@ -45,12 +45,12 @@ namespace TestLibrary.TestApiMethods
                         transactions.ExecDetails.DbTime = 0;
                         TestTime = 0;
                     }
-                    //(new Test(0, testParam, userID, (int)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value,  transactions.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
-                    //ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value, transactions.ExecDetails.ExecTime.Value, TestTime));
+                    //(new Test(0, testParam, userID, (long)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value,  transactions.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
+                    //ret.tests.Add(new Test( testParam, userID, (long)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value, transactions.ExecDetails.ExecTime.Value, TestTime));
 
                     ret.AddRange(transactions.Transactions);
 
-                    TestRun.testsLis.Add(new Test(testParam, userID, (int)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value, transactions.ExecDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(testParam, userID, (long)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value, transactions.ExecDetails.ExecTime.Value, TestTime));
 
 
                     TestRun.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userTransctions = ret);
@@ -61,10 +61,10 @@ namespace TestLibrary.TestApiMethods
             catch (Exception e)
             {
                 //ret.tests = new List<Test>();
-                ////(new Test(0, testParam, USERID, (int)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
-                //ret.tests.Add(new Test( testParam, userID, (int)EndpointEnum.GetTrasactions, 0, 0, 0));
+                ////(new Test(0, testParam, USERID, (long)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
+                //ret.tests.Add(new Test( testParam, userID, (long)EndpointEnum.GetTrasactions, 0, 0, 0));
 
-                TestRun.testsLis.Add(new Test(testParam, userID, (int)EndpointEnum.GetTrasactions, 0, 0, 0));
+                TestRun.testsLis.Add(new Test(testParam, userID, (long)EndpointEnum.GetTrasactions, 0, 0, 0));
             }
 
             //  return ret;

@@ -27,7 +27,7 @@ namespace TestLibrary.Infrastructure.TestLogic
         public static List<CompanyModel> comp = new List<CompanyModel>();
         public static List<UserGenerator> user = new List<UserGenerator>();
 
-        public void TestMain()
+        public List<Test> TestMain(TestParameters testsParameters)
         {
             // Log.Logger = new LoggerConfiguration()
             //    .MinimumLevel.Debug()
@@ -35,51 +35,52 @@ namespace TestLibrary.Infrastructure.TestLogic
             //     .WriteTo.File("logs\\.txt", rollingInterval: RollingInterval.Minute)
             //   .CreateLogger();
 
-            TestParameters tp = new TestParameters(20, "x", 10, 10, 20, 20, 30);
+            //TestParameters tp = new TestParameters(20, "x", 10, 10, 20, 20, 30);
             
-            RunFirst(tp);
+            RunFirst(testsParameters);
 
 
-            foreach (var u in user)
-            {
-                Log.Information(u.userToken);
-            }
+            //foreach (var u in user)
+            //{
+            //    Log.Information(u.userToken);
+            //}
 
-            foreach (var test in testsLis)
-            {
-                if (test != null)
-                {
-                    Log.Information(test.TimeStamp.ToLongTimeString()+"." + test.TimeStamp.Millisecond);
-                    Log.Information(test.TestParametersId + ", " + test.TestId + ", " + test.UserId + ", " + test.EndpointId + ", " + test.ApiTestTime + ", " + test.DatabaseTestTime + ", " + test.ApplicationTestTime);
+            //foreach (var test in testsLis)
+            //{
+            //    if (test != null)
+            //    {
+            //        Log.Information(test.TimeStamp.ToLongTimeString()+"." + test.TimeStamp.Millisecond);
+            //        Log.Information(test.TestParametersId + ", " + test.TestId + ", " + test.UserId + ", " + test.EndpointId + ", " + test.ApiTestTime + ", " + test.DatabaseTestTime + ", " + test.ApplicationTestTime);
 
-                    //                    //Log.Information("TimeStamp: " + test.TestTime + "." + test.TestTime.Millisecond);
-                    //                    Log.Information("TestParam: " + test.TestParametersId);
-                    //Log.Information("TestId: " + test.TestId);
-                    //Log.Information("UserId: " + test.UserId);
-                    //Log.Information("EndpointId: " + test.EndpointId);
-                    //Log.Information("API_Time: " + test.ApiTestTime / 1000);
-                    //Log.Information("DB_Time: " + test.DatabaseTestTime / 1000);
-                    //Log.Information("Apl_Time: " + test.ApplicationTestTime);
+            //        //                    //Log.Information("TimeStamp: " + test.TestTime + "." + test.TestTime.Millisecond);
+            //        //                    Log.Information("TestParam: " + test.TestParametersId);
+            //        //Log.Information("TestId: " + test.TestId);
+            //        //Log.Information("UserId: " + test.UserId);
+            //        //Log.Information("EndpointId: " + test.EndpointId);
+            //        //Log.Information("API_Time: " + test.ApiTestTime / 1000);
+            //        //Log.Information("DB_Time: " + test.DatabaseTestTime / 1000);
+            //        //Log.Information("Apl_Time: " + test.ApplicationTestTime);
 
-                    //Log.Debug("");
-                }
-                else
-                {
-                    Log.Error("NULL");
+            //        //Log.Debug("");
+            //    }
+            //    else
+            //    {
+            //        Log.Error("NULL");
 
-                }
-            }
-            foreach (var c in TestRun.comp)
-            {
+            //    }
+            //}
+            //foreach (var c in TestRun.comp)
+            //{
 
-                Log.Information("Company:   " + c.Id + "   " + c.Name);
+            //    Log.Information("Company:   " + c.Id + "   " + c.Name);
 
-            }
-            Log.CloseAndFlush();
+            //}
+            //Log.CloseAndFlush();
+            return testsLis;
         }
 
 
-        public static async Task RunFirst(TestParameters testParams)
+        public  async Task<List<Test>> RunFirst(TestParameters testParams)
         {
             TestParameters tp = testParams;
             
@@ -122,7 +123,7 @@ namespace TestLibrary.Infrastructure.TestLogic
 
 
 
-
+            return testsLis;
         }
 
 
@@ -153,10 +154,10 @@ namespace TestLibrary.Infrastructure.TestLogic
             
             //await DodanieFirmy();
             await NowaOfertaSprzedazy();
-            await WycofanieOfertySprzedazy();
+            //await WycofanieOfertySprzedazy();
             await WyswietlanieOfertSprzedazy();
            
-            await WycofanieOfertyKupna();
+            //await WycofanieOfertyKupna();
             await WyswietlanieTransakcji();
             await WyswietlanieZasobów();
             await Wylogowanie();

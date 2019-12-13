@@ -1,8 +1,12 @@
-﻿namespace TestLibrary.Infrastructure.TestLogic
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using TestLibrary.BusinessObject;
+
+namespace TestLibrary.Infrastructure.TestLogic
 {
     public interface ITestRun
     {
-        void TestMain();
-
+        List<Test> TestMain(TestParameters testParameters);
+        
     }
 }

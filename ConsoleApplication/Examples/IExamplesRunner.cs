@@ -1,13 +1,16 @@
-﻿namespace ConsoleApplication.Examples
+﻿using System.Collections.Generic;
+using TestLibrary.BusinessObject;
+
+namespace ConsoleApplication.Examples
 {
     public interface IExamplesRunner
     {
-        void RunTest();
-        void AddTests();
+        void RunTest(long id);
+        void AddTests(List<Test> tests);
         void GetTests();
         void GetTest();
         void GetTestsParameters();
-        void GetTestParameters();
+        TestParameters GetTestParameters(long id);
         void AddTestParameters();
         void AddEndpoint();
         void GetEndpoint();

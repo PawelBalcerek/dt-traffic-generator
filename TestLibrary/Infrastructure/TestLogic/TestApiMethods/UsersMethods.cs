@@ -20,7 +20,8 @@ namespace TestLibrary.TestApiMethods
     {
         public static async Task RegisterUser(long testParam, string email, string password, string name)
         {
-            ReturnRegistration ret = new ReturnRegistration();
+           // ReturnRegistration ret = new ReturnRegistration();
+           //List<Test> test = new List<Test>();
             try
             {
                 var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -53,28 +54,29 @@ namespace TestLibrary.TestApiMethods
                 reg = JsonConvert.DeserializeObject<RegisterResponse>(resp);
                 watch.Stop();
                 long TestTime = watch.ElapsedMilliseconds;
-                ret.test = new List<Test>();
+                
                 if (reg.ExecDetails.ExecTime == null || reg.ExecDetails.DbTime == null || TestTime == null)
                 {
                     reg.ExecDetails.ExecTime = 0;
                     reg.ExecDetails.DbTime = 0;
                     TestTime = 0;
                 }
-                //(new Test(0, testParam, 0, (int)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value,  reg.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
-                ret.test.Add(new Test( testParam, 0, (int)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value, reg.ExecDetails.ExecTime.Value, TestTime));
-
+                //(new Test(0, testParam, 0, (long)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value,  reg.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
+                //test.Add(new Test( testParam, 0, (long)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value, reg.ExecDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, 0, (long)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value, reg.ExecDetails.ExecTime.Value, TestTime));
             }
             catch (Exception e)
             {
-                ret.test = new List<Test>();
-                ret.test.Add(new Test( testParam, 0, (int)EndpointEnum.AddUser, 0, 0, 0));
+                
+                //ret.test.Add(new Test( testParam, 0, (long)EndpointEnum.AddUser, 0, 0, 0));
+                TestRun.testsLis.Add(new Test(testParam, 0, (long)EndpointEnum.AddUser, 0, 0, 0));
             }
-            TestRun.testsLis.AddRange(ret.test);
+            //TestRun.testsLis.AddRange(ret.test);
             //return ret;
 
         }
 
-        public static async Task GetUserId(int testParameters, string token)
+        public static async Task GetUserId(long testParameters, string token)
         {
             int id = 0;
             double cash = 0;
@@ -117,18 +119,18 @@ namespace TestLibrary.TestApiMethods
                     //    userGens.Where(u => u.userName == x.userName.ToString()).ToList().ForEach(ug => ug.userId = returedId.id);
                     //    userGens.Where(u => u.userName == x.userName.ToString()).ToList().ForEach(ug => ug.userCash = returedId.cash);
                     //}
-                    //(new Test(0, testParameters, returedId.id, (int)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value,  user.execDetails.ExecTime.Value, TestTime, DateTime.Now));
-                    //returedId.test.Add(new Test( testParameters, returedId.id, (int)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value, user.execDetails.ExecTime.Value, TestTime));
+                    //(new Test(0, testParameters, returedId.id, (long)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value,  user.execDetails.ExecTime.Value, TestTime, DateTime.Now));
+                    //returedId.test.Add(new Test( testParameters, returedId.id, (long)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value, user.execDetails.ExecTime.Value, TestTime));
 
 
-                    TestRun.testsLis.Add(new Test(testParameters, id, (int)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value, user.execDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(testParameters, id, (long)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value, user.execDetails.ExecTime.Value, TestTime));
                 }
             }
             catch (Exception e)
             {
                 //returedId.test = new List<Test>();
-                //returedId.test.Add(new Test( testParameters, returedId.id, (int)EndpointEnum.GetUserInfo, 0, 0, 0));
-                TestRun.testsLis.Add(new Test(testParameters, id, (int)EndpointEnum.GetUserInfo, 0, 0, 0));
+                //returedId.test.Add(new Test( testParameters, returedId.id, (long)EndpointEnum.GetUserInfo, 0, 0, 0));
+                TestRun.testsLis.Add(new Test(testParameters, id, (long)EndpointEnum.GetUserInfo, 0, 0, 0));
             }
 
             //TestRun.testsLis.AddRange(returedId.test);
@@ -192,22 +194,22 @@ namespace TestLibrary.TestApiMethods
             //            .ForEach(ug => ug.userToken = ret.jwt);
             //    }
 
-            //(new Test(0, testParam, userId, (int)EndpointEnum.Login, login.ExecDetails.DbTime.Value,  login.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
-            //ret.testy.Add(new Test( testParam, userId, (int)EndpointEnum.Login, login.ExecDetails.DbTime.Value, login.ExecDetails.ExecTime.Value, TestTime));
+            //(new Test(0, testParam, userId, (long)EndpointEnum.Login, login.ExecDetails.DbTime.Value,  login.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
+            //ret.testy.Add(new Test( testParam, userId, (long)EndpointEnum.Login, login.ExecDetails.DbTime.Value, login.ExecDetails.ExecTime.Value, TestTime));
 
             //}
             //catch (Exception e)
             //{
             //    ret.testy = new List<Test>();
-            //    ret.testy.Add(new Test(DateTime.Now, testParam, 0, (int)EndpointEnum.Login, 0, 0, 0));
+            //    ret.testy.Add(new Test(DateTime.Now, testParam, 0, (long)EndpointEnum.Login, 0, 0, 0));
 
             //}
-            TestRun.testsLis.Add(new Test(testParam, userId, (int)EndpointEnum.Login, login.ExecDetails.DbTime.Value, login.ExecDetails.ExecTime.Value, TestTime));
+            TestRun.testsLis.Add(new Test(testParam, userId, (long)EndpointEnum.Login, login.ExecDetails.DbTime.Value, login.ExecDetails.ExecTime.Value, TestTime));
 
             //return ret.jwt;
         }
 
-        public static async Task LogoutUser(long TestParamId, int id, string token)
+        public static async Task LogoutUser(long TestParamId, long id, string token)
         {
             try
             {
@@ -237,17 +239,17 @@ namespace TestLibrary.TestApiMethods
                         TestTime = 0;
                     }
 
-                    //(new Test(0, TestParamId, id, (int)EndpointEnum.Login, logout.ExecDetails.DbTime.Value,  logout.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
-                    //ret.Add(new Test( TestParamId, id, (int)EndpointEnum.Logout, logout.ExecDetails.DbTime.Value, logout.ExecDetails.ExecTime.Value, TestTime));
-                    TestRun.testsLis.Add(new Test(TestParamId, id, (int)EndpointEnum.Logout, logout.ExecDetails.DbTime.Value, logout.ExecDetails.ExecTime.Value, TestTime));
+                    //(new Test(0, TestParamId, id, (long)EndpointEnum.Login, logout.ExecDetails.DbTime.Value,  logout.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
+                    //ret.Add(new Test( TestParamId, id, (long)EndpointEnum.Logout, logout.ExecDetails.DbTime.Value, logout.ExecDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(TestParamId, id, (long)EndpointEnum.Logout, logout.ExecDetails.DbTime.Value, logout.ExecDetails.ExecTime.Value, TestTime));
 
                 }
             }
             catch (Exception e)
             {
                 //List<Test> ret = new List<Test>();
-                //ret.Add(new Test( TestParamId, id, (int)EndpointEnum.Logout, 0, 0, 0));
-                TestRun.testsLis.Add(new Test(TestParamId, id, (int)EndpointEnum.Logout, 0, 0, 0));
+                //ret.Add(new Test( TestParamId, id, (long)EndpointEnum.Logout, 0, 0, 0));
+                TestRun.testsLis.Add(new Test(TestParamId, id, (long)EndpointEnum.Logout, 0, 0, 0));
 
             }
 

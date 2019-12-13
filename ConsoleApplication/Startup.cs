@@ -73,8 +73,8 @@ namespace ConsoleApplication
                 //TODO w tym projekcie "ConsoleApplication" nie powinno być żadnej logiki działąnia testów, 
                 // natomiast powinna być wywoływana logika testów za pomocą metody "RunTest"
                 // przykład uruchomienia poniżej
-                _testRun.TestMain();
-                _examplesRunner.GetTestsParameters();
+                //_testRun.TestMain();
+                //_examplesRunner.GetTestsParameters();
                 //_examplesRunner.AddTestParameters();
                 //_examplesRunner.GetTestParameters();
                 //_examplesRunner.GetTestsParameters();
@@ -84,7 +84,8 @@ namespace ConsoleApplication
                 //_examplesRunner.AddTests();
                 //_examplesRunner.GetTest();
                 //_examplesRunner.GetTests();
-                //_examplesRunner.RunTest();
+                _examplesRunner.RunTest(5);
+                
             }
             catch (Exception ex)
             {
