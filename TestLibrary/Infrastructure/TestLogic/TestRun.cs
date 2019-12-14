@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using TestLibrary.BusinessObject;
 using TestLibrary.Creators.Abstract;
@@ -26,7 +27,7 @@ namespace TestLibrary.Infrastructure.TestLogic
         public static List<Test> testsLis = new List<Test>();
         public static List<CompanyModel> comp = new List<CompanyModel>();
         public static List<UserGenerator> user = new List<UserGenerator>();
-
+        public static List<string> listaAkcji = new List<string> { "Logowanie z pobraniem informacji o userze" };
         public List<Test> TestMain(TestParameters testsParameters)
         {
             // Log.Logger = new LoggerConfiguration()
@@ -39,7 +40,10 @@ namespace TestLibrary.Infrastructure.TestLogic
             
             RunFirst(testsParameters);
 
-
+            foreach (var akcja in listaAkcji)
+            {
+                Log.Information(akcja);
+            }
             //foreach (var u in user)
             //{
             //    Log.Information(u.userToken);
@@ -107,12 +111,27 @@ namespace TestLibrary.Infrastructure.TestLogic
 
             var watch2 = System.Diagnostics.Stopwatch.StartNew();
             List<Task> userTasks = new List<Task>();
+            var reflection = typeof(UserActions);
+            List<string> listOfMethods = reflection.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Where(method => method.IsPrivate).Select(method => method.Name).ToList();
+            int indexWylogowywanie = listOfMethods.IndexOf("Wylogowanie");
+            listOfMethods.RemoveAt(indexWylogowywanie);
+            Random r = new Random();
+            List<string> randomMethodorder = new List<string>();
+            int j = 0;
+            while (j < testParams.NumberOfRequests)
+            {
+                int number = r.Next(listOfMethods.Count);
+                randomMethodorder.Add(listOfMethods[number]);
+                j++;
+                //listOfMethods.RemoveAt(number);
+            }
+            randomMethodorder.Add("Wylogowanie");
 
             for (int i = 0; i < ug.Count; i++)
             {
-                userTasks.Add(new UserActions(ug[i],tp).PerformUserAction());
+                userTasks.Add(new UserActions(ug[i],tp).Random(randomMethodorder));
             }
-
+            listaAkcji.AddRange(randomMethodorder);
             Task.WaitAll(userTasks.ToArray());
 
 
@@ -133,92 +152,7 @@ namespace TestLibrary.Infrastructure.TestLogic
 
     }
 
-    public class UserActions
-    {
-        
-        private UserGenerator _user = null;
-        private TestParameters _testParameters = null;
-
-        public UserActions(UserGenerator user, TestParameters testParams)
-        {
-            _user = user;
-            _testParameters = testParams;
-        }
-
-        public async Task PerformUserAction()
-        {
-            //await
-
-            await WyswietlanieOfertKupna();
-          
-            await NowaOfertaKupna();
-            
-            //await DodanieFirmy();
-            await NowaOfertaSprzedazy();
-            //await WycofanieOfertySprzedazy();
-            await WyswietlanieOfertSprzedazy();
-           
-            //await WycofanieOfertyKupna();
-            await WyswietlanieTransakcji();
-            await WyswietlanieZasobów();
-            await Wylogowanie();
-
-            
-           
-
-        }
-
-        public async Task WyswietlanieOfertKupna()
-        {
-            await BuyOfferMethods.GetUserBuyOffers(_testParameters.TestParametersId, _user.userId, _user.userToken);
-        }
-        public async Task NowaOfertaKupna()
-        {
-            await CompaniesMethod.GetCompanies(_testParameters.TestParametersId, _user.userToken, _user.userId);
-            await BuyOfferMethods.AddBuyOffer(_testParameters.TestParametersId, _user.userToken, _user.userId, _testParameters.MinBuyPrice, _testParameters.MaxBuyPrice);
-        }
-        public async Task WycofanieOfertyKupna()
-        {
-            await BuyOfferMethods.GetUserBuyOffers(_testParameters.TestParametersId, _user.userId, _user.userToken);
-            await BuyOfferMethods.PutBuyOffers(_testParameters.TestParametersId, _user.userToken, _user.userId);
-            await BuyOfferMethods.GetUserBuyOffers(_testParameters.TestParametersId, _user.userId, _user.userToken);
-        }
-
-        public async Task DodanieFirmy()
-        {
-            await CompaniesMethod.POSTCompanies(_user.userId, _testParameters.TestParametersId, _user.userToken);
-            await ResourcesMethods.GetResources(_testParameters.TestParametersId, _user.userToken);
-        }
-        public async Task WyswietlanieTransakcji()
-        {
-            await TransactionMethods.GetTransactions(_testParameters.TestParametersId, _user.userToken, _user.userId);
-        }
-        public async Task WyswietlanieZasobów()
-        {
-            await ResourcesMethods.GetResources(_testParameters.TestParametersId, _user.userToken);
-        }
-        public async Task WyswietlanieOfertSprzedazy()
-        {
-            await SellOffersMethods.GetUserSellOffers(_testParameters.TestParametersId, _user.userToken);
-        }
-        public async Task NowaOfertaSprzedazy()
-        {
-            await ResourcesMethods.GetResources(_testParameters.TestParametersId, _user.userToken);
-            await SellOffersMethods.AddSellOffer(_testParameters.TestParametersId, _user.userToken, _testParameters.MinSellPrice, _testParameters.MaxSellPrice);
-            await SellOffersMethods.GetUserSellOffers(_testParameters.TestParametersId, _user.userToken);
-        }
-
-        public async Task WycofanieOfertySprzedazy()
-        {
-            await SellOffersMethods.GetUserSellOffers(_testParameters.TestParametersId, _user.userToken);
-            await SellOffersMethods.PutSellOffers(_testParameters.TestParametersId, _user.userToken, _user.userId);
-        }
-        public async Task Wylogowanie()
-        {
-            await UsersMethods.LogoutUser(_testParameters.TestParametersId , _user.userId, _user.userToken);
-        }
-
-    }
+    
 
 
 }
