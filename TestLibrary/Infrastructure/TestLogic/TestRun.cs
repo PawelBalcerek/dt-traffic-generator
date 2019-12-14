@@ -147,6 +147,7 @@ namespace TestLibrary.Infrastructure.TestLogic
 
         public async Task PerformUserAction()
         {
+            //await
 
             await WyswietlanieOfertKupna();
           

@@ -7,5 +7,6 @@ namespace TestLibrary.Infrastructure.TestLogic
     class TestLogicClass
     {
         //tutaj nasz kod jest wklejony
+
     }
 }
