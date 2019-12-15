@@ -84,7 +84,7 @@ public class UGAction
         try
         {
 
-            // string key = await UsersMethods.GetJWT(1, _user.userEmail.ToString(), _user.userPassword.ToString());
+            
             await UsersMethods.GetJWT(_testParameters.TestParametersId, _user.userEmail, _user.userPassword);
             await UsersMethods.GetUserId(_testParameters.TestParametersId, _user.userToken);
 

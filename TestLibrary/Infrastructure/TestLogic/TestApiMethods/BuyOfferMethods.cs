@@ -11,7 +11,6 @@ using TestLibrary.Infrastructure.TestLogic.API.Request.SellOffers;
 using TestLibrary.Infrastructure.TestLogic.API.Request.BuyOffers;
 using TestLibrary.Infrastructure.TestLogic.API.Request.SellOffers;
 
-//using TestLibrary.Infrastructure.TestLogic.TestApiMethods.ReturnedObject;
 
 using TestLibrary.Infrastructure.TestLogic.API.Request.Company;
 using TestLibrary.Infrastructure.TestLogic.API.Response.BuyOffers;
@@ -32,15 +31,13 @@ namespace TestLibrary.TestApiMethods
                 string resp = "";
                 using (var client = new WebClient())
                 {
-                    client.Headers.Add("Content-Type:application/json"); //Content-Type  
+                    client.Headers.Add("Content-Type:application/json");
                     client.Headers.Add("Accept:application/json");
                     client.Headers.Add("Authorization", "Bearer " + token);
-                    var result = await client.DownloadStringTaskAsync(GET_URLs.BuyOffers).ConfigureAwait(true); //URI  
+                    var result = await client.DownloadStringTaskAsync(GET_URLs.BuyOffers).ConfigureAwait(true);
                     resp = result;
                     GetBuyOffersByUserIdResponseModel response = new GetBuyOffersByUserIdResponseModel();
                     response = JsonConvert.DeserializeObject<GetBuyOffersByUserIdResponseModel>(resp);
-
-                    // returnedBuyOffers.tests = new List<TestLibrary.BusinessObject.Test>();
                     returnedBuyOffers = new List<BuyOfferModel>();
                     returnedBuyOffers.AddRange(response.buyOffers);
                     watch.Stop();
@@ -52,11 +49,7 @@ namespace TestLibrary.TestApiMethods
                         response.execDetails.DbTime = 0;
                         TestTime = 0;
                     }
-                    //Test(testId,paramId,userId,endpointId,response.execDetails.DbTime,response.execDetails.ExecTime,ApiTestTime,timeStamp);
-                    //Test(long testId, long testParametersId, long userId, long endpointId, double databaseTestTime, double applicationTestTime, double apiTestTime, DateTime timeStamp)
-
-                    // returnedBuyOffers.tests.Add(new Test( paramId, userId, (long)EndpointEnum.GetBuyOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
-                    TestRun.testsLis.Add(new Test(paramId, userId, (long)EndpointEnum.GetBuyOffers, response.execDetails.DbTime.Value, TestTime, response.execDetails.ExecTime.Value));
+                    TestRun.testsLis.Add(new Test(paramId, userId, (long)EndpointEnum.GetBuyOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
                     TestRun.user.Where(u => u.userId == userId).ToList()
                         .ForEach(ug => ug.userBuyOffer = returnedBuyOffers);
 
@@ -64,14 +57,11 @@ namespace TestLibrary.TestApiMethods
             }
             catch (Exception e)
             {
-                //returnedBuyOffers.tests = new List<Test>();
-                //returnedBuyOffers.tests.Add(new Test( paramId, userId, (long)EndpointEnum.GetBuyOffers, 0, 0, 0));
                 TestRun.testsLis.Add(new Test(paramId, userId, (long)EndpointEnum.GetBuyOffers, 0, 0, 0));
 
 
             }
-            // await Task.CompletedTask;
-            //   return Task.CompletedTask;
+
         }
 
         public static async Task AddBuyOffer(long testParam, string token, long USERID, double minBuyPrice, double maxBuyPrice)
@@ -130,20 +120,12 @@ namespace TestLibrary.TestApiMethods
                     response.execDetails.DbTime = 0;
                     TestTime = 0;
                 }
-                //(new Test(0, testParam, USERID, ((long)EndpointEnum.AddUser, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime, DateTime.Now));
-                //ret.tests.Add(new Test( testParam, USERID, (long)EndpointEnum.AddUser, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
-                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.AddUser, response.execDetails.DbTime.Value, TestTime, response.execDetails.ExecTime.Value));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.AddUser, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
             }
             catch (Exception e)
             {
-                //ret.tests = new List<Test>();
-                //(new Test(0, testParam, USERID, (long)EndpointEnum.AddBuyOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime, DateTime.Now));
-                //ret.tests.Add(new Test(testParam, USERID, (long)EndpointEnum.AddBuyOffer, 0, 0, 0));
                 TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.AddBuyOffer, 0, 0, 0));
             }
-
-            //return ret;
-
         }
 
         public static async Task PutBuyOffers(long testParam, string token, long USERID)
@@ -211,18 +193,12 @@ namespace TestLibrary.TestApiMethods
                     response.execDetails.DbTime = 0;
                     TestTime = 0;
                 }
-                //(new Test(0, testParam, USERID, (long)EndpointEnum.PUTBuyOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime, DateTime.Now));
-                //ret.tests.Add(new Test( testParam, USERID, (long)EndpointEnum.PUTBuyOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime)); ;
-                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.PUTBuyOffer, response.execDetails.DbTime.Value, TestTime, response.execDetails.ExecTime.Value));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.PUTBuyOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
             }
             catch (Exception e)
             {
-
-                //ret.tests.Add(new Test( testParam, USERID, (long)EndpointEnum.PUTBuyOffer, 0, 0, 0));
                 TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.PUTBuyOffer, 0, 0, 0));
             }
-
-            //  return ret;
 
         }
 
