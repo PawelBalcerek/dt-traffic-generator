@@ -11,5 +11,6 @@ namespace TestLibrary.Infrastructure.ObjectsConverter.Abstract
         Test ConvertTest(ITest test);
         Endpoint ConvertEndpoint(IEndpoint endpoint);
         AverageEndpointsExecutionTimes ConvertAverageEndpointsExecutionTimes(IAverageEndpointsExecutionTimes data);
+        UserEndpointExecutionTimes ConvertUserEndpointExecutionTimes(IUserEndpointExecutionTimes data);
     }
 }

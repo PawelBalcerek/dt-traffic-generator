@@ -25,5 +25,16 @@ namespace Data.Repositories.Concrete
                     g.Average(p => p.ApplicationTestTime),
                     g.Average(p => p.ApiTestTime))));
         }
+
+        public IEnumerable<IUserEndpointExecutionTimes> GetUsersEndpointExecutionTimes(long testParametersId, long endpointId)
+        {
+            return DbContext.Tests
+                .Where(t => t.TestParametersId == testParametersId && t.EndpointId == endpointId)
+                .Include(t => t.Endpoint)
+                .OrderBy(t => t.TimeStamp)
+                .GroupBy(t => t.UserId)
+                .Select(g => new UserEndpointExecutionTimes(g.Select(p => p.UserId).FirstOrDefault(), g.Select(p => p.Endpoint).FirstOrDefault(),
+                    g.Select(p => new ExecutionTimesWithStamp(p.DatabaseTestTime, p.ApplicationTestTime, p.ApiTestTime, p.TimeStamp))));
+        }
     }
 }

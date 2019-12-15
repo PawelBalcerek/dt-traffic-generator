@@ -1,4 +1,6 @@
-﻿using TestLibrary.BusinessObject;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TestLibrary.BusinessObject;
 using TestLibrary.BusinessObject.Abstract;
 using TestLibrary.Infrastructure.ObjectsConverter.Abstract;
 using TestLibrary.Infrastructure.ReportInfrastructure.Abstract;
@@ -39,6 +41,21 @@ namespace TestLibrary.Infrastructure.ObjectsConverter.Concrete
                     data.AverageExecutionTimes.DatabaseTestTime,
                     data.AverageExecutionTimes.ApplicationTestTime,
                     data.AverageExecutionTimes.ApiTestTime));
+        }
+
+
+        private ExecutionTimesWithStamp ConvertExecutionTimesWithStamp(IExecutionTimesWithStamp data)
+        {
+            if (data == null)
+                return null;
+            return new ExecutionTimesWithStamp(data.DatabaseTestTime, data.ApplicationTestTime, data.ApiTestTime, data.TimeStamp);
+        }
+
+        public UserEndpointExecutionTimes ConvertUserEndpointExecutionTimes(IUserEndpointExecutionTimes data)
+        {
+            if (data == null)
+                return null;
+            return new UserEndpointExecutionTimes(data.UserId, ConvertEndpoint(data.Endpoint), data.ExecutionTimesWithStamps.Select(p => ConvertExecutionTimesWithStamp(p)));
         }
     }
 }
