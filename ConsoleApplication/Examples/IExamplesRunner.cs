@@ -6,10 +6,11 @@ namespace ConsoleApplication.Examples
     public interface IExamplesRunner
     {
         void RunTest(long id);
+        void RunTestWithRandomParameter();
         void AddTests(List<Test> tests);
         void GetTests();
         void GetTest();
-        void GetTestsParameters();
+        List<TestParameters> GetTestsParameters();
         TestParameters GetTestParameters(long id);
         void AddTestParameters();
         void AddEndpoint();

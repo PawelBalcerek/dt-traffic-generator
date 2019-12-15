@@ -53,7 +53,7 @@ namespace TestLibrary.Infrastructure.TestLogic
         {
             await TransactionMethods.GetTransactions(_testParameters.TestParametersId, _user.userToken, _user.userId);
         }
-        private async Task WyswietlanieZasobów()
+        private async Task WyswietlanieZasobow()
         {
             await ResourcesMethods.GetResources(_testParameters.TestParametersId, _user.userToken);
         }
@@ -72,6 +72,7 @@ namespace TestLibrary.Infrastructure.TestLogic
         {
             await SellOffersMethods.GetUserSellOffers(_testParameters.TestParametersId, _user.userToken);
             await SellOffersMethods.PutSellOffers(_testParameters.TestParametersId, _user.userToken, _user.userId);
+            await SellOffersMethods.GetUserSellOffers(_testParameters.TestParametersId, _user.userToken);
         }
         private async Task Wylogowanie()
         {

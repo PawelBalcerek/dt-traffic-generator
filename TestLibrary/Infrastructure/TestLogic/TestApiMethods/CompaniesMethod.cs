@@ -70,7 +70,7 @@ namespace TestLibrary.TestApiMethods
                 }
                 //(new Test(0, testParam, userId, (long)EndpointEnum.AddCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime, DateTime.Now));
                 //ret.tests.Add(new Test( testParam, userId, (long)EndpointEnum.AddCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
-                TestRun.testsLis.Add(new Test(testParam, userId, (long)EndpointEnum.AddCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, userId, (long)EndpointEnum.AddCompanies, comp.execDetails.DbTime.Value, TestTime, comp.execDetails.ExecTime.Value));
             }
             catch (Exception e)
             {
@@ -115,7 +115,7 @@ namespace TestLibrary.TestApiMethods
                    // ret.tests.Add(new Test( testParam, userId, (long)EndpointEnum.GetCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
                     ret.AddRange(comp.Companies);
 
-                    TestRun.testsLis.Add(new Test(testParam, userId, (long)EndpointEnum.GetCompanies, comp.execDetails.DbTime.Value, comp.execDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(testParam, userId, (long)EndpointEnum.GetCompanies, comp.execDetails.DbTime.Value, TestTime, comp.execDetails.ExecTime.Value));
                     TestRun.comp.Clear();
                     TestRun.comp.AddRange(ret);
                 }

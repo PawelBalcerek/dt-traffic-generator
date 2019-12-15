@@ -43,9 +43,18 @@ namespace ConsoleApplication.Examples
             TestParameters testParam = GetTestParameters(id);
             List<Test> testy = _testRun.TestMain(testParam);
             AddTests(testy);
+
             
             //IRunTestResponse runTestResponse = _testRunner.RunTest(testParametersId);
             //ResponseResultEnum result = runTestResponse.ResponseResult;
+        }
+
+        public void RunTestWithRandomParameter()
+        {
+            List<TestParameters> testParameters = GetTestsParameters();
+            Random rnd = new Random();
+            long paramId = testParameters[rnd.Next(0, testParameters.Capacity)].TestParametersId;
+            RunTest(paramId);
         }
 
         public void AddTests(List<Test> testsList)
@@ -85,13 +94,16 @@ namespace ConsoleApplication.Examples
             }
         }
 
-        public void GetTestsParameters()
+        public List<TestParameters> GetTestsParameters()
         {
             IGetTestsParametersResponse getTestsParametersResponse = _testParametersProvider.GetTestsParameters();
+            List<TestParameters> tp = new List<TestParameters>();
             if (getTestsParametersResponse.ResponseResult == ResponseResultEnum.Success)
             {
-                IList<TestParameters> testsParameters = getTestsParametersResponse.TestsParameters.ToList();
+                tp = getTestsParametersResponse.TestsParameters.ToList();
             }
+
+            return tp;
         }
 
         public TestParameters GetTestParameters(long id)

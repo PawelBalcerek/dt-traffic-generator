@@ -50,7 +50,7 @@ namespace TestLibrary.TestApiMethods
 
                     ret.AddRange(transactions.Transactions);
 
-                    TestRun.testsLis.Add(new Test(testParam, userID, (long)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value, transactions.ExecDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(testParam, userID, (long)EndpointEnum.GetTrasactions, transactions.ExecDetails.DbTime.Value, TestTime, transactions.ExecDetails.ExecTime.Value));
 
 
                     TestRun.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userTransctions = ret);

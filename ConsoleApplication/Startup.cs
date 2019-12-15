@@ -84,8 +84,8 @@ namespace ConsoleApplication
                 //_examplesRunner.AddTests();
                 //_examplesRunner.GetTest();
                 //_examplesRunner.GetTests();
-                _examplesRunner.RunTest(5);
-                
+              //  _examplesRunner.RunTest(2);
+                _examplesRunner.RunTestWithRandomParameter();
             }
             catch (Exception ex)
             {

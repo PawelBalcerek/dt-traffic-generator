@@ -54,7 +54,7 @@ namespace TestLibrary.TestApiMethods
                     }
                     //(new Test(0, paramId, userId, (long)EndpointEnum.GetSellOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
                     //returnedSellOffers.tests.Add(new Test( paramId, userId, (long)EndpointEnum.GetSellOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
-                    TestRun.testsLis.Add(new Test(paramId, userId, (long)EndpointEnum.GetSellOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(paramId, userId, (long)EndpointEnum.GetSellOffers, response.execDetails.DbTime.Value, TestTime, response.execDetails.ExecTime.Value));
 
 
                     TestRun.user.Where(u => u.userId == userId).ToList()
@@ -144,7 +144,7 @@ namespace TestLibrary.TestApiMethods
                 }
                 //(new Test(0, testParam, USERID, (long)EndpointEnum.AddSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
                 //ret.tests.Add(new Test( testParam, USERID, (long)EndpointEnum.AddSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
-                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.AddSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.AddSellOffer, response.execDetails.DbTime.Value, TestTime, response.execDetails.ExecTime.Value));
             }
             catch (Exception e)
             {
@@ -222,7 +222,7 @@ namespace TestLibrary.TestApiMethods
                 }
                 //(new Test(0, testParam, USERID, (long)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTimeValue, TestTime, DateTime.Now));
                 //ret.tests.Add(new Test( testParam, USERID, (long)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
-                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.PUTSellOffer, response.execDetails.DbTime.Value, TestTime, response.execDetails.ExecTime.Value));
             }
             catch (Exception e)
             {

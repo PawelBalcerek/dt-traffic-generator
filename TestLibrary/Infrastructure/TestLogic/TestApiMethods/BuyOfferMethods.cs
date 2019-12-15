@@ -39,8 +39,8 @@ namespace TestLibrary.TestApiMethods
                     resp = result;
                     GetBuyOffersByUserIdResponseModel response = new GetBuyOffersByUserIdResponseModel();
                     response = JsonConvert.DeserializeObject<GetBuyOffersByUserIdResponseModel>(resp);
-                    
-                   // returnedBuyOffers.tests = new List<TestLibrary.BusinessObject.Test>();
+
+                    // returnedBuyOffers.tests = new List<TestLibrary.BusinessObject.Test>();
                     returnedBuyOffers = new List<BuyOfferModel>();
                     returnedBuyOffers.AddRange(response.buyOffers);
                     watch.Stop();
@@ -54,9 +54,9 @@ namespace TestLibrary.TestApiMethods
                     }
                     //Test(testId,paramId,userId,endpointId,response.execDetails.DbTime,response.execDetails.ExecTime,ApiTestTime,timeStamp);
                     //Test(long testId, long testParametersId, long userId, long endpointId, double databaseTestTime, double applicationTestTime, double apiTestTime, DateTime timeStamp)
-                    
-                   // returnedBuyOffers.tests.Add(new Test( paramId, userId, (long)EndpointEnum.GetBuyOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
-                    TestRun.testsLis.Add(new Test(paramId, userId, (long)EndpointEnum.GetBuyOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+
+                    // returnedBuyOffers.tests.Add(new Test( paramId, userId, (long)EndpointEnum.GetBuyOffers, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(paramId, userId, (long)EndpointEnum.GetBuyOffers, response.execDetails.DbTime.Value, TestTime, response.execDetails.ExecTime.Value));
                     TestRun.user.Where(u => u.userId == userId).ToList()
                         .ForEach(ug => ug.userBuyOffer = returnedBuyOffers);
 
@@ -70,7 +70,7 @@ namespace TestLibrary.TestApiMethods
 
 
             }
-           // await Task.CompletedTask;
+            // await Task.CompletedTask;
             //   return Task.CompletedTask;
         }
 
@@ -123,7 +123,7 @@ namespace TestLibrary.TestApiMethods
                 response = JsonConvert.DeserializeObject<CreateBuyOfferResponseModel>(resp);
                 watch.Stop();
                 long TestTime = watch.ElapsedMilliseconds;
-               // ret.tests = new List<Test>();
+                // ret.tests = new List<Test>();
                 if (response.execDetails.ExecTime == null || response.execDetails.DbTime == null || TestTime == null)
                 {
                     response.execDetails.ExecTime = 0;
@@ -132,7 +132,7 @@ namespace TestLibrary.TestApiMethods
                 }
                 //(new Test(0, testParam, USERID, ((long)EndpointEnum.AddUser, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime, DateTime.Now));
                 //ret.tests.Add(new Test( testParam, USERID, (long)EndpointEnum.AddUser, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
-                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.AddUser, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.AddUser, response.execDetails.DbTime.Value, TestTime, response.execDetails.ExecTime.Value));
             }
             catch (Exception e)
             {
@@ -204,7 +204,7 @@ namespace TestLibrary.TestApiMethods
                 response = JsonConvert.DeserializeObject<WithdrawBuyOfferResponseModel>(resp);
                 watch.Stop();
                 long TestTime = watch.ElapsedMilliseconds;
-                
+
                 if (response.execDetails.ExecTime == null || response.execDetails.DbTime == null || TestTime == null)
                 {
                     response.execDetails.ExecTime = 0;
@@ -213,11 +213,11 @@ namespace TestLibrary.TestApiMethods
                 }
                 //(new Test(0, testParam, USERID, (long)EndpointEnum.PUTBuyOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime, DateTime.Now));
                 //ret.tests.Add(new Test( testParam, USERID, (long)EndpointEnum.PUTBuyOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime)); ;
-                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.PUTBuyOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.PUTBuyOffer, response.execDetails.DbTime.Value, TestTime, response.execDetails.ExecTime.Value));
             }
             catch (Exception e)
             {
-               
+
                 //ret.tests.Add(new Test( testParam, USERID, (long)EndpointEnum.PUTBuyOffer, 0, 0, 0));
                 TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.PUTBuyOffer, 0, 0, 0));
             }

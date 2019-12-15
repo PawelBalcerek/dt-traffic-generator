@@ -6,8 +6,8 @@ namespace TestLibrary
 {
     class GET_URLs
     {
-        //public static string apiUrl = "http://javatestai.ddns.net:8081/api";
-         public static string apiUrl = "http://java-ai.eastus.cloudapp.azure.com/api";
+        public static string apiUrl = "http://javatestai.ddns.net:8081/api";
+         //public static string apiUrl = "http://java-ai.eastus.cloudapp.azure.com/api";
         //public static string apiUrl = "http://net-core-ai.eastus.cloudapp.azure.com/api";
         // public static string GETLogin = apiUrl + "/users";
         public static string GETCompanies = apiUrl + "/companies";

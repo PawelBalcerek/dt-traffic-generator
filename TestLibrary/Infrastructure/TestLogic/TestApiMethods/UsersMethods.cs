@@ -63,7 +63,7 @@ namespace TestLibrary.TestApiMethods
                 }
                 //(new Test(0, testParam, 0, (long)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value,  reg.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
                 //test.Add(new Test( testParam, 0, (long)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value, reg.ExecDetails.ExecTime.Value, TestTime));
-                TestRun.testsLis.Add(new Test(testParam, 0, (long)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value, reg.ExecDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, 0, (long)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value, TestTime, reg.ExecDetails.ExecTime.Value));
             }
             catch (Exception e)
             {
@@ -123,7 +123,7 @@ namespace TestLibrary.TestApiMethods
                     //returedId.test.Add(new Test( testParameters, returedId.id, (long)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value, user.execDetails.ExecTime.Value, TestTime));
 
 
-                    TestRun.testsLis.Add(new Test(testParameters, id, (long)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value, user.execDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(testParameters, id, (long)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value, TestTime, user.execDetails.ExecTime.Value));
                 }
             }
             catch (Exception e)
@@ -204,7 +204,7 @@ namespace TestLibrary.TestApiMethods
             //    ret.testy.Add(new Test(DateTime.Now, testParam, 0, (long)EndpointEnum.Login, 0, 0, 0));
 
             //}
-            TestRun.testsLis.Add(new Test(testParam, userId, (long)EndpointEnum.Login, login.ExecDetails.DbTime.Value, login.ExecDetails.ExecTime.Value, TestTime));
+            TestRun.testsLis.Add(new Test(testParam, userId, (long)EndpointEnum.Login, login.ExecDetails.DbTime.Value, TestTime, login.ExecDetails.ExecTime.Value));
 
             //return ret.jwt;
         }
@@ -241,7 +241,7 @@ namespace TestLibrary.TestApiMethods
 
                     //(new Test(0, TestParamId, id, (long)EndpointEnum.Login, logout.ExecDetails.DbTime.Value,  logout.ExecDetails.ExecTime.Value, TestTime, DateTime.Now));
                     //ret.Add(new Test( TestParamId, id, (long)EndpointEnum.Logout, logout.ExecDetails.DbTime.Value, logout.ExecDetails.ExecTime.Value, TestTime));
-                    TestRun.testsLis.Add(new Test(TestParamId, id, (long)EndpointEnum.Logout, logout.ExecDetails.DbTime.Value, logout.ExecDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(TestParamId, id, (long)EndpointEnum.Logout, logout.ExecDetails.DbTime.Value, TestTime, logout.ExecDetails.ExecTime.Value));
 
                 }
             }
