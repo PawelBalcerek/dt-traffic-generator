@@ -11,6 +11,7 @@ using TestLibrary.Infrastructure.TestInfrastructure.Abstract;
 using TestLibrary.Infrastructure.TestLogic.API.Objects;
 //using TestLibrary.Infrastructure.TestLogic.TestApiMethods;
 using TestLibrary.TestApiMethods;
+//using TestLibrary.Infrastructure.TestLogic.DecysionTree;
 
 
 namespace TestLibrary.Infrastructure.TestLogic
@@ -111,24 +112,33 @@ namespace TestLibrary.Infrastructure.TestLogic
 
             var watch2 = System.Diagnostics.Stopwatch.StartNew();
             List<Task> userTasks = new List<Task>();
-            var reflection = typeof(UserActions);
-            List<string> listOfMethods = reflection.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Where(method => method.IsPrivate).Select(method => method.Name).ToList();
-            int indexWylogowywanie = listOfMethods.IndexOf("Wylogowanie");
-            listOfMethods.RemoveAt(indexWylogowywanie);
-            Random r = new Random();
+            //var reflection = typeof(UserActions);
+            ////losowanie metod
+            //List<string> listOfMethods = reflection.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Where(method => method.IsPrivate).Select(method => method.Name).ToList();
+            //int indexWylogowywanie = listOfMethods.IndexOf("Wylogowanie");
+            //listOfMethods.RemoveAt(indexWylogowywanie);
+            //Random r = new Random();
+            //treeNodesString
             List<string> randomMethodorder = new List<string>();
-            int j = 0;
-            while (j < testParams.NumberOfRequests)
-            {
-                int number = r.Next(listOfMethods.Count);
-                randomMethodorder.Add(listOfMethods[number]);
-                j++;
-                //listOfMethods.RemoveAt(number);
-            }
-            randomMethodorder.Add("Wylogowanie");
+            DecisionTree decisionTree = new DecisionTree(testParams.NumberOfRequests);
+            randomMethodorder = decisionTree.treeNodesString;
+            //List<string> randomMethodorder = treeNodesString;
+
+            //int j = 0;
+            //while (j < testParams.NumberOfRequests)
+            //{
+
+            //    int number = r.Next(listOfMethods.Count);
+            //    randomMethodorder.Add(listOfMethods[number]);
+            //    j++;
+            //    //listOfMethods.RemoveAt(number);
+            //}
+            //randomMethodorder.Add("Wylogowanie");
+
 
             for (int i = 0; i < ug.Count; i++)
             {
+                
                 userTasks.Add(new UserActions(ug[i],tp).Random(randomMethodorder));
             }
             listaAkcji.AddRange(randomMethodorder);

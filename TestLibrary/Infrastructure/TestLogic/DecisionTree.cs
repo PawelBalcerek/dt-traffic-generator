@@ -4,37 +4,30 @@ using System.Text;
 
 namespace TestLibrary.Infrastructure.TestLogic
 {
-    class DecisionTree
+    public class DecisionTree
     {
+        public DecisionTree(int numOfRequest)
+        {
+            _numOfRequest = numOfRequest;
+            treeNodesString = new List<string>();
+            SecondStage();
+        }
 
+        int _numOfRequest;
         int[] secondStageDecysionTree = { 50, 30, 5, 5, 20, 10 };
         int[] thirdStageDecysionTree = { 10, 70, 20 };
 
-        List<treeNodes> ActionPathList;
-        enum treeNodes
-        {
-            BUYOFFER = 1,
-            SHOWBUYOFFER = 11,
-            ADDBUYOFFER = 12,
-            WITHDRAWBUYOFFER = 13,
+        
 
+       public  List<string> treeNodesString { get; set; }
 
-            SELLOFFER = 2,
-            SHOWSELLOFFER = 21,
-            ADDSELLOFFER = 22,
-            WITHDRAWOFFER = 23,
-
-            RESOURCES = 3,
-
-            COMPANIES = 4,
-
-            TRANSACTION = 5,
-
-            LOGOUT = 6
-        };
 
         public void SecondStage()
         {
+            int i = 0;
+           
+                
+        
             //buyOffer sellOffer Resources companies Transaction LogOut
             // zliczenie wszystkich procentów do drzewa decyzyjnego
             int seconStage_buyOffer = secondStageDecysionTree[0];
@@ -46,38 +39,49 @@ namespace TestLibrary.Infrastructure.TestLogic
 
 
 
-            Random rand = new Random();
-            int randNum = rand.Next(0, 100);
+           
 
 
-            if (randNum <= seconStage_buyOffer)
+            while (i < _numOfRequest)
             {
-                //wywolanie funckji losujacej z buyOffer
-                ThirdStage_buyOffer();
-            }
-            else if (randNum <= seconStage_sellOffer)
-            {
-                //wywołanie funkcji losujacej z sellOffer
-                ThirdStage_sellOffer();
+                i++;
+                Random rand = new Random();
+                int randNum = rand.Next(0, 100);
 
-            }
-            else if (randNum <= secondStage_Resources)
-            {
-                
-                //
-                ActionPathList.Add(treeNodes.RESOURCES);
-            }
-            else if (randNum <= secondStage_Companies)
-            {
-                ActionPathList.Add(treeNodes.COMPANIES);
-            }
-            else if (randNum <= secondStage_Transaction)
-            {
-                ActionPathList.Add(treeNodes.TRANSACTION);
-            }
-            else if (randNum <= secondStage_logOut)
-            {
-                ActionPathList.Add(treeNodes.LOGOUT);
+
+                if (randNum <= seconStage_buyOffer)
+                {
+                    //wywolanie funckji losujacej z buyOffer
+                    ThirdStage_buyOffer();
+                }
+                else if (randNum <= seconStage_sellOffer)
+                {
+                    //wywołanie funkcji losujacej z sellOffer
+                    ThirdStage_sellOffer();
+
+                }
+                else if (randNum <= secondStage_Resources)
+                {
+
+                    //
+                    //ActionPathList.Add(treeNodes.RESOURCES);
+                    treeNodesString.Add("WyswietlanieZasobow");
+                }
+                else if (randNum <= secondStage_Companies)
+                {
+                    //ActionPathList.Add(treeNodes.COMPANIES);
+                    treeNodesString.Add("DodanieFirmy");
+                }
+                else if (randNum <= secondStage_Transaction)
+                {
+                    //ActionPathList.Add(treeNodes.TRANSACTION);
+                    treeNodesString.Add("WyswietlanieTransakcji");
+                }
+                else if (randNum <= secondStage_logOut)
+                {
+                    //ActionPathList.Add(treeNodes.LOGOUT);
+                    treeNodesString.Add("Wylogowanie");
+                }
             }
         }
 
@@ -96,19 +100,23 @@ namespace TestLibrary.Infrastructure.TestLogic
 
             if (randNum <= ThirdStage_show)
             {
-                ActionPathList.Add(treeNodes.SHOWBUYOFFER);
+                //ActionPathList.Add(treeNodes.SHOWBUYOFFER);
+                treeNodesString.Add("WyswietlanieOfertKupna");
             }
             else if (randNum <= ThirdStage_add)
             {
-                ActionPathList.Add(treeNodes.ADDBUYOFFER);
+                //ActionPathList.Add(treeNodes.ADDBUYOFFER);
                 //ThirdStage_buyOffer_add();
+                treeNodesString.Add("NowaOfertaKupna");
             }
             else if (randNum <= TrirdStage_withdraw)
             {
-                ActionPathList.Add(treeNodes.WITHDRAWBUYOFFER);
+                // ActionPathList.Add(treeNodes.WITHDRAWBUYOFFER);
                 //ThirdStage_buyOffer_withdraw();
-            }
 
+                treeNodesString.Add("WycofanieOfertyKupna");
+            }
+            
         }
 
         /// <summary>
@@ -125,30 +133,27 @@ namespace TestLibrary.Infrastructure.TestLogic
 
             if (randNum <= ThirdStage_show)
             {
-                ActionPathList.Add(treeNodes.SHOWSELLOFFER);
+                //ActionPathList.Add(treeNodes.SHOWSELLOFFER);
                 //ThirdStage_sellOffer_show();
+                treeNodesString.Add("WyswietlanieOfertSprzedazy");
+
             }
             else if (randNum <= ThirdStage_add)
             {
-                ActionPathList.Add(treeNodes.ADDSELLOFFER);
+                treeNodesString.Add("NowaOfertaSprzedazy");
+                //ActionPathList.Add(treeNodes.ADDSELLOFFER);
                 //ThirdStage_sellOffer_add();
             }
             else if (randNum <= TrirdStage_withdraw)
             {
-                ActionPathList.Add(treeNodes.WITHDRAWOFFER);
+
+                treeNodesString.Add("WycofanieOfertySprzedazy");
+                //ActionPathList.Add(treeNodes.WITHDRAWOFFER);
                 //ThirdStage_sellOffer_withdraw();
             }
         }
 
-        //tutaj bedzie wykonanie akcji wypenienia listy akcji, prawdopodobnie trzeba przeniesc w lepsze miesce
-
-        void Generate_tree_path(int number_of_action)
-        {
-            for(int i = 0; i < number_of_action; i++)
-            {
-                SecondStage();
-            }
-        }
+     
 
     }
 
