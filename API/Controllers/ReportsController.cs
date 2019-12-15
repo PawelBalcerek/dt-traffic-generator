@@ -53,5 +53,40 @@ namespace API.Controllers
                     return StatusCode(500);
             }
         }
+
+
+        /// <summary>
+        /// Method to get the list of all users with average execution times for specific test and endpoint.
+        /// </summary>
+        [ProducesResponseType(200, Type = typeof(GetAverageEndpointsExecutionTimesResponseModel))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [HttpGet("GetUsersEndpointExecutionTimes")]
+        public ActionResult GetUsersEndpointExecutionTimes(long testParametersId, long endpointId)
+        {
+            try
+            {
+                IGetUsersEndpointExecutionTimesResponse response = _reportProvider.GetUsersEndpointExecutionTimes(testParametersId, endpointId);
+                return PrepareHttpResponse(response);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "ReportsController(GetUsersEndpointExecutionTimes)(EXCEPTION)");
+                return StatusCode(500);
+            }
+        }
+
+        private ActionResult PrepareHttpResponse(IGetUsersEndpointExecutionTimesResponse response)
+        {
+            switch (response.ResponseResult)
+            {
+                case ResponseResultEnum.Success:
+                    return Ok(new GetUsersEnpointExecutionTimesResponseModel(response.UserEndpointExecuteTimes));
+                case ResponseResultEnum.NotFound:
+                    return StatusCode(404);
+                default:
+                    return StatusCode(500);
+            }
+        }
     }
 }
