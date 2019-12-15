@@ -14,8 +14,8 @@ namespace TestLibrary.Infrastructure.TestLogic
         }
 
         int _numOfRequest;
-        int[] secondStageDecysionTree = { 50, 30, 5, 5, 20, 10 };
-        int[] thirdStageDecysionTree = { 10, 70, 20 };
+        int[] secondStageDecysionTree = { 55, 35, 5, 5, 20, 0 };
+        int[] thirdStageDecysionTree = { 15, 80, 5 };
 
         
 
