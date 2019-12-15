@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TestLibrary
+﻿namespace TestLibrary
 {
+    public class ApiUrlProvider
+    {
+        public static string ApiUrl { get; set; }
+    }
+
     class GET_URLs
     {
         //public static string apiUrl = "http://javatestai.ddns.net:8081/api";
-         //public static string apiUrl = "http://java-ai.eastus.cloudapp.azure.com/api";
-        public static string apiUrl = "http://net-core-ai.eastus.cloudapp.azure.com/api";
-        
+        //public static string apiUrl = "http://java-ai.eastus.cloudapp.azure.com/api";
+        //public static string apiUrl = "http://net-core-ai.eastus.cloudapp.azure.com/api";
+        public static string apiUrl = ApiUrlProvider.ApiUrl;
+
         public static string GETCompanies = apiUrl + "/companies";
         public static string GetUserData = apiUrl + "/users";
         public static string Logout = apiUrl + "/logout";
@@ -23,7 +25,7 @@ namespace TestLibrary
     }
     class POST_URLs
     {
-        public static string apiUrl = GET_URLs.apiUrl;
+        public static string apiUrl = ApiUrlProvider.ApiUrl;
         public static string Login = apiUrl + "/login";
         public static string Register = apiUrl + "/users";
         public static string AddCompanies = apiUrl + "/companies";
@@ -36,7 +38,7 @@ namespace TestLibrary
     class PUT_URLs
     {
 
-        public static string apiUrl = GET_URLs.apiUrl;
+        public static string apiUrl = ApiUrlProvider.ApiUrl;
         public static string WithdrawSellOffer = apiUrl + "/sell-offers/";
         public static string WithdrawBuyOffers = apiUrl + "/buy-offers/";
         public static string Configurations = apiUrl + "/configurations";
@@ -46,7 +48,7 @@ namespace TestLibrary
     class DELETE_URLs
     {
 
-        public static string apiUrl = GET_URLs.apiUrl;
+        public static string apiUrl = ApiUrlProvider.ApiUrl;
         public static string DatabaseClear = apiUrl + "/database/clear";
         public static string DatabasePurge = apiUrl + "/database/purge";
     }

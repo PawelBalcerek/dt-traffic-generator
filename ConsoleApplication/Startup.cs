@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Events;
+using TestLibrary;
 using TestLibrary.Creators.Abstract;
 using TestLibrary.Creators.Concrete;
 using TestLibrary.Infrastructure.ObjectsConverter.Abstract;
@@ -52,6 +53,8 @@ namespace ConsoleApplication
             services.AddTransient<IReportProvider, ReportProvider>();
             services.AddTransient<ITestRun, TestRun>();
 
+            ApiUrlProvider.ApiUrl = configuration["ApiUrl"];
+
             services.AddTransient<Startup>();
             return services;
         }
@@ -84,7 +87,7 @@ namespace ConsoleApplication
                 //_examplesRunner.AddTests();
                 //_examplesRunner.GetTest();
                 //_examplesRunner.GetTests();
-              //  _examplesRunner.RunTest(2);
+                //  _examplesRunner.RunTest(2);
                 _examplesRunner.RunTestWithRandomParameter();
             }
             catch (Exception ex)
