@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+
+namespace TestLibrary.Infrastructure.TestLogic.Models
+{
+    [Table("SellOffers")]
+    public partial class SellOffer
+    {
+        public SellOffer()
+        {
+            Transactions = new HashSet<Transaction>();
+        }
+
+        public int Id { get; set; }
+        public int ResourceId { get; set; }
+        public int Amount { get; set; }
+        public double Price { get; set; }
+        public DateTime Date { get; set; }
+        public bool IsValid { get; set; }
+        public int StartAmount { get; set; }
+
+        public virtual Resource Resource { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
+    }
+}
