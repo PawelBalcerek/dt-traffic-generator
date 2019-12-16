@@ -120,7 +120,7 @@ namespace TestLibrary.TestApiMethods
                     response.execDetails.DbTime = 0;
                     TestTime = 0;
                 }
-                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.AddUser, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
+                TestRun.testsLis.Add(new Test(testParam, USERID, (long)EndpointEnum.AddBuyOffer, response.execDetails.DbTime.Value, response.execDetails.ExecTime.Value, TestTime));
             }
             catch (Exception e)
             {

@@ -51,7 +51,7 @@ namespace TestLibrary.TestApiMethods
 
                     ret.AddRange(resources.Resources);
 
-                    TestRun.testsLis.Add(new Test(testParam, userID, (long)EndpointEnum.GetCompanies, resources.execDetails.DbTime.Value, resources.execDetails.ExecTime.Value, TestTime));
+                    TestRun.testsLis.Add(new Test(testParam, userID, (long)EndpointEnum.GetUserResources, resources.execDetails.DbTime.Value, resources.execDetails.ExecTime.Value, TestTime));
 
 
                     TestRun.user.Where(u => u.userId == userID).ToList().ForEach(ug => ug.userResources = ret);
