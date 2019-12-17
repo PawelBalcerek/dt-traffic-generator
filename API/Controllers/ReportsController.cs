@@ -58,7 +58,7 @@ namespace API.Controllers
         /// <summary>
         /// Method to get the list of all users with average execution times for specific test and endpoint.
         /// </summary>
-        [ProducesResponseType(200, Type = typeof(GetAverageEndpointsExecutionTimesResponseModel))]
+        [ProducesResponseType(200, Type = typeof(GetUsersEnpointExecutionTimesResponseModel))]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpGet("GetUsersEndpointExecutionTimes")]
