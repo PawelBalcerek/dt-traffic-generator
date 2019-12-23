@@ -21,6 +21,8 @@ using TestLibrary.Providers.Abstract;
 using TestLibrary.Providers.Concrete;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System.Linq;
+using TestLibrary;
+using TestLibrary.Infrastructure.TestLogic;
 
 namespace API
 {
@@ -53,7 +55,8 @@ namespace API
             services.AddTransient<ITestsCreator, TestsCreator>();
             services.AddTransient<IReportRepository, ReportRepository>();
             services.AddTransient<IReportProvider, ReportProvider>();
-          
+            services.AddTransient<ITestRun, TestRun>();
+
             services.AddSwaggerGen(x =>
             {
                 x.SwaggerDoc("v1", new Info { Title = "dt-traffic-generator Api", Description = "DayTrader - Traffic Generation - Swagger Api Documentation" });
@@ -62,7 +65,6 @@ namespace API
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 x.IncludeXmlComments(xmlPath);
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,6 +100,8 @@ namespace API
                     }
                 }
             }
+
+            ApiUrlProvider.ApiUrl = Configuration["ApiUrl"];
         }
     }
 }
