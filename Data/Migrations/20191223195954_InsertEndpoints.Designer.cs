@@ -3,15 +3,17 @@ using System;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(EfficiencyTestDbContext))]
-    partial class EfficiencyTestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191223195954_InsertEndpoints")]
+    partial class InsertEndpoints
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +33,23 @@ namespace Data.Migrations
                     b.HasKey("EndpointId");
 
                     b.ToTable("Endpoints");
+
+                    b.HasData(
+                        new { EndpointId = 1L, EndpointName = "UserGetInfo", HttpMethod = "GET" },
+                        new { EndpointId = 2L, EndpointName = "UserRegister", HttpMethod = "POST" },
+                        new { EndpointId = 3L, EndpointName = "UserLogin", HttpMethod = "POST" },
+                        new { EndpointId = 4L, EndpointName = "UserLogout", HttpMethod = "GET" },
+                        new { EndpointId = 5L, EndpointName = "CompaniesShow", HttpMethod = "GET" },
+                        new { EndpointId = 6L, EndpointName = "CompaniesAdd", HttpMethod = "POST" },
+                        new { EndpointId = 7L, EndpointName = "ResourcesShow", HttpMethod = "GET" },
+                        new { EndpointId = 8L, EndpointName = "SellOffersShow", HttpMethod = "GET" },
+                        new { EndpointId = 9L, EndpointName = "SellOffersAdd", HttpMethod = "POST" },
+                        new { EndpointId = 10L, EndpointName = "SellOffersWithdraw", HttpMethod = "GET" },
+                        new { EndpointId = 11L, EndpointName = "BuyOffersShow", HttpMethod = "GET" },
+                        new { EndpointId = 12L, EndpointName = "BuyOffersAdd", HttpMethod = "POST" },
+                        new { EndpointId = 13L, EndpointName = "BuyOffersWithdraw", HttpMethod = "GET" },
+                        new { EndpointId = 14L, EndpointName = "TransactionsShow", HttpMethod = "GET" }
+                    );
                 });
 
             modelBuilder.Entity("Data.Models.Test", b =>
