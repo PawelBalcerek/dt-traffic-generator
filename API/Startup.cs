@@ -22,6 +22,8 @@ using TestLibrary.Providers.Concrete;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System.Linq;
 using TestLibrary;
+using TestLibrary.Infrastructure.CsvConverting.Abstract;
+using TestLibrary.Infrastructure.CsvConverting.Concrete;
 using TestLibrary.Infrastructure.TestLogic;
 
 namespace API
@@ -56,6 +58,8 @@ namespace API
             services.AddTransient<IReportRepository, ReportRepository>();
             services.AddTransient<IReportProvider, ReportProvider>();
             services.AddTransient<ITestRun, TestRun>();
+
+            services.AddTransient<ICsvConverter, CsvConverter>();
 
             services.AddSwaggerGen(x =>
             {
