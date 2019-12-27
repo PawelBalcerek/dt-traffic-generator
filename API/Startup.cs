@@ -19,11 +19,12 @@ using TestLibrary.Infrastructure.ObjectsConverter.Concrete;
 using TestLibrary.Repositories.Abstract;
 using TestLibrary.Providers.Abstract;
 using TestLibrary.Providers.Concrete;
-using Microsoft.EntityFrameworkCore.Migrations;
 using System.Linq;
 using TestLibrary;
 using TestLibrary.Infrastructure.CsvConverting.Abstract;
 using TestLibrary.Infrastructure.CsvConverting.Concrete;
+using TestLibrary.Infrastructure.FileGenerating.Abstract;
+using TestLibrary.Infrastructure.FileGenerating.Concrete;
 using TestLibrary.Infrastructure.TestLogic;
 
 namespace API
@@ -60,6 +61,7 @@ namespace API
             services.AddTransient<ITestRun, TestRun>();
 
             services.AddTransient<ICsvConverter, CsvConverter>();
+            services.AddTransient<IFileGenerator, FileGenerator>();
 
             services.AddSwaggerGen(x =>
             {

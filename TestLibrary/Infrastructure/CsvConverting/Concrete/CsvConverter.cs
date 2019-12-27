@@ -2,6 +2,7 @@
 using System.Linq;
 using ServiceStack;
 using TestLibrary.Infrastructure.CsvConverting.Abstract;
+using TestLibrary.Infrastructure.ReportInfrastructure.Abstract;
 using TestLibrary.Infrastructure.ReportInfrastructure.Concrete;
 using TestLibrary.Infrastructure.ReportInfrastructure.Concrete.Model;
 
@@ -14,15 +15,20 @@ namespace TestLibrary.Infrastructure.CsvConverting.Concrete
             return ConvertToCsvModel(data).ToCsv();
         }
 
-        private IEnumerable<GetAverageEndpointsExecutionTimesCsvModel> ConvertToCsvModel(IEnumerable<AverageEndpointsExecutionTimes> data)
+        private IEnumerable<EndpointExecutionTimesModel> ConvertToCsvModel(IEnumerable<AverageEndpointsExecutionTimes> data)
         {
-            return data.Select(item => new GetAverageEndpointsExecutionTimesCsvModel(
+            return data.Select(item => new EndpointExecutionTimesModel(
                 item.Endpoint.EndpointId, 
                 item.Endpoint.EndpointName, 
                 item.Endpoint.HttpMethod, 
                 item.AverageExecutionTimes.DatabaseTestTime, 
                 item.AverageExecutionTimes.ApplicationTestTime, 
                 item.AverageExecutionTimes.ApiTestTime));
+        }
+
+        public string ConvertToCsv(IEnumerable<IExecutionTimesWithStamp> data)
+        {
+            return data.ToCsv();
         }
     }
 }

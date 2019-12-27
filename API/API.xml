@@ -29,9 +29,19 @@
             Method to get the csv file representation of the list of all endpoints (for specific test) with average execution times.
             </summary>
         </member>
+        <member name="M:API.Controllers.ReportsController.GetUsersEndpointsExecutionTimes(System.Int64)">
+            <summary>
+            Method to get the list of all users (for all endpoints) with average execution times for specific test.
+            </summary>
+        </member>
         <member name="M:API.Controllers.ReportsController.GetUsersEndpointExecutionTimes(System.Int64,System.Int64)">
             <summary>
             Method to get the list of all users with average execution times for specific test and endpoint.
+            </summary>
+        </member>
+        <member name="M:API.Controllers.ReportsController.GetUsersEndpointsExecutionTimesCsv(System.Int64)">
+            <summary>
+            Method to get zip file contains csv file of the list of all users (for all endpoints) with average execution times for specific test.
             </summary>
         </member>
         <member name="M:API.Controllers.TestsController.RunTest(API.Models.Test.RunTestRequestModel)">

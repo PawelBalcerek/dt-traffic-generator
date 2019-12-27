@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using ConsoleApplication.Examples;
 using Data.Models;
 using Data.Repositories.Concrete;
@@ -11,6 +10,10 @@ using Serilog.Events;
 using TestLibrary;
 using TestLibrary.Creators.Abstract;
 using TestLibrary.Creators.Concrete;
+using TestLibrary.Infrastructure.CsvConverting.Abstract;
+using TestLibrary.Infrastructure.CsvConverting.Concrete;
+using TestLibrary.Infrastructure.FileGenerating.Abstract;
+using TestLibrary.Infrastructure.FileGenerating.Concrete;
 using TestLibrary.Infrastructure.ObjectsConverter.Abstract;
 using TestLibrary.Infrastructure.ObjectsConverter.Concrete;
 using TestLibrary.Infrastructure.RunTest.Abstract;
@@ -52,6 +55,9 @@ namespace ConsoleApplication
             services.AddTransient<IReportRepository, ReportRepository>();
             services.AddTransient<IReportProvider, ReportProvider>();
             services.AddTransient<ITestRun, TestRun>();
+
+            services.AddTransient<ICsvConverter, CsvConverter>();
+            services.AddTransient<IFileGenerator, FileGenerator>();
 
             ApiUrlProvider.ApiUrl = configuration["ApiUrl"];
 
