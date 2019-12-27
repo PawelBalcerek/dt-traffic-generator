@@ -1,8 +1,14 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
 using API.Models.Report;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
+using TestLibrary.BusinessObject.Abstract;
+using TestLibrary.Configuration;
 using TestLibrary.Infrastructure.Common.Const;
+using TestLibrary.Infrastructure.CsvConverting.Abstract;
+using TestLibrary.Infrastructure.FileGenerating.Abstract;
 using TestLibrary.Infrastructure.ReportInfrastructure.Abstract;
 using TestLibrary.Providers.Abstract;
 
@@ -13,10 +19,14 @@ namespace API.Controllers
     public class ReportsController : ControllerBase
     {
         private readonly IReportProvider _reportProvider;
+        private readonly ICsvConverter _csvConverter;
+        private readonly IFileGenerator _fileGenerator;
 
-        public ReportsController(IReportProvider reportProvider)
+        public ReportsController(IReportProvider reportProvider, ICsvConverter csvConverter, IFileGenerator fileGenerator)
         {
             _reportProvider = reportProvider;
+            _csvConverter = csvConverter;
+            _fileGenerator = fileGenerator;
         }
 
 
@@ -56,9 +66,67 @@ namespace API.Controllers
 
 
         /// <summary>
+        /// Method to get the csv file representation of the list of all endpoints (for specific test) with average execution times.
+        /// </summary>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [HttpGet("GetAverageEndpointsExecutionTimesCsv")]
+        public ActionResult GetAverageEndpointsExecutionTimesCsv(long testParametersId)
+        {
+            try
+            {
+                IGetAverageEndpointsExecutionTimesResponse getAverageEndpointsResponse = _reportProvider.GetAverageEndpointsExecutionTimes(testParametersId);
+                return PrepareCsvFileHttpResponse(getAverageEndpointsResponse);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "ReportsController(GetAverageEndpointsExecutionTimesCsv)(EXCEPTION)");
+                return StatusCode(500);
+            }
+        }
+
+        private ActionResult PrepareCsvFileHttpResponse(IGetAverageEndpointsExecutionTimesResponse response)
+        {
+            switch (response.ResponseResult)
+            {
+                case ResponseResultEnum.Success:
+                    byte[] csvFile = _fileGenerator.GenerateCsvFile(response.AverageEndpointExecutionsTimes);
+                    return File(csvFile, Config.CsvContentType, Config.AverageEndpointsExecutionTimesCsvFileName);
+                case ResponseResultEnum.NotFound:
+                    return StatusCode(404);
+                default:
+                    return StatusCode(500);
+            }
+        }
+
+
+        /// <summary>
+        /// Method to get the list of all users (for all endpoints) with average execution times for specific test.
+        /// </summary>
+        [ProducesResponseType(200, Type = typeof(GetUsersEnpointExecutionTimesResponseModel))]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [HttpGet("GetUsersEndpointsExecutionTimes")]
+        public ActionResult GetUsersEndpointsExecutionTimes(long testParametersId)
+        {
+            try
+            {
+                IGetUsersEndpointExecutionTimesResponse response = _reportProvider.GetUsersEndpointsExecutionTimes(testParametersId);
+                return PrepareHttpResponse(response);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "ReportsController(GetUsersEndpointsExecutionTimes)(EXCEPTION)");
+                return StatusCode(500);
+            }
+        }
+
+
+        /// <summary>
         /// Method to get the list of all users with average execution times for specific test and endpoint.
         /// </summary>
-        [ProducesResponseType(200, Type = typeof(GetAverageEndpointsExecutionTimesResponseModel))]
+        [ProducesResponseType(200, Type = typeof(GetUsersEnpointExecutionTimesResponseModel))]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         [HttpGet("GetUsersEndpointExecutionTimes")]
@@ -82,6 +150,42 @@ namespace API.Controllers
             {
                 case ResponseResultEnum.Success:
                     return Ok(new GetUsersEnpointExecutionTimesResponseModel(response.UserEndpointExecuteTimes));
+                case ResponseResultEnum.NotFound:
+                    return StatusCode(404);
+                default:
+                    return StatusCode(500);
+            }
+        }
+
+
+        /// <summary>
+        /// Method to get zip file contains csv file of the list of all users (for all endpoints) with average execution times for specific test.
+        /// </summary>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        [HttpGet("GetUsersEndpointsExecutionTimesCsv")]
+        public ActionResult GetUsersEndpointsExecutionTimesCsv(long testParametersId)
+        {
+            try
+            {
+                IGetUsersEndpointExecutionTimesResponse response = _reportProvider.GetUsersEndpointsExecutionTimes(testParametersId);
+                return PrepareCsvFileHttpResponse(response);
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "ReportsController(GetUsersEndpointsExecutionTimesCsv)(EXCEPTION)");
+                return StatusCode(500);
+            }
+        }
+
+        private ActionResult PrepareCsvFileHttpResponse(IGetUsersEndpointExecutionTimesResponse response)
+        {
+            switch (response.ResponseResult)
+            {
+                case ResponseResultEnum.Success:
+                    byte[] zipFile = _fileGenerator.GenerateUserEndpointExecutionTimesZipFile(response.UserEndpointExecuteTimes);
+                    return File(zipFile, Config.ZipContentType, Config.UserEndpointExecutionTimesCsvZipFileName);
                 case ResponseResultEnum.NotFound:
                     return StatusCode(404);
                 default:

@@ -35,6 +35,20 @@ namespace TestLibrary.Providers.Concrete
             }
         }
 
+        public IGetUsersEndpointExecutionTimesResponse GetUsersEndpointsExecutionTimes(long testParametersId)
+        {
+            try
+            {
+                IEnumerable<IUserEndpointExecutionTimes> response = _reportRepository.GetUsersEndpointsExecutionTimes(testParametersId);
+                return new GetUsersEndpointExecutionTimesResponse(response.Select(p => _converter.ConvertUserEndpointExecutionTimes(p)));
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "GetUsersEndpointsExecutionTimes(EXCEPTION)");
+                return new GetUsersEndpointExecutionTimesResponse();
+            }
+        }
+
         public IGetUsersEndpointExecutionTimesResponse GetUsersEndpointExecutionTimes(long testParametersId, long endpointId)
         {
             try
