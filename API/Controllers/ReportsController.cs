@@ -77,7 +77,7 @@ namespace API.Controllers
             try
             {
                 IGetAverageEndpointsExecutionTimesResponse getAverageEndpointsResponse = _reportProvider.GetAverageEndpointsExecutionTimes(testParametersId);
-                return PrepareCsvFileHttpResponse(getAverageEndpointsResponse);
+                return PrepareCsvFileHttpResponse(getAverageEndpointsResponse, testParametersId);
             }
             catch (Exception ex)
             {
@@ -86,13 +86,14 @@ namespace API.Controllers
             }
         }
 
-        private ActionResult PrepareCsvFileHttpResponse(IGetAverageEndpointsExecutionTimesResponse response)
+        private ActionResult PrepareCsvFileHttpResponse(IGetAverageEndpointsExecutionTimesResponse response, long testParametersId)
         {
             switch (response.ResponseResult)
             {
                 case ResponseResultEnum.Success:
                     byte[] csvFile = _fileGenerator.GenerateCsvFile(response.AverageEndpointExecutionsTimes);
-                    return File(csvFile, Config.CsvContentType, Config.AverageEndpointsExecutionTimesCsvFileName);
+                    string fileName = $"{Config.AverageEndpointsExecutionTimesCsvFileName}_testId-{testParametersId}{Config.CsvExtension}";
+                    return File(csvFile, Config.CsvContentType, fileName);
                 case ResponseResultEnum.NotFound:
                     return StatusCode(404);
                 default:
@@ -170,7 +171,7 @@ namespace API.Controllers
             try
             {
                 IGetUsersEndpointExecutionTimesResponse response = _reportProvider.GetUsersEndpointsExecutionTimes(testParametersId);
-                return PrepareCsvFileHttpResponse(response);
+                return PrepareCsvFileHttpResponse(response, testParametersId);
             }
             catch (Exception ex)
             {
@@ -179,13 +180,14 @@ namespace API.Controllers
             }
         }
 
-        private ActionResult PrepareCsvFileHttpResponse(IGetUsersEndpointExecutionTimesResponse response)
+        private ActionResult PrepareCsvFileHttpResponse(IGetUsersEndpointExecutionTimesResponse response, long testParametersId)
         {
             switch (response.ResponseResult)
             {
                 case ResponseResultEnum.Success:
                     byte[] zipFile = _fileGenerator.GenerateUserEndpointExecutionTimesZipFile(response.UserEndpointExecuteTimes);
-                    return File(zipFile, Config.ZipContentType, Config.UserEndpointExecutionTimesCsvZipFileName);
+                    string fileName = $"{Config.UserEndpointExecutionTimesCsvZipFileName}_testId-{testParametersId}{Config.ZipExtension}";
+                    return File(zipFile, Config.ZipContentType, fileName);
                 case ResponseResultEnum.NotFound:
                     return StatusCode(404);
                 default:
