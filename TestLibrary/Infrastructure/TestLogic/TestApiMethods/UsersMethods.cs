@@ -18,7 +18,7 @@ namespace TestLibrary.TestApiMethods
 {
     class UsersMethods
     {
-        public static async Task RegisterUser(long testParam, string email, string password, string name)
+        public static async Task<Test> RegisterUser(long testParam, string email, string password, string name)
         {
             try
             {
@@ -57,16 +57,22 @@ namespace TestLibrary.TestApiMethods
                     TestTime = 0;
                 }
 
-                TestRun.testsLis.Add(new Test(testParam, 0, (long)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value, reg.ExecDetails.ExecTime.Value, TestTime));
+                //TestRun.testsLis.Add(new Test(testParam, 0, (long)EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value, reg.ExecDetails.ExecTime.Value, TestTime));
+                Test test = new Test(testParam, 0, (long) EndpointEnum.AddUser, reg.ExecDetails.DbTime.Value,
+                    reg.ExecDetails.ExecTime.Value, TestTime);
+                return test;
             }
             catch (Exception e)
             {
-                TestRun.testsLis.Add(new Test(testParam, 0, (long)EndpointEnum.AddUser, 0, 0, 0));
+                //TestRun.testsLis.Add(new Test(testParam, 0, (long)EndpointEnum.AddUser, 0, 0, 0));
+                Test test = new Test(testParam, 0, (long) EndpointEnum.AddUser, 0, 0, 0);
+                return test;
             }
 
+            
         }
 
-        public static async Task GetUserId(long testParameters, string token)
+        public static async Task<Test> GetUserId(long testParameters, string token)
         {
             int id = 0;
             double cash = 0;
@@ -96,16 +102,20 @@ namespace TestLibrary.TestApiMethods
                     }
                     TestRun.user.Where(u => u.userToken == token).ToList().ForEach(ug => ug.userId = id);
                     TestRun.user.Where(u => u.userToken == token).ToList().ForEach(ug => ug.userCash = cash);
-                    TestRun.testsLis.Add(new Test(testParameters, id, (long)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value, user.execDetails.ExecTime.Value, TestTime));
+                    //TestRun.testsLis.Add(new Test(testParameters, id, (long)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value, user.execDetails.ExecTime.Value, TestTime));
+                    Test test = new Test(testParameters, id, (long)EndpointEnum.GetUserInfo, user.execDetails.DbTime.Value, user.execDetails.ExecTime.Value, TestTime);
+                    return test;
                 }
             }
             catch (Exception e)
             {
-                TestRun.testsLis.Add(new Test(testParameters, id, (long)EndpointEnum.GetUserInfo, 0, 0, 0));
+                //TestRun.testsLis.Add(new Test(testParameters, id, (long)EndpointEnum.GetUserInfo, 0, 0, 0));
+                Test test = new Test(testParameters, id, (long) EndpointEnum.GetUserInfo, 0, 0, 0);
+                return test;
             }
         }
 
-        public static async Task GetJWT(long testParam, string email, string password)
+        public static async Task<Test> GetJWT(long testParam, string email, string password)
         {
             string jwt = "";
             var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -146,8 +156,12 @@ namespace TestLibrary.TestApiMethods
             }
             int userId = TestRun.user.Where(u => u.userEmail == email).First().userId;
             TestRun.user.Where(u => u.userEmail == email).ToList().ForEach(ug => ug.userToken = jwt);
-            TestRun.testsLis.Add(new Test(testParam, userId, (long)EndpointEnum.Login, login.ExecDetails.DbTime.Value, login.ExecDetails.ExecTime.Value, TestTime));
+            //TestRun.testsLis.Add(new Test(testParam, userId, (long)EndpointEnum.Login, login.ExecDetails.DbTime.Value, login.ExecDetails.ExecTime.Value, TestTime));
+            Test test = new Test(testParam, 0, (long) EndpointEnum.Login, login.ExecDetails.DbTime.Value,
+                login.ExecDetails.ExecTime.Value, TestTime);
+            return test;
         }
+
 
         public static async Task LogoutUser(long TestParamId, long id, string token)
         {

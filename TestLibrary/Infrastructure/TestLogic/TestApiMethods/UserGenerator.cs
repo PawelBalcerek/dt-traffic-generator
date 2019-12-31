@@ -83,19 +83,34 @@ public class UGAction
 
         try
         {
+            List<Test> testy = new List<Test>();
+            testy.Add(await UsersMethods.GetJWT(_testParameters.TestParametersId, _user.userEmail, _user.userPassword));
+            testy.Add(await UsersMethods.GetUserId(_testParameters.TestParametersId, _user.userToken));
+            long id = testy[testy.Count - 1].UserId;
 
-            
-            await UsersMethods.GetJWT(_testParameters.TestParametersId, _user.userEmail, _user.userPassword);
-            await UsersMethods.GetUserId(_testParameters.TestParametersId, _user.userToken);
-
+            foreach (var test in testy)
+            {
+                //test.UserId = id;
+                //TestRun.testsLis.Add(test);
+                TestRun.testsLis.Add(new Test(test.TestParametersId, id, test.EndpointId, test.DatabaseTestTime, test.ApplicationTestTime, test.ApiTestTime));
+            }
+                         
         }
         catch (Exception e)
         {
+            List<Test> testy = new List<Test>();
+            testy.Add(await UsersMethods.RegisterUser(_testParameters.TestParametersId, _user.userEmail, _user.userPassword, _user.userName));
+            testy.Add(await UsersMethods.GetJWT(_testParameters.TestParametersId, _user.userEmail, _user.userPassword));
+            testy.Add(await UsersMethods.GetUserId(_testParameters.TestParametersId, _user.userToken));
+            
+            long id = testy[testy.Count - 1].UserId;
 
-            await UsersMethods.RegisterUser(_testParameters.TestParametersId, _user.userEmail, _user.userPassword, _user.userName);
-            await UsersMethods.GetJWT(_testParameters.TestParametersId, _user.userEmail, _user.userPassword);
-            await UsersMethods.GetUserId(_testParameters.TestParametersId, _user.userToken);
-
+            foreach (var test in testy)
+            {
+                //test.UserId = id;
+                //TestRun.testsLis.Add(test);
+                TestRun.testsLis.Add(new Test(test.TestParametersId,id,test.EndpointId,test.DatabaseTestTime,test.ApplicationTestTime,test.ApiTestTime));
+            }
 
 
 
